@@ -3,7 +3,7 @@
 install environment:
   `virtualenv env`
 run env:
-  `source env/bin/active`
+  `source env/bin/activate`
 install packages:
   `pip install -r requirements.txt`
 run server:
@@ -14,7 +14,7 @@ run client:
 install environment
   `py -m venv env`
 run env:
-  `source env/bin/active`
+  `env/Scripts/activate`
 install packages:
   `pip install -r requirements.txt`
 run server:
