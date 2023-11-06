@@ -146,7 +146,7 @@ function App() {
               <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
             </Form.Group>
             <Button variant="primary" type="submit">
-              Submit
+               Sign up
             </Button>
           </Form>
         </div>        
@@ -165,7 +165,7 @@ function App() {
               <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
             </Form.Group>
             <Button variant="primary" type="submit">
-              Submit
+               Log in
             </Button>
           </Form>
         </div>
