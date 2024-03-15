@@ -1,0 +1,83 @@
+
+.signup-form {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #e5e5e5;
+    font-size: 14px;
+    text-align: center;
+    height: 100%;;
+}
+.title {
+    color: #0048ff;
+    margin-top: 54px;
+    font: 64px Lexend Deca, sans-serif;
+}
+.sub-title {
+    color: #0048ff;
+    margin-top: 21px;
+    font: 16px Lexend Deca, sans-serif;
+}
+.input-field {
+    font-family: Lexend Deca, sans-serif;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 72, 255, 1);
+    margin-top: 19px;
+    width: 300px;
+    max-width: 100%;
+    color: #0048ff;
+    line-height: 143%;
+    padding: 17px 60px 17px 20px;
+}
+.link-container {
+    display: flex;
+    margin-top: 22px;
+    justify-content: space-between;
+    gap: 20px;
+    font-weight: 500;
+}
+.signin-link {
+    color: #002b9a;
+    cursor: pointer;
+}
+.action-button {
+    border-radius: 10px;
+    background-color: rgba(214, 0, 141, 0.64);
+    margin-top: 12px;
+    width: 300px;
+    color: #f5f5f5;
+    text-transform: capitalize;
+    padding: 15px;
+    font: 16px Lexend Deca, sans-serif;
+    cursor: pointer;
+}
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(50%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+
+@media (max-width: 991px) {
+    .title,
+    .sub-title,
+    .input-field,
+    .action-button {
+    margin-top: 40px;
+    font-size: 40px;
+    padding-right: 20px;
+    white-space: initial;
+    }
+}
+.signup-image{
+    width: 100%;
+    align-self: stretch;
+    margin-top: 62px;
+}
