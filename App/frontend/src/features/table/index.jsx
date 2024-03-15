@@ -1,12 +1,24 @@
+<<<<<<< HEAD
 import React from 'react';
+=======
+import React, { useState } from 'react';
+>>>>>>> Bao
 import PropTypes from 'prop-types';
 import './styles.scss'
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+<<<<<<< HEAD
 import { useState } from "react";
 import * as XLSX from 'xlsx';
 TableFeature.propTypes = {
 
+=======
+import * as XLSX from 'xlsx';
+import TableList from './tableList';
+TableFeature.propTypes = {
+    excelData: PropTypes.arrayOf(PropTypes.object),
+    setExcelData: PropTypes.func,
+>>>>>>> Bao
 };
 
 function TableFeature(props) {
@@ -14,7 +26,11 @@ function TableFeature(props) {
     const [typeError, setTypeError] = useState(null);
 
     // submit state
+<<<<<<< HEAD
     const [excelData, setExcelData] = useState(null);
+=======
+
+>>>>>>> Bao
 
     // onchange event
     const handleFile = (e) => {
@@ -47,6 +63,7 @@ function TableFeature(props) {
             const worksheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[worksheetName];
             const data = XLSX.utils.sheet_to_json(worksheet);
+<<<<<<< HEAD
             setExcelData(data.slice(0, 10));
         }
     }
@@ -100,6 +117,15 @@ function TableFeature(props) {
                 </div>
 
             </div>
+=======
+            props.setExcelData(data);
+        }
+    }
+    return (
+
+        <div>
+            <TableList excelData={props.excelData} typeError={typeError} handleFile={handleFile} handleFileSubmit={handleFileSubmit} />
+>>>>>>> Bao
         </div>
     );
 }

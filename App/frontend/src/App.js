@@ -35,6 +35,7 @@ function App() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [excelData, setExcelData] = useState(null);
 
   useEffect(() => {
     client.get("/api/user")
@@ -110,10 +111,17 @@ function App() {
         <Header nameActive={currentUser} logoutFunction={submitLogout} />
         <Routes>
           <Route path='/home' element={<Home />} />
+<<<<<<< HEAD
           <Route path='/calculate' element={<AppHeader />}>
             <Route path='chart' element={<Chart />} />
             <Route path='action1' element={<Action1 />} />
             <Route path='action2' element={<Action2 />} />
+=======
+          <Route path='/calculate' element={<AppHeader setExcelData={setExcelData} excelData={excelData} />}>
+            <Route path='chart' element={<Chart />} />
+            <Route path='action1' element={<Action1 data={excelData} />} />
+            <Route path='action2' element={<Action2 data={excelData} />} />
+>>>>>>> Bao
           </Route>
         </Routes>
       </div>
