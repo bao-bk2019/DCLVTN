@@ -3,11 +3,11 @@ import TableFeature from '../table';
 import { Button } from 'react-bootstrap';
 import { Link, Outlet } from 'react-router-dom';
 import './styles.scss'
-function AppHeader() {
+function AppHeader({ excelData, setExcelData }) {
     return (
         <>
             <div className='mx-auto'>
-                <TableFeature />
+                <TableFeature excelData={excelData} setExcelData={setExcelData} />
             </div>
             <div className='center'>
                 <Button variant="warming">

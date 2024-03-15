@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss'
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { useState } from "react";
 import * as XLSX from 'xlsx';
+import TableList from './tableList';
 TableFeature.propTypes = {
-
+    excelData: PropTypes.arrayOf(PropTypes.object),
+    setExcelData: PropTypes.func,
 };
 
 function TableFeature(props) {
@@ -14,7 +15,7 @@ function TableFeature(props) {
     const [typeError, setTypeError] = useState(null);
 
     // submit state
-    const [excelData, setExcelData] = useState(null);
+
 
     // onchange event
     const handleFile = (e) => {
@@ -47,59 +48,13 @@ function TableFeature(props) {
             const worksheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[worksheetName];
             const data = XLSX.utils.sheet_to_json(worksheet);
-            setExcelData(data.slice(0, 10));
+            props.setExcelData(data);
         }
     }
     return (
-        <div className='importable'>
-            <ButtonGroup aria-label="Basic example" style={{ paddingLeft: 140 }}>
-                <Button variant="secondary">Clear Table</Button>
-                <Button variant="secondary">Import/Export</Button>
-                <Button variant="secondary">Transform Data</Button>
-                <Button variant="secondary">Settings</Button>
-            </ButtonGroup>
-            <div className="wrapper">
-                {/* form */}
-                <form className="form-group custom-form" onSubmit={handleFileSubmit}>
-                    <input type="file" className="form-control" required onChange={handleFile} />
-                    <button type="submit" className="btn btn-success btn-md">UPLOAD</button>
-                    {typeError && (
-                        <div className="alert alert-danger" role="alert">{typeError}</div>
-                    )}
-                </form>
 
-                {/* view data */}
-                <div className="viewer">
-                    {excelData ? (
-                        <div className="table-responsive" style={{ maxHeight: 300 }}>
-                            <table className="table">
-
-                                <thead>
-                                    <tr>
-                                        {Object.keys(excelData[0]).map((key) => (
-                                            <th key={key}>{key}</th>
-                                        ))}
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {excelData.map((individualExcelData, index) => (
-                                        <tr key={index}>
-                                            {Object.keys(individualExcelData).map((key) => (
-                                                <td key={key}>{individualExcelData[key]}</td>
-                                            ))}
-                                        </tr>
-                                    ))}
-                                </tbody>
-
-                            </table>
-                        </div>
-                    ) : (
-                        <div>No File is uploaded yet!</div>
-                    )}
-                </div>
-
-            </div>
+        <div>
+            <TableList excelData={props.excelData} typeError={typeError} handleFile={handleFile} handleFileSubmit={handleFileSubmit} />
         </div>
     );
 }
