@@ -54,14 +54,25 @@ function TableList(props) {
                                 <tbody>
                                     {props.excelData.map((individualExcelData, rowIndex) => (
                                         <tr key={rowIndex}>
-                                            {Object.keys(individualExcelData).map((key, columnIndex) => (
-                                                <td key={key}>
-                                                    <input
-                                                        type="text"
-                                                        value={individualExcelData[key]}
-                                                        onChange={(e) => handleCellChange(rowIndex, columnIndex, e.target.value)}
-                                                    />
-                                                </td>
+                                            {Object.keys(props.excelData[0]).map((key, columnIndex) => (
+                                                (individualExcelData[key]) ? (
+                                                    <td key={key}>
+                                                        <input
+                                                            type="text"
+                                                            value={individualExcelData[key]}
+                                                            onChange={(e) => handleCellChange(rowIndex, columnIndex, e.target.value)}
+                                                        />
+                                                    </td>
+                                                ) : (
+                                                    <td key={key}>
+                                                        <input
+                                                            type="text"
+                                                            value=""
+                                                            placeholder='No value'
+                                                            onChange={(e) => handleCellChange(rowIndex, columnIndex, e.target.value)}
+                                                        />
+                                                    </td>
+                                                )
                                             ))}
                                         </tr>
                                     ))}
