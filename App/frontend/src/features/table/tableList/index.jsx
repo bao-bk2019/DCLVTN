@@ -7,10 +7,15 @@ TableList.propTypes = {
     excelData: PropTypes.arrayOf(PropTypes.object),
     handleFileSubmit: PropTypes.func,
     handleFile: PropTypes.func,
-
+    setExcelData: PropTypes.func,
 };
 
 function TableList(props) {
+    const handleCellChange = (rowIndex, columnIndex, newValue) => {
+        const updatedData = [...props.excelData];
+        updatedData[rowIndex][Object.keys(updatedData[0])[columnIndex]] = newValue;
+        props.setExcelData(updatedData);
+    };
     return (
         <div className='importable'>
             <ButtonGroup aria-label="Basic example" style={{ paddingLeft: 140 }}>
@@ -47,10 +52,16 @@ function TableList(props) {
                                 </thead>
 
                                 <tbody>
-                                    {props.excelData.map((individualExcelData, index) => (
-                                        <tr key={index}>
-                                            {Object.keys(individualExcelData).map((key) => (
-                                                <td key={key}>{individualExcelData[key]}</td>
+                                    {props.excelData.map((individualExcelData, rowIndex) => (
+                                        <tr key={rowIndex}>
+                                            {Object.keys(individualExcelData).map((key, columnIndex) => (
+                                                <td key={key}>
+                                                    <input
+                                                        type="text"
+                                                        value={individualExcelData[key]}
+                                                        onChange={(e) => handleCellChange(rowIndex, columnIndex, e.target.value)}
+                                                    />
+                                                </td>
                                             ))}
                                         </tr>
                                     ))}
