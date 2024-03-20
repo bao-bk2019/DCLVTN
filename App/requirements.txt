@@ -1,0 +1,13 @@
+Django==4.2.7
+<<<<<<< HEAD
+<<<<<<< HEAD
+djangorestframework==3.14.0
+django-cors-headers==4.3.0
+=======
+djangorestframework==3.7.1
+djangorestframework==3.14.0
+>>>>>>> 68152b7 (new update)
+=======
+djangorestframework==3.7.1
+djangorestframework==3.14.0
+>>>>>>> Bao
