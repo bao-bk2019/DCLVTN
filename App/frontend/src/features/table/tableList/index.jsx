@@ -43,9 +43,9 @@ function TableList(props) {
                             <div key={key} style={{ display: 'inline-block', width: `${100 / columns.length}%` }}>
                                 <input
                                     type="text"
-                                    value={rowData[key] || ''}
+                                    value={rowData[key]}
                                     placeholder="No value"
-                                    onChange={(e) => props.handleCellChange(index, columnIndex, e.target.value)}
+                                    onChange={(e) => handleCellChange(index, columnIndex, e.target.value)}
                                     onBlur={measure} // Đo lại kích thước của ô khi nội dung thay đổi
                                 />
                             </div>
@@ -56,14 +56,14 @@ function TableList(props) {
         );
     };
     return (
-        <div className='importable'>
+        <div >
             <ButtonGroup aria-label="Basic example" style={{ paddingLeft: 140 }}>
                 <Button variant="secondary">Clear Table</Button>
                 <Button variant="secondary">Import/Export</Button>
                 <Button variant="secondary">Transform Data</Button>
                 <Button variant="secondary">Settings</Button>
             </ButtonGroup>
-            <div className="wrapper">
+            <div >
                 {/* form */}
                 <form className="form-group custom-form" onSubmit={props.handleFileSubmit}>
                     <input type="file" className="form-control" required onChange={props.handleFile} />
@@ -77,7 +77,7 @@ function TableList(props) {
                 </form>
 
                 {/* view data */}
-                <div className="viewer">
+                <div >
                     {props.excelData ? (
                         // <div className="table-responsive" style={{ maxHeight: 300 }}>
                         //     <table className="table">
@@ -120,7 +120,7 @@ function TableList(props) {
                         //     </table>
                         // </div>
                         <List
-                            width={800} // Chiều rộng của bảng
+                            width={1400} // Chiều rộng của bảng
                             height={300} // Chiều cao của bảng
                             rowCount={props.excelData.length} // Số hàng trong bảng
                             rowHeight={cacheRef.current.rowHeight} // Lấy chiều cao từ cache
