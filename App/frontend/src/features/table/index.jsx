@@ -53,7 +53,7 @@ function TableFeature(props) {
     return (
 
         <div>
-            <TableList excelData={props.excelData} typeError={typeError} handleFile={handleFile} handleFileSubmit={handleFileSubmit} />
+            <TableList excelData={props.excelData} typeError={typeError} handleFile={handleFile} handleFileSubmit={handleFileSubmit} setExcelData={props.setExcelData} />
         </div>
     );
 }
