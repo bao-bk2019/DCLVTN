@@ -18,6 +18,12 @@ import Action1 from './features/action1/index.jsx';
 import Action2 from './features/action2/index.jsx'
 import { useNavigate, Route, Routes } from 'react-router-dom';
 import Header from './components/Header/index.jsx';
+import User from './features/user/index.jsx'
+import Profile from './features/user/profile/index.jsx'
+import Languague from './features/user/language/index.jsx'
+import Help from './features/user/help/index.jsx'
+import Notification from './features/user/notification/index.jsx'
+import Edit from './features/user/edit/index.jsx'
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
@@ -128,6 +134,14 @@ function App() {
         <Route path='/signin' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
         <Route path='/signup' element={<SignupForm />} />
         <Route path='/*' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
+        <Route path="/user" element={<User />} >
+          <Route index element={<Profile />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="edit" element={<Edit />} />
+          <Route path="notification" element={<Notification />} />
+          <Route path="language" element={<Languague />} />
+          <Route path="help" element={<Help />} />
+        </Route>
       </Routes>
       {/* <Outlet /> */}
     </>

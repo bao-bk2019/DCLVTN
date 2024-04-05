@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './styles.scss';
 import logo from '../Img/logo.png'
-import { useRef } from 'react';
 import AvatarDropdown from './Dropdown/index.jsx'
 
 const Header = ({ nameActive, logoutFunction }) => {
@@ -98,18 +97,6 @@ const Header = ({ nameActive, logoutFunction }) => {
 
                 </div>
                 <AvatarDropdown logoutFunction={logoutFunction}/>
-                {/* <div>
-                    <img
-                    loading="lazy"
-                    srcSet={avatar}
-                    className="img-avatar"
-                    onClick={accountDropdown()}
-                    />  
-                <div id="myDropdown" classname="dropdown-content" ref={listElement}>
-                        <a href="#home">Setting</a>
-                        <a href="#about">Logout</a>
-                    </div>  
-                </div> */}
                 
             </div>
         </div>

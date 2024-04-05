@@ -35,5 +35,6 @@ span.input-group-addon {
     align-items: center;
     margin-top: 5%;
 }
-.linkStyled { textDecoration: "none";
+.linkStyled { 
+  text-decoration: "none";
    color: 'brown' }
