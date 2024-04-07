@@ -29,13 +29,13 @@
     object-position: center;
     width: 45px;
   }
-  .title-text {
+  .slide-text {
     font-family: Roboto, sans-serif;
     flex-grow: 1;
     flex-basis: auto;
     margin: auto 0;
   }
-  .profile-btn {
+  .slide-element {
     display: flex;
     margin-top: 48px;
     gap: 20px;
@@ -44,20 +44,12 @@
     white-space: nowrap;
   }
   @media (max-width: 991px) {
-    .profile-btn {
+    .slide-element {
       margin-top: 40px;
       white-space: initial;
     }
   }
-  .notification-btn {
-    display: flex;
-    margin-top: 82px;
-    gap: 20px;
-    white-space: nowrap;
-  }
-  @media (max-width: 991px) {
-    .notification-btn {
-      margin-top: 40px;
-      white-space: initial;
-    }
+
+  .slide-element:hover{
+    background-color: #8AD7E0;
   }

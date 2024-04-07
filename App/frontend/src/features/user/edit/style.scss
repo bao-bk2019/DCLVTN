@@ -1,0 +1,24 @@
+.myprofile {
+  display: flex;
+  margin-top: 40px;
+  margin-left: 40px;
+  flex-direction: column;
+  width: 90%;
+}
+@media (max-width: 991px) {
+  .myprofile {
+    max-width: 100%;
+    margin-top: 40px;
+  }
+}
+.h2-profile {
+  font-family: Roboto, sans-serif;
+  flex-grow: 1;
+  flex-basis: auto;
+  margin: auto 0;
+  color: #0048FF;
+  font-weight: bold;
+}
+.btn-edit{
+  width: 40px;
+}

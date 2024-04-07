@@ -9,6 +9,8 @@ import TextField from '@mui/material/TextField';
 // import {useForm} from 'react-hook-form'
 import Button from '@mui/material/Button';
 import {Link} from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
+// import Grid from '@mui/material/Grid';
 
 function Profile() {
   // const [firstname, setFirstName] = useState('');
@@ -41,6 +43,7 @@ function Profile() {
           // onChange={(e) => setLastName(e.target.value)}
           disabled={true}
           />
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{display:'inline-flex',width: 100, height: 100, float: 'right'}}/> 
       </div>
       <div>
       <TextField 
