@@ -16,7 +16,6 @@ function TableFeature(props) {
 
     // submit state
 
-
     // onchange event
     const handleFile = (e) => {
         let fileTypes = ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv'];

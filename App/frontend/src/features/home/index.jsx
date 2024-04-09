@@ -244,8 +244,8 @@ function MyComponent(props) {
                 </div>
             </div>
             <div className="div-75">
-                <div className="div-76">PreKnown</div>
-                <div className="div-77">PreKnown , 2023 © All Rights Reserved</div>
+                <div className="div-76">Data&Retailer</div>
+                <div className="div-77">Data&Retailer , 2024 © All Rights Reserved</div>
             </div>
         </div>
     );
