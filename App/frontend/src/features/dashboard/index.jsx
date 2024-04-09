@@ -9,8 +9,8 @@ function AppHeader({ excelData, setExcelData }) {
             <div className='mx-auto'>
                 <TableFeature excelData={excelData} setExcelData={setExcelData} />
             </div>
-            <div className='center'>
-                <Button variant="warming">
+            <div className='option-features' >
+                <Button variant="warming" >
                     <Link to="action1" >Cluster</Link>
                 </Button>{' '}
                 <Button variant="warming">
