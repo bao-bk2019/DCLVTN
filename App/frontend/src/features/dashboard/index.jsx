@@ -17,11 +17,11 @@ function AppHeader({ excelData, setExcelData }) {
     
     return (
         <div className='main-container'>
-            <h2 className='h2-text'>Overview</h2>
+            <h2 className='h2-text' id='my-overview'>Overview</h2>
             <div className='mx-auto'>
                 <TableFeature excelData={excelData} setExcelData={setExcelData} />
             </div>
-            <h2 className='h2-text'>Analysis</h2>
+            <h2 className='h2-text' id='my-analysis'>Analysis</h2>
             <ToggleButtonGroup
             value={choice}
             exclusive
@@ -55,10 +55,7 @@ function AppHeader({ excelData, setExcelData }) {
 
             </div> */}
             <AnalysisBoard type={choice}/>
-            
-            
-            <h2 className='h2-text'>Histogram</h2>
-            <Outlet />
+            {/* <Outlet /> */}
         </div>
     );
 };
