@@ -1,6 +1,6 @@
 import React, {useState, useFetch} from 'react'
 import './style.scss';
-import avatar from '../../../components/Img/avatar.jpg'
+// import avatar from '../../../components/Img/avatar.jpg'
 // import Form from 'react-bootstrap/Form';
 import Box from '@mui/material/Box';
 // import FormControl from '@mui/material/FormControl';

@@ -1,7 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import { List, CellMeasurer, CellMeasurerCache, ScrollSync } from 'react-virtualized';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 
 import './styles.scss'
 TableList.propTypes = {
@@ -15,7 +20,7 @@ TableList.propTypes = {
 function TableList(props) {
     const handleCellChange = (rowIndex, columnIndex, newValue) => {
         const updatedData = [...props.excelData];
-        updatedData[rowIndex][Object.keys(updatedData[0])[columnIndex]] = newValue;
+        updatedData[rowIndex][Object.keys(updatedData[0] || {})[columnIndex]] = newValue;
         props.setExcelData(updatedData);
     };
     const cacheRef = useRef(
@@ -57,7 +62,7 @@ function TableList(props) {
 
     const renderRow = ({ index, key, style, parent }) => {
         const rowData = props.excelData[index];
-        const columns = Object.keys(rowData);
+        const columns = Object.keys(rowData || {});
 
         return (
             <CellMeasurer
@@ -86,17 +91,46 @@ function TableList(props) {
             </CellMeasurer>
         );
     };
+    function cellRenderer({ columnIndex, key, rowIndex, style }) {
+        return (
+            <div key={key} style={style}>
+                {props.excelData[rowIndex][columnIndex]}
+            </div>
+        );
+    }
+
+    const [open, setOpen] = useState(false);
+    const ReturnProfilePage = () => {
+        setOpen(false);
+    };
+    const HandleSubmitDialog = (e) => {
+        props.handleFileSubmit(e);
+        // CountColumns(props.excelData);
+        setOpen(false);
+        // console.log(Object.keys(props.excelData).length);
+        // e.preventDefault()
+        // console.log(props.excelData.reduce((row, curentvalue) => Object.keys(row).length > curentvalue? Object.keys(row).length: curentvalue , -1 ));
+        // props.excelData.columnscount = Object.keys(props.excelData.reduce((row, curentvalue) => Object.keys(row).length > curentvalue? Object.keys(row).length: curentvalue , -1 )).length;
+
+    }
+    // const ColumnCountandLength = {
+    //     count: Object.keys(props.excelData.reduce((row, curentvalue) => Object.keys(row).length > curentvalue? Object.keys(row).length: curentvalue , -1 )).length ,
+    //     length: 100
+    // }
+    // function CountColumns(data) {
+    //     return Object.keys(data[0]).length
+    // }
     return (
         <div >
-            <ButtonGroup aria-label="Basic example" style={{ paddingLeft: 140 }}>
+            <ButtonGroup aria-label="Basic example" style={{ paddingLeft: 0 }}>
                 <Button variant="secondary">Clear Table</Button>
-                <Button variant="secondary">Import/Export</Button>
+                <Button variant="secondary" onClick={() => setOpen(true)}>Import</Button>
                 <Button variant="secondary">Transform Data</Button>
                 <Button variant="secondary">Settings</Button>
             </ButtonGroup>
             <div >
                 {/* form */}
-                <form className="form-group custom-form" onSubmit={props.handleFileSubmit}>
+                {/* <form className="form-group custom-form" onSubmit={props.handleFileSubmit}>
                     <input type="file" className="form-control" required onChange={props.handleFile} />
                     <ButtonGroup aria-label="Basic example" >
                         <Button type="submit" variant="secondary" >UPLOAD</Button>
@@ -105,75 +139,92 @@ function TableList(props) {
                     {props.typeError && (
                         <div className="alert alert-danger" role="alert">{props.typeError}</div>
                     )}
-                </form>
+                </form> */}
 
                 {/* view data */}
                 <div >
-                    {props.excelData ? (
-                        // <div className="table-responsive" style={{ maxHeight: 300 }}>
-                        //     <table className="table">
+                    <div className='table-content'>
+                        {props.excelData ? (
+                            // <div className="table-responsive" style={{ maxHeight: 300 }}>
+                            //     <table className="table">
 
-                        //         <thead>
-                        //             <tr>
-                        //                 {Object.keys(props.excelData[0]).map((key) => (
-                        //                     <th key={key}>{key}</th>
-                        //                 ))}
-                        //             </tr>
-                        //         </thead>
+                            //         <thead>
+                            //             <tr>
+                            //                 {Object.keys(props.excelData[0]).map((key) => (
+                            //                     <th key={key}>{key}</th>
+                            //                 ))}
+                            //             </tr>
+                            //         </thead>
 
-                        //         <tbody>
-                        //             {props.excelData.map((individualExcelData, rowIndex) => (
-                        //                 <tr key={rowIndex}>
-                        //                     {Object.keys(props.excelData[0]).map((key, columnIndex) => (
-                        //                         (individualExcelData[key]) ? (
-                        //                             <td key={key}>
-                        //                                 <input
-                        //                                     type="text"
-                        //                                     value={individualExcelData[key]}
-                        //                                     onChange={(e) => handleCellChange(rowIndex, columnIndex, e.target.value)}
-                        //                                 />
-                        //                             </td>
-                        //                         ) : (
-                        //                             <td key={key}>
-                        //                                 <input
-                        //                                     type="text"
-                        //                                     value=""
-                        //                                     placeholder='No value'
-                        //                                     onChange={(e) => handleCellChange(rowIndex, columnIndex, e.target.value)}
-                        //                                 />
-                        //                             </td>
-                        //                         )
-                        //                     ))}
-                        //                 </tr>
-                        //             ))}
-                        //         </tbody>
+                            //         <tbody>
+                            //             {props.excelData.map((individualExcelData, rowIndex) => (
+                            //                 <tr key={rowIndex}>
+                            //                     {Object.keys(props.excelData[0]).map((key, columnIndex) => (
+                            //                         (individualExcelData[key]) ? (
+                            //                             <td key={key}>
+                            //                                 <input
+                            //                                     type="text"
+                            //                                     value={individualExcelData[key]}
+                            //                                     onChange={(e) => handleCellChange(rowIndex, columnIndex, e.target.value)}
+                            //                                 />
+                            //                             </td>
+                            //                         ) : (
+                            //                             <td key={key}>
+                            //                                 <input
+                            //                                     type="text"
+                            //                                     value=""
+                            //                                     placeholder='No value'
+                            //                                     onChange={(e) => handleCellChange(rowIndex, columnIndex, e.target.value)}
+                            //                                 />
+                            //                             </td>
+                            //                         )
+                            //                     ))}
+                            //                 </tr>
+                            //             ))}
+                            //         </tbody>
 
-                        //     </table>
-                        // </div>
-                        <ScrollSync>
-                            {({ onScroll, scrollTop, scrollLeft }) => (
-                                <div style={{ paddingLeft: '60px', paddingRight: '60px' }}>
-                                    <div style={{ overflowX: 'auto', maxWidth: '100%' }} onScroll={onScroll}>
-                                        {renderHeaderRow()}
-                                        <List
-                                            width={1800}
-                                            height={300}
-                                            rowCount={props.excelData.length}
-                                            rowHeight={cacheRef.current.rowHeight}
-                                            rowRenderer={renderRow}
-                                            scrollTop={scrollTop}
-                                            scrollLeft={scrollLeft}
-                                        />
+                            //     </table>
+                            // </div>
+                            <ScrollSync>
+                                {({ onScroll, scrollTop, scrollLeft }) => (
+                                    <div style={{ paddingLeft: '60px', paddingRight: '60px' }}>
+                                        <div style={{ overflowX: 'auto', maxWidth: '100%' }} onScroll={onScroll}>
+                                            {renderHeaderRow()}
+                                            <List
+                                                width={1800}
+                                                height={300}
+                                                rowCount={props.excelData.length}
+                                                rowHeight={cacheRef.current.rowHeight}
+                                                rowRenderer={renderRow}
+                                                scrollTop={scrollTop}
+                                                scrollLeft={scrollLeft}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                            )}
-                        </ScrollSync>
-                    ) : (
-                        <div style={{ width: '100%', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No File is uploaded yet!</div>
-                    )}
+                                )}
+                            </ScrollSync>
+                        ) : (
+                            <div style={{ width: '100%', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No File is uploaded yet!</div>
+                        )}
+                    </div>
                 </div>
 
             </div>
+            <Dialog
+                open={open}
+                onClose={ReturnProfilePage}
+                PaperProps={{
+                    component: 'form',
+                    onSubmit: HandleSubmitDialog
+                }}>
+                <DialogTitle>Import File</DialogTitle>
+                <DialogContent>
+                    <input type="file" className="form-control" required onChange={props.handleFile} />
+                </DialogContent>
+                <DialogActions>
+                    <Button type="submit" variant="secondary" >UPLOAD</Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 }

@@ -16,7 +16,7 @@ import SignupForm from './features/signup/index.jsx';
 import Chart from './features/chart/index.jsx'
 import Action1 from './features/action1/index.jsx';
 import Action2 from './features/action2/index.jsx'
-import { useNavigate, Route, Routes } from 'react-router-dom';
+import { useNavigate, Route, Routes, useLocation } from 'react-router-dom';
 import Header from './components/Header/index.jsx';
 import User from './features/user/index.jsx'
 import Profile from './features/user/profile/index.jsx'
@@ -31,6 +31,7 @@ axios.defaults.withCredentials = true;
 const client = axios.create({
   baseURL: "http://127.0.0.1:8000"
 });
+
 
 
 
@@ -52,6 +53,18 @@ function App() {
         setCurrentUser(false);
       });
   }, []);
+  const [pageLocation, setPageLocation] = useState('home')
+  const location = useLocation();
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    // execute on location change
+    setCount(count + 1);
+    console.log('Location changed!', location.pathname);
+    if (location == '/home')
+    setPageLocation('home');
+    else setPageLocation('main');
+  }, [location]);
 
   function update_form_btn() {
     if (registrationToggle) {
@@ -114,13 +127,13 @@ function App() {
   if (currentUser) {
     return (
       <div>
-        <Header nameActive={currentUser} logoutFunction={submitLogout} />
+        <Header nameActive={currentUser} currentPage={pageLocation} logoutFunction={submitLogout} />
         <Routes>
           <Route path='/home' element={<Home />} />
           <Route path='/calculate' element={<AppHeader setExcelData={setExcelData} excelData={excelData} />}>
-            <Route path='chart' element={<Chart />} />
+            {/* <Route path='chart' element={<Chart />} />
             <Route path='action1' element={<Action1 data={excelData} />} />
-            <Route path='action2' element={<Action2 data={excelData} />} />
+            <Route path='action2' element={<Action2 data={excelData} />} /> */}
           </Route>
         </Routes>
       </div>
