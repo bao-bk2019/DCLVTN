@@ -7,7 +7,7 @@ import AvatarDropdown from './Dropdown/index.jsx'
 const Header = ({ nameActive, logoutFunction }) => {
     if (nameActive === false) {
         return (
-            <div className="div-78">
+            <div className="header-main">
                 <div className="div-2">
                     <div className="div-3">
                         <Link Link to="/home" style={{ textDecoration: "none" }}>
@@ -56,7 +56,7 @@ const Header = ({ nameActive, logoutFunction }) => {
         );
     }
     return (
-        <div className="div-78">
+        <div className="header-main">
             <div className="div-2">
                 <div className="div-3">
                     <Link Link to="/home" style={{ textDecoration: "none" }}>
