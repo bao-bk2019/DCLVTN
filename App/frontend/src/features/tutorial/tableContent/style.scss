@@ -29,14 +29,12 @@
     object-position: center;
     width: 45px;
   }
-
   .slide-text {
     font-family: Roboto, sans-serif;
     flex-grow: 1;
     flex-basis: auto;
     margin: auto 0;
   }
-
   .slide-element {
     display: flex;
     margin-top: 48px;
@@ -44,7 +42,6 @@
     color: #002b9a;
     font-weight: 700;
     white-space: nowrap;
-    filter: brightness(1.53);
   }
   @media (max-width: 991px) {
     .slide-element {
@@ -55,8 +52,4 @@
 
   .slide-element:hover{
     background-color: #8AD7E0;
-  }
-
-  .active-item {
-    filter: brightness(0.5);
   }

@@ -1,65 +1,73 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import LanguageIcon from '@mui/icons-material/Language';
+import LockIcon from '@mui/icons-material/Lock';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import './style.scss';
+
+
 function SideBar() {
   
-  const [open, setOpen] = useState(false);
-  const [logout, setLogout] = useState(false);
+  const links = [
+      {
+        id: 1,
+        name: "Profile",
+        to: "./profile",
+        className: "slide-element",
+        icon: <CreateOutlinedIcon sx={{width: '45px', height: '45px'}}/>
+      },
+      {
+        id: 2,
+        name: "Notification",
+        to: "./notification",
+        className: "slide-element",
+        icon: <NotificationsNoneIcon sx={{width: '45px', height: '45px'}} />
+      },
+      {
+        id: 3,
+        name: "Security",
+        to: "./security",
+        className: "slide-element",
+        icon: <LockIcon sx={{width: '45px', height: '45px'}} />
+      },
+      {
+        id: 4,
+        name: "Language",
+        to: "./language",
+        className: "slide-element",
+        icon: <LanguageIcon sx={{width: '45px', height: '45px'}} />
+      },
+      {
+        id: 5,
+        name: "Help",
+        to: "./help",
+        className: "slide-element",
+        icon: <HelpOutlineIcon sx={{width: '45px', height: '45px'}} /> 
+      }
+    ];
+  // let [state.links , setState] = useState(1) ; 
 
-  const handleClickOpen = () => {
-    setLogout(true);
-  };
-  const ReturnMainPage = () => {
-    setLogout(false);
-    window.location.href = '/';
-  };
-  const ReturnCurrentPage = () => {
-    setLogout(false);
+  const [curId, setCurId] = useState(1);
+  
+  const handleClick = (id) => {
+    setCurId(id);
   };
 
   return (
     <div className="sidebar">
         <h2 className="headertext">Settings and Privacy</h2>
-        <Link className="slide-element">
-            <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/4c2d374ae33f61a797932855e440d65e27b687c921b83788ab7a3265872a599b?"
-            className="icon-img"
-          />
-          <div className="slide-text">Profile</div>
-        </Link>
-        <Link className="slide-element">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/b5c470d158a0be772f52a3484b0cfe5e8885325cb798430a1d8f2025ea264fb5?"
-            className="icon-img"
-          />
-          <div className="slide-text">Notification</div>
-        </Link>
-        <Link className="slide-element">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/2bfc5ca9a044709da31b0e7798a1425064d43f2dc86b7dc1828d4fb93b5fc40e?"
-            className="icon-img"
-          />
-          <div className="slide-text">Security</div>
-        </Link>
-        <Link className="slide-element">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/b7e4fafb83dafffbb1c0d80ec783a05f17c285c307783f214601d84b88b9cf0b?"
-            className="icon-img"
-          />
-          <div className="slide-text">Language</div>
-        </Link>
-        <Link className="slide-element">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/939d1555623a5f977b8691e2eea878e5bfd6be429a989b11661896b6997bc1e0?"
-            className="icon-img"
-          />
-          <div className="slide-text">Help</div>
-        </Link>
+        {links.map(link => {
+          return(
+            <div key={link.id}>
+            <Link to={link.to} onClick={() => handleClick(link.id)} className={link.className + (link.id === curId ? " active-item" : "")} >
+              {link.icon}
+              <div className="slide-text">{link.name}</div>
+            </Link>
+            </div>
+          )
+        })}
       </div>
   )
 }
