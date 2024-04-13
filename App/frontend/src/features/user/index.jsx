@@ -6,6 +6,7 @@ import Languague from './language/index.jsx'
 import Help from './help/index.jsx'
 import Notification from './notification/index.jsx'
 import Edit from './edit/index.jsx'
+import Security from './security/index.jsx';
 import './style.scss';
 function User() {
   return (
@@ -16,6 +17,7 @@ function User() {
               <Route path="profile" element={<Profile />} />
               <Route path="edit" element={<Edit />} />
               <Route path="notification" element={<Notification />} />
+              <Route path="security" element={<Security />} />
               <Route path="language" element={<Languague />} />
               <Route path="help" element={<Help />} />
             </Routes>

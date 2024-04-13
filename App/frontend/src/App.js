@@ -15,6 +15,8 @@ import Languague from './features/user/language/index.jsx'
 import Help from './features/user/help/index.jsx'
 import Notification from './features/user/notification/index.jsx'
 import Edit from './features/user/edit/index.jsx'
+import Tutorial from './features/tutorial/index.jsx';
+import Security from './features/user/security/index.jsx';
 import { AuthProvider } from "./AuthContext.js";
 
 function Logout() {
@@ -58,6 +60,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="edit" element={<Edit />} />
           <Route path="notification" element={<Notification />} />
+          <Route path="security" element={<Security />} />
           <Route path="language" element={<Languague />} />
           <Route path="help" element={<Help />} />
         </Route>
