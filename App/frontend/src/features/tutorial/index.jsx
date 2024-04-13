@@ -1,5 +1,6 @@
 import React from 'react'
 import './styles.scss'
+<<<<<<< HEAD
 import {Route, Routes, Outlet} from 'react-router-dom';
 import TableContent from './tableContent'
 import GetStarted from './getstarted/first';
@@ -12,6 +13,19 @@ function Tutorial() {
       <Box sx={{pl: 4, pt: 4, flex: '1 1 0%'}}>
         <Outlet/>
       </Box>
+=======
+import {Route, Routes} from 'react-router-dom';
+import getStarted from './getstarted/first';
+import TableContent from './tableContent'
+
+function Tutorial() {
+  return (
+    <div>
+      <TableContent/>
+      <Routes>
+        <Route path='/get-started' element={<getStarted />} />
+      </Routes>
+>>>>>>> 83fec3a (update account management with tutorial)
     </div>
   )
 }
