@@ -1,8 +1,11 @@
 import React from 'react'
+import './style.scss';
 
 function Security() {
   return (
-    <div>Security</div>
+    <div className='myprofile'>
+    <h2 className="h2-profile">Notification</h2>
+    </div>
   )
 }
 

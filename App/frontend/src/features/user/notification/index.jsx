@@ -5,7 +5,7 @@ import './style.scss';
 function Notification() {
   return (
     <div className='mynotify'>
-    <h2 className="h2-notify">Notification</h2>
+      <h2 className="h2-notify">Notification</h2>
     </div>
   )
 }

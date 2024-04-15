@@ -5,7 +5,7 @@ import logo from '../Img/logo.png'
 import AvatarDropdown from './Dropdown/index.jsx'
 import { useAuth } from '../../AuthContext.js';
 
-const Header = ({ currentPage}) => {
+const Header = ({ currentPage }) => {
     const { isAuthorized } = useAuth();
     console.log(isAuthorized);
     if (!isAuthorized) {

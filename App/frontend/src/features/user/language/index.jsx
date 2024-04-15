@@ -22,23 +22,23 @@ function Language() {
     <div className='mylanguage'>
       <h2 className="h2-language">Language</h2>
       <List>
-      <ListItem sx={{fontWeight: 'bold'}}>
-        <ListItemText sx={{color:'#0048FF'}}
-          primary="Which languages do you want to use ? "
-        />
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <Select
-          value={age}
-          onChange={handleChange}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
-        >
-          <MenuItem value=''>English</MenuItem>
-          <MenuItem value={'vi'}>Vietnamese</MenuItem>
-        </Select>
-      </FormControl>
+        <ListItem sx={{ fontWeight: 'bold' }}>
+          <ListItemText sx={{ color: '#0048FF' }}
+            primary="Which languages do you want to use ? "
+          />
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <Select
+              value={age}
+              onChange={handleChange}
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+            >
+              <MenuItem value=''>English</MenuItem>
+              <MenuItem value={'vi'}>Vietnamese</MenuItem>
+            </Select>
+          </FormControl>
 
-      </ListItem>
+        </ListItem>
       </List>
     </div>
   )

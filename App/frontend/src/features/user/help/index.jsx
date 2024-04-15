@@ -4,7 +4,7 @@ import './style.scss';
 function Help() {
   return (
     <div className='myhelp'>
-    <h2 className="h2-help">Notification</h2>
+      <h2 className="h2-help">Notification</h2>
     </div>
   )
 }

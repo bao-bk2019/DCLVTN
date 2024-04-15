@@ -21,6 +21,8 @@ import Tutorial from './features/tutorial/index.jsx';
 import GetStarted from './features/tutorial/getstarted/first/index.jsx';
 =======
 import Security from './features/user/security/index.jsx';
+import getStarted from './features/tutorial/getstarted/first/index.jsx';
+
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
@@ -135,7 +137,7 @@ function App() {
         <Header nameActive={currentUser} currentPage={pageLocation} logoutFunction={submitLogout} />
         <Routes>
           <Route path='/home' element={<Home />} />
-          <Route path='/tutorial' element={<Tutorial/>}/>
+          {/* <Route path='/tutorial' element={<Tutorial/>}/> */}
           <Route path='/calculate' element={<AppHeader setExcelData={setExcelData} excelData={excelData} />}>
             {/* <Route path='chart' element={<Chart />} />
             <Route path='action1' element={<Action1 data={excelData} />} />
@@ -163,9 +165,10 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/signin' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
         <Route path='/signup' element={<SignupForm />} />
-        <Route path='/tutorial' element={<Tutorial/>}/>
+        <Route path='/tutorial' element={<Tutorial/>}>
+          <Route path='get-started' element={<getStarted />}/>
+        </Route>
         <Route path='/*' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
-        
         <Route path="/user" element={<User />} >
 >>>>>>> 83fec3a (update account management with tutorial)
           <Route index element={<Profile />} />
