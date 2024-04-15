@@ -1,20 +1,16 @@
 import React from 'react'
 import './styles.scss';
 import Dropdown from 'react-bootstrap/Dropdown';
-import avatar from '../../Img/avatar.jpg'
-
+// import avatar from '../../Img/avatar.jpg'
+import Avatar from '@mui/material/Avatar';
 const AvatarDropdown = ({logoutFunction}) => {
     const avatarimg = React.forwardRef(({ children, onClick }, ref) => (
-        <img
-        loading="lazy"
-        srcSet={avatar}
-        className="img-avatar"
+        <Avatar 
+        sx={{width: '54px', height: '54px'}}
         onClick={(e) => {
-            e.preventDefault();
-            onClick(e);
-          }
-        }
-        /> 
+          e.preventDefault();
+          onClick(e);
+        }}/>
       ));
   return (
     <Dropdown>

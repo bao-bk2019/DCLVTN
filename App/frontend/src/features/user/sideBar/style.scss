@@ -41,10 +41,11 @@
     display: flex;
     margin-top: 48px;
     gap: 20px;
-    color: #002b9a;
+    color: #5975BD;
     font-weight: 700;
     white-space: nowrap;
     filter: brightness(1.53);
+    text-decoration: none;
   }
   @media (max-width: 991px) {
     .slide-element {
@@ -55,8 +56,11 @@
 
   .slide-element:hover{
     background-color: #8AD7E0;
+    text-decoration: underline;
+  
   }
 
   .active-item {
-    filter: brightness(0.5);
+    color: #002b9a;
+    text-decoration: underline;
   }

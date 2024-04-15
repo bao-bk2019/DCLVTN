@@ -1,4 +1,4 @@
-import React, {useState, useFetch} from 'react'
+import React, {useState} from 'react'
 import './style.scss';
 // import avatar from '../../../components/Img/avatar.jpg'
 // import Form from 'react-bootstrap/Form';
@@ -8,15 +8,30 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 // import {useForm} from 'react-hook-form'
 import Button from '@mui/material/Button';
-import {Link} from 'react-router-dom';
+import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import EditIcon from '@mui/icons-material/Edit';
+import Badge from '@mui/material/Badge';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
 
 function Edit() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
   const [remove, setRemove] = useState(false);
   const ReturnProfilePage = () => {
     setRemove(false);
@@ -46,7 +61,24 @@ function Edit() {
           defaultValue="Nguyen Van"
           // onChange={(e) => setLastName(e.target.value)}
           />
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{display:'inline-flex',width: 100, height: 100, float: 'right'}}/> 
+          <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            badgeContent={
+              // <SmallAvatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              <EditIcon sx={{backgroundColor: "white", borderRadius: '50%', cursor: 'pointer'}} className='edit-img'
+              onClick={() => console.log("Click!")} 
+              aria-owns={open ? 'mouse-over-popover' : undefined}
+              aria-haspopup="true"
+              onMouseEnter={handlePopoverOpen}
+              onMouseLeave={handlePopoverClose}
+              />
+            }
+            sx={{display:'inline-flex', float: 'right'}}
+            >
+            <Avatar sx={{width: 100, height: 100}}/> 
+          </Badge>
+          
       </div>
       <div>
       <TextField 
@@ -97,12 +129,10 @@ function Edit() {
           />
       </div>
     </Box>
-      <Button variant="outlined" onClick={()=>setRemove(true)}>Cancel</Button>  
-
-      <Link to="#"className='btn-edit'>
-        <Button variant="contained" type='submit'>Save</Button>  
-      </Link>
-
+      <Stack spacing={2} direction="row">
+        <Button variant="outlined" onClick={()=>setRemove(true)}>Cancel</Button>  
+        <Button variant="contained" type='submit' onClick={()=>{window.location.href='./profile';}}>Save</Button> 
+      </Stack>
       <Dialog
         open={remove}
         onClose={ReturnProfilePage}
@@ -124,6 +154,26 @@ function Edit() {
           </Button>
         </DialogActions>
       </Dialog>
+      <Popover
+        id="mouse-over-popover"
+        sx={{
+          pointerEvents: 'none',
+        }}
+        open={open}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        onClose={handlePopoverClose}
+        disableRestoreFocus
+      >
+        <Typography sx={{ p: 1 }}>Change your photo.</Typography>
+      </Popover>
     </div>
   )
 }

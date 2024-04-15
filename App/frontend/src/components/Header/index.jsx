@@ -135,7 +135,7 @@ const Header = ({ nameActive, currentPage, logoutFunction }) => {
                         });
                     }}>Analysis</button>
                     <button className="btn" style={{ color: "rgba(0, 72, 255, 1)", fontSize: "20px" }} onClick={() => {
-                        window.location = './tutorial'
+                        window.location = './tutorial/get-started'
                     }}>Tutorial</button>
 
                 </div>

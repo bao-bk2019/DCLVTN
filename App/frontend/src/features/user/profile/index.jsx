@@ -1,6 +1,5 @@
-import React, {useState, useFetch} from 'react'
+import React from 'react'
 import './style.scss';
-import avatar from '../../../components/Img/avatar.jpg'
 // import Form from 'react-bootstrap/Form';
 import Box from '@mui/material/Box';
 // import FormControl from '@mui/material/FormControl';
@@ -43,7 +42,7 @@ function Profile() {
           // onChange={(e) => setLastName(e.target.value)}
           disabled={true}
           />
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{display:'inline-flex',width: 100, height: 100, float: 'right'}}/> 
+          <Avatar sx={{display:'inline-flex', width: 100, height: 100, float: 'right'}}/> 
       </div>
       <div>
       <TextField 
