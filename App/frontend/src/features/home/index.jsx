@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Link } from 'react-router-dom';
 import './styles.scss';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
 function MyComponent(props) {
     return (
         <div className="div">
@@ -9,7 +11,7 @@ function MyComponent(props) {
                     <div className="column">
                         <div className="div-13">
                             <div className="div-14">
-                                Providing Industry Leading Solutions for
+                                Providing Data Analysis Solutions for Retailers
                                 <br />
                             </div>
                             <div className="div-15">
@@ -20,12 +22,7 @@ function MyComponent(props) {
                             </div>
                             <div className="div-16">
                                 <div className="div-17">Get Started</div>
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/f359dddde05e53387b40b796025d4a8beb2a608cf31288555bb98099b769343b?apiKey=afa45b72ad7c46798aa3d2761c2357ac&"
-                                    alt="Company Logo"
-                                    className="img-2"
-                                />
+                                <ArrowForwardIcon/>
                             </div>
                         </div>
                     </div>
@@ -42,11 +39,11 @@ function MyComponent(props) {
             <div className="div-18">
                 <div className="div-19">
                     <div className="column-3">
-                        <div className="div-20" id="my-section">
-                            About
+                        <div className="about-us" id="my-section">
+                            <p>About
                             <br />
                             Us
-                            <br />
+                            </p>
                         </div>
                     </div>
                     <div className="column-4">
@@ -73,12 +70,7 @@ function MyComponent(props) {
                                 </div>
                                 <div className="div-29">
                                     <div className="div-30">Learn More</div>
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/f359dddde05e53387b40b796025d4a8beb2a608cf31288555bb98099b769343b?apiKey=afa45b72ad7c46798aa3d2761c2357ac&"
-                                        alt="Company Logo"
-                                        className="img-4"
-                                    />
+                                    <ArrowForwardIcon/>
                                 </div>
                             </div>
                         </div>
@@ -114,12 +106,7 @@ function MyComponent(props) {
                                 </div>
                                 <div className="div-37">
                                     <div className="div-38">Learn More</div>
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/f359dddde05e53387b40b796025d4a8beb2a608cf31288555bb98099b769343b?apiKey=afa45b72ad7c46798aa3d2761c2357ac&"
-                                        alt="Company Logo"
-                                        className="img-7"
-                                    />
+                                    <ArrowForwardIcon/>
                                 </div>
                             </div>
                         </div>
@@ -139,12 +126,7 @@ function MyComponent(props) {
                                 </div>
                                 <div className="div-45">
                                     <div className="div-46">Learn More</div>
-                                    <img
-                                        loading="lazy"
-                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/f359dddde05e53387b40b796025d4a8beb2a608cf31288555bb98099b769343b?apiKey=afa45b72ad7c46798aa3d2761c2357ac&"
-                                        alt="Company Logo"
-                                        className="img-8"
-                                    />
+                                    <ArrowForwardIcon/>
                                 </div>
                             </div>
                         </div>

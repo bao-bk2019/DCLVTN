@@ -26,7 +26,7 @@ import Notification from './features/user/notification/index.jsx'
 import Edit from './features/user/edit/index.jsx'
 import Tutorial from './features/tutorial/index.jsx';
 import Security from './features/user/security/index.jsx';
-import getStarted from './features/tutorial/getstarted/first/index.jsx';
+import GetStarted from './features/tutorial/getstarted/first/index.jsx';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -135,10 +135,18 @@ function App() {
         <Routes>
           <Route path='/home' element={<Home />} />
           {/* <Route path='/tutorial' element={<Tutorial/>}/> */}
-          <Route path='/calculate' element={<AppHeader setExcelData={setExcelData} excelData={excelData} />}>
-            {/* <Route path='chart' element={<Chart />} />
-            <Route path='action1' element={<Action1 data={excelData} />} />
-            <Route path='action2' element={<Action2 data={excelData} />} /> */}
+          <Route path='/calculate' element={<AppHeader setExcelData={setExcelData} excelData={excelData} />}/>
+          <Route path="/user" element={<User />} >
+              <Route index element={<Profile />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="edit" element={<Edit />} />
+              <Route path="notification" element={<Notification />} />
+              <Route path="security" element={<Security />} />
+              <Route path="language" element={<Languague />} />
+              <Route path="help" element={<Help />} />
+          </Route>
+          <Route path='/tutorial' element={<Tutorial/>}>
+            <Route path='get-started' element={<GetStarted />}/>
           </Route>
         </Routes>
       </div>
@@ -152,20 +160,19 @@ function App() {
         <Route path='/signin' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
         <Route path='/signup' element={<SignupForm />} />
         <Route path='/tutorial' element={<Tutorial/>}>
-          <Route path='get-started' element={<getStarted />}/>
+          <Route path='getstarted' element={<GetStarted />}/>
         </Route>
-        <Route path='/*' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
         <Route path="/user" element={<User />} >
-          <Route index element={<Profile />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="edit" element={<Edit />} />
-          <Route path="notification" element={<Notification />} />
-          <Route path="security" element={<Security />} />
-          <Route path="language" element={<Languague />} />
-          <Route path="help" element={<Help />} />
-        </Route>
+              <Route index element={<Profile />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="edit" element={<Edit />} />
+              <Route path="notification" element={<Notification />} />
+              <Route path="security" element={<Security />} />
+              <Route path="language" element={<Languague />} />
+              <Route path="help" element={<Help />} />
+          </Route>
+        <Route path='/*' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
       </Routes>
-      {/* <Outlet /> */}
     </>
   );
 }

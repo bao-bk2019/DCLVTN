@@ -1,16 +1,16 @@
 import React from 'react'
 import './styles.scss'
-import {Route, Routes} from 'react-router-dom';
-import getStarted from './getstarted/first';
+import {Route, Routes, Outlet} from 'react-router-dom';
 import TableContent from './tableContent'
+import GetStarted from './getstarted/first';
 
 function Tutorial() {
   return (
-    <div>
+    <div className='main-tutorial'>
       <TableContent/>
-      <Routes>
-        <Route path='/get-started' element={<getStarted />} />
-      </Routes>
+      <div className='content-tutorial'>
+        <Outlet/>
+      </div>
     </div>
   )
 }
