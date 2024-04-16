@@ -21,7 +21,7 @@ import Tutorial from './features/tutorial/index.jsx';
 import GetStarted from './features/tutorial/getstarted/first/index.jsx';
 =======
 import Security from './features/user/security/index.jsx';
-import getStarted from './features/tutorial/getstarted/first/index.jsx';
+import GetStarted from './features/tutorial/getstarted/first/index.jsx';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -138,10 +138,18 @@ function App() {
         <Routes>
           <Route path='/home' element={<Home />} />
           {/* <Route path='/tutorial' element={<Tutorial/>}/> */}
-          <Route path='/calculate' element={<AppHeader setExcelData={setExcelData} excelData={excelData} />}>
-            {/* <Route path='chart' element={<Chart />} />
-            <Route path='action1' element={<Action1 data={excelData} />} />
-            <Route path='action2' element={<Action2 data={excelData} />} /> */}
+          <Route path='/calculate' element={<AppHeader setExcelData={setExcelData} excelData={excelData} />}/>
+          <Route path="/user" element={<User />} >
+              <Route index element={<Profile />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="edit" element={<Edit />} />
+              <Route path="notification" element={<Notification />} />
+              <Route path="security" element={<Security />} />
+              <Route path="language" element={<Languague />} />
+              <Route path="help" element={<Help />} />
+          </Route>
+          <Route path='/tutorial' element={<Tutorial/>}>
+            <Route path='get-started' element={<GetStarted />}/>
           </Route>
         </Routes>
       </div>
@@ -158,31 +166,30 @@ function App() {
         <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="/home" element={<Home />} />
 
-        {/* Protected routes */}
+  {/* Protected routes */ }
         <Route path="/calculate" element={<ProtectedRoute><AppHeader setExcelData={setExcelData} excelData={excelData} /></ProtectedRoute>} />
         <Route path="/user/*" element={<ProtectedRoute><User /></ProtectedRoute>}>
 =======
         <Route path='/home' element={<Home />} />
-        <Route path='/signin' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
-        <Route path='/signup' element={<SignupForm />} />
-        <Route path='/tutorial' element={<Tutorial/>}>
-          <Route path='get-started' element={<getStarted />}/>
-        </Route>
-        <Route path='/*' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
-        <Route path="/user" element={<User />} >
+      <Route path='/signin' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
+      <Route path='/signup' element={<SignupForm />} />
+      <Route path='/tutorial' element={<Tutorial />}>
+        <Route path='getstarted' element={<GetStarted />} />
+      </Route>
+      <Route path="/user" element={<User />} >
 >>>>>>> 83fec3a (update account management with tutorial)
-          <Route index element={<Profile />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="edit" element={<Edit />} />
-          <Route path="notification" element={<Notification />} />
-          <Route path="security" element={<Security />} />
-          <Route path="language" element={<Languague />} />
-          <Route path="help" element={<Help />} />
-        </Route>
-        {/* Not found route */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </AuthProvider>
+        <Route index element={<Profile />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="edit" element={<Edit />} />
+        <Route path="notification" element={<Notification />} />
+        <Route path="security" element={<Security />} />
+        <Route path="language" element={<Languague />} />
+        <Route path="help" element={<Help />} />
+      </Route>
+      {/* Not found route */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+    </AuthProvider >
   );
 }
 

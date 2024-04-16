@@ -7,6 +7,7 @@ import Help from './help/index.jsx'
 import Notification from './notification/index.jsx'
 import Edit from './edit/index.jsx'
 import Security from './security/index.jsx';
+
 import './style.scss';
 function User() {
   return (

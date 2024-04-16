@@ -1,9 +1,14 @@
 import React from 'react'
 
-function getStarted() {
+function GetStarted() {
   return (
-    <div>getStarted</div>
+    <div>
+      <h1>First steps with Data&Retailers</h1>
+      Data&Retailers is a web-based statistics software that runs right here in your browser window.
+      Since it is a web application, it does not need to be downloaded or installed. 
+      You can start analyzing your data online in the statistics calculator on Data&Retailers at any time.
+    </div>
   )
 }
 
-export default getStarted
+export default GetStarted
