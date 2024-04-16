@@ -17,7 +17,7 @@ import Notification from './features/user/notification/index.jsx'
 import Edit from './features/user/edit/index.jsx'
 import Tutorial from './features/tutorial/index.jsx';
 import Security from './features/user/security/index.jsx';
-import getStarted from './features/tutorial/getstarted/first/index.jsx';
+import GetStarted from './features/tutorial/getstarted/first/index.jsx';
 
 import { AuthProvider } from "./AuthContext.js";
 

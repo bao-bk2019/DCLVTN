@@ -288,22 +288,22 @@
       width: 100%;
     }
   }
-  .div-20 {
+  .about-us {
+    margin: 0;
     border-radius: 500px 0px 0px 500px;
-    border-color: rgba(196, 212, 255, 1);
-    border-style: solid;
-    border-right-width: 3px;
+    border-right: 3px solid rgba(196, 212, 255, 1);
     background-color: var(--White, #fff);
-    justify-content: center;
-    align-items: start;
+    text-align: center;
+    // justify-content: center;
+    // align-items: center;
+    padding-top: 35%;
     color: #0048ff;
     aspect-ratio: 1;
     width: 100%;
-    padding: 60px 60px 0 73px;
     font: 700 40px Work Sans, sans-serif;
   }
   @media (max-width: 991px) {
-    .div-20 {
+    .about-us {
       margin-top: 40px;
       padding: 40px 20px 0 30px;
     }
