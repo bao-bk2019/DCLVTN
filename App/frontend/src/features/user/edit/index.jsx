@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './style.scss';
 // import avatar from '../../../components/Img/avatar.jpg'
 // import Form from 'react-bootstrap/Form';
@@ -35,30 +35,30 @@ function Edit() {
   const [remove, setRemove] = useState(false);
   const ReturnProfilePage = () => {
     setRemove(false);
-  }; 
+  };
   const SaveEdit = () => {
     setRemove(false);
-    window.location.href='./profile';
+    window.location.href = './profile';
   }
   return (
     <div className='myedit'>
-    <h2 className="h2-edit">Edit my profile</h2>
-    <Box component="form" sx={{ display: 'grip'}}>
-      <div>
-          <TextField 
-          sx={{m: 3, ml:2}}
-          label="First Name"
-          id="first-name"
-          placeholder="Enter your first name"
-          // onChange={(e) => setFirstName(e.target.value)}
-          defaultValue="A"
+      <h2 className="h2-edit">My profile</h2>
+      <Box component="form" sx={{ display: 'grip' }}>
+        <div>
+          <TextField
+            sx={{ m: 3, ml: 2 }}
+            label="First Name"
+            id="first-name"
+            placeholder="Enter your first name"
+            // onChange={(e) => setFirstName(e.target.value)}
+            defaultValue="A"
           />
-          <TextField 
-          sx={{m: 3, mr: 2}}
-          label="Last Name"
-          id="last-name"
-          placeholder="Enter your last name"
-          defaultValue="Nguyen Van"
+          <TextField
+            sx={{ m: 3, mr: 2 }}
+            label="Last Name"
+            id="last-name"
+            placeholder="Enter your last name"
+            defaultValue="Nguyen Van"
           // onChange={(e) => setLastName(e.target.value)}
           />
           <Badge
@@ -66,72 +66,72 @@ function Edit() {
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             badgeContent={
               // <SmallAvatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              <EditIcon sx={{backgroundColor: "white", borderRadius: '50%', cursor: 'pointer'}} className='edit-img'
-              onClick={() => console.log("Click!")} 
-              aria-owns={open ? 'mouse-over-popover' : undefined}
-              aria-haspopup="true"
-              onMouseEnter={handlePopoverOpen}
-              onMouseLeave={handlePopoverClose}
+              <EditIcon sx={{ backgroundColor: "white", borderRadius: '50%', cursor: 'pointer' }} className='edit-img'
+                onClick={() => console.log("Click!")}
+                aria-owns={open ? 'mouse-over-popover' : undefined}
+                aria-haspopup="true"
+                onMouseEnter={handlePopoverOpen}
+                onMouseLeave={handlePopoverClose}
               />
             }
-            sx={{display:'inline-flex', float: 'right'}}
-            >
-            <Avatar sx={{width: 100, height: 100}}/> 
+            sx={{ display: 'inline-flex', float: 'right' }}
+          >
+            <Avatar sx={{ width: 100, height: 100 }} />
           </Badge>
-          
-      </div>
-      <div>
-      <TextField 
-          sx={{m: 3, ml:2, mr: 2}}
-          label="Email"
-          id="email"
-          fullWidth
-          placeholder="Enter your email"
-          defaultValue="NguyenVanA@gmail.com"
+
+        </div>
+        <div>
+          <TextField
+            sx={{ m: 3, ml: 2, mr: 2 }}
+            label="Email"
+            id="email"
+            fullWidth
+            placeholder="Enter your email"
+            defaultValue="NguyenVanA@gmail.com"
           // onChange={(e) => setEmail(e.target.value)}
           />
-      </div>
-      <div>
-      <TextField 
-          sx={{m: 3, ml:2, mr: 2}}
-          label="Address"
-          id="address"
-          fullWidth
-          placeholder="Enter the address"
-          defaultValue="Ho Chi Minh City"
+        </div>
+        <div>
+          <TextField
+            sx={{ m: 3, ml: 2, mr: 2 }}
+            label="Address"
+            id="address"
+            fullWidth
+            placeholder="Enter the address"
+            defaultValue="Ho Chi Minh City"
           // onChange={(e) => setAddress(e.target.value)}
           />
-      </div>
-      <TextField 
-          sx={{m: 3, ml:2, mr: 2}}
+        </div>
+        <TextField
+          sx={{ m: 3, ml: 2, mr: 2 }}
           label="Phone number"
           id="phone"
           fullWidth
           placeholder="Enter the phone number"
           defaultValue="0987654321"
-          // onChange={(e) => setPhone(e.target.value)}
+        // onChange={(e) => setPhone(e.target.value)}
+        />
+        <div>
+          <TextField
+            sx={{ m: 3, ml: 2 }}
+            label="City"
+            id="city"
+            placeholder="Enter the city"
+            // onChange={(e) => setCity(e.target.value)}
+            defaultValue="Ho Chi Minh City"
           />
-      <div>
-          <TextField 
-          sx={{m: 3, ml:2}}
-          label="City"
-          id="city"
-          placeholder="Enter the city"
-          // onChange={(e) => setCity(e.target.value)}
-          defaultValue="Ho Chi Minh City"
-          />
-          <TextField 
-          sx={{m: 3, mr: 2}}
-          label="State"
-          id="state"
-          placeholder="Thu Duc District"
+          <TextField
+            sx={{ m: 3, mr: 2 }}
+            label="State"
+            id="state"
+            placeholder="Thu Duc District"
           // onChange={(e) => setState(e.target.value)}
           />
-      </div>
-    </Box>
+        </div>
+      </Box>
       <Stack spacing={2} direction="row">
-        <Button variant="outlined" onClick={()=>setRemove(true)}>Cancel</Button>  
-        <Button variant="contained" type='submit' onClick={()=>{window.location.href='./profile';}}>Save</Button> 
+        <Button variant="outlined" onClick={() => setRemove(true)}>Cancel</Button>
+        <Button variant="contained" type='submit' onClick={() => { window.location.href = './profile'; }}>Save</Button>
       </Stack>
       <Dialog
         open={remove}

@@ -1,12 +1,17 @@
-
-import React from "react"
-import { Routes, Route, Navigate, useLocation } from "react-router-dom"
+import './App.css';
+import React from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+// import Container from 'react-bootstrap/Container';
+// import Navbar from 'react-bootstrap/Navbar';
+// import Button from 'react-bootstrap/Button';
+// import Form from 'react-bootstrap/Form';
+// import Dropdown from 'react-bootstrap/Dropdown';
+// import Footer from './components/Footer/index.jsx';
 import Home from './features/home/index.jsx'
 import SignIn from './features/signin/index.jsx';
 import SignupForm from './features/signup/index.jsx';
-import ProtectedRoute from "./components/ProtectedRoute"
-import NotFound from "./features/notfound/NotFound.jsx";
-import AppHeader from './features/dashboard/index.jsx';
+import { useNavigate, Route, Routes, useLocation } from 'react-router-dom';
 import Header from './components/Header/index.jsx';
 import { useState, useEffect } from 'react';
 import User from './features/user/index.jsx'
@@ -130,26 +135,34 @@ function App() {
       navigate("/home");
     });
   }
+  // ADD YOUR PATH TO USER MANAGEMENT HERE
+  const userList = [
+    {id: 0, path: 'profile', element: <Profile />},
+    {id: 1, path: 'edit', element: <Edit />},
+    {id: 2, path: 'notification', element: <Notification />},
+    {id: 3, path: 'security', element: <Security />},
+    {id: 4, path: 'language', element: <Languague />},
+    {id: 5, path: 'help', element: <Help />},
+  ];
+  // ADD YOUR PATH TO TUTORIAL PAGE HERE
+  const tutorialList = [
+    {id: 0, path: 'get-started', element: <GetStarted />},
+  ]
 
   if (currentUser) {
     return (
-      <div>
+      <div className='main-app'>
         <Header nameActive={currentUser} currentPage={pageLocation} logoutFunction={submitLogout} />
         <Routes>
           <Route path='/home' element={<Home />} />
-          {/* <Route path='/tutorial' element={<Tutorial/>}/> */}
           <Route path='/calculate' element={<AppHeader setExcelData={setExcelData} excelData={excelData} />}/>
           <Route path="/user" element={<User />} >
               <Route index element={<Profile />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="edit" element={<Edit />} />
-              <Route path="notification" element={<Notification />} />
-              <Route path="security" element={<Security />} />
-              <Route path="language" element={<Languague />} />
-              <Route path="help" element={<Help />} />
+              {userList.map((item) => <Route path={item.path} element={item.element} />)}
           </Route>
           <Route path='/tutorial' element={<Tutorial/>}>
-            <Route path='get-started' element={<GetStarted />}/>
+            <Route index element={<GetStarted />} />
+            {tutorialList.map((item) => <Route path={item.path} element={item.element} />)}
           </Route>
         </Routes>
       </div>
@@ -157,8 +170,8 @@ function App() {
   }
 >>>>>>> 83fec3a (update account management with tutorial)
   return (
-    <AuthProvider>
-      <Header currentPage={pageLocation} />
+    <div className='main-app'>
+      <Header nameActive={currentUser} />
       <Routes>
 <<<<<<< HEAD
         <Route path="/login" element={<SignIn />} />
@@ -171,25 +184,19 @@ function App() {
         <Route path="/user/*" element={<ProtectedRoute><User /></ProtectedRoute>}>
 =======
         <Route path='/home' element={<Home />} />
-      <Route path='/signin' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
-      <Route path='/signup' element={<SignupForm />} />
-      <Route path='/tutorial' element={<Tutorial />}>
-        <Route path='getstarted' element={<GetStarted />} />
-      </Route>
-      <Route path="/user" element={<User />} >
->>>>>>> 83fec3a (update account management with tutorial)
-        <Route index element={<Profile />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="edit" element={<Edit />} />
-        <Route path="notification" element={<Notification />} />
-        <Route path="security" element={<Security />} />
-        <Route path="language" element={<Languague />} />
-        <Route path="help" element={<Help />} />
-      </Route>
-      {/* Not found route */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-    </AuthProvider >
+        <Route path='/signin' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
+        <Route path='/signup' element={<SignupForm />} />
+        <Route path='/tutorial' element={<Tutorial/>}>
+          <Route index element={<GetStarted />} />
+          {tutorialList.map((item) => <Route path={item.path} element={item.element} />)}
+        </Route>
+        <Route path="/user" element={<User />} >
+              <Route index element={<Profile />} />
+              {userList.map((item) => <Route path={item.path} element={item.element} />)}
+          </Route>
+        <Route path='/*' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
+      </Routes>
+    </div>
   );
 }
 

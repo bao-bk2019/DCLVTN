@@ -1,8 +1,10 @@
 import React from 'react';
 import TableFeature from '../table';
 // import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
+// import { Link, Outlet } from 'react-router-dom';
 // import { Link, Outlet } from 'react-router-dom';
 import './styles.scss'
 import Descriptive from './descriptive';
@@ -43,10 +45,8 @@ function AppHeader({ excelData, setExcelData }) {
                     LSTM
                 </ToggleButton>
             </ToggleButtonGroup>
-            {(choice === "Descriptive")? <Descriptive />: null}
-            {(choice === "Cluster")? <Clustering />: null}
-            {(choice === "PCA")? <PCA />: null}
-            {(choice === "LSTM")? <LSTMPredict />: null}
+            <AnalysisBoard type={choice} />
+            {/* <Outlet /> */}
         </div>
     );
 };
