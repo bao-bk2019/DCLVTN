@@ -55,7 +55,7 @@ const Header = ({ nameActive, currentPage, logoutFunction }) => {
             </div>
         );
     }
-    else if (currentPage == 'home')
+    else if (currentPage === 'home')
     {
         return (
             <div className="header-main">

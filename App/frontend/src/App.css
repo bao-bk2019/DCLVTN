@@ -7,6 +7,15 @@
   pointer-events: none;
 }
 
+@media screen and (min-width: 1200px){
+    .main-app{
+      position: relative;
+      margin:auto;
+      width:1200px;
+      max-width: 1200px;
+    }
+}
+
 /* boostrap form style */
 
 .form-inline {

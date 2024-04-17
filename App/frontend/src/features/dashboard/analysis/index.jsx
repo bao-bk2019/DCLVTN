@@ -2,7 +2,7 @@ import React from 'react'
 import './styles.scss'
 
 const AnalysisBoard = (props) => {
-    if (props.type == 'Descriptive')
+    if (props.type === 'Descriptive')
     return (
     <div className="classifi-value">
         <div className="var-item">Metric Variables: </div>
@@ -10,15 +10,15 @@ const AnalysisBoard = (props) => {
         <div className="var-item">Nominal Variables:</div>
     </div>
     )
-    else if (props.type == "Cluster")
+    else if (props.type === "Cluster")
     return (
         <div>Not updated</div>
     )
-    else if (props.type == "PCA")
+    else if (props.type === "PCA")
     return (
         <div>Not updated</div>
     )
-    else if (props.type == "LSTM")
+    else if (props.type === "LSTM")
     return (
         <div>Not updated</div>
     )

@@ -1,17 +1,15 @@
-.myprofile {
+.mysecurity {
   display: flex;
-  margin-top: 40px;
-  margin-left: 40px;
   flex-direction: column;
   width: 90%;
 }
 @media (max-width: 991px) {
-  .myprofile {
+  .mysecurity {
     max-width: 100%;
     margin-top: 40px;
   }
 }
-.h2-profile {
+.h2-security {
   font-family: Roboto, sans-serif;
   flex-grow: 1;
   flex-basis: auto;

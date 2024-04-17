@@ -41,8 +41,8 @@ function Edit() {
     window.location.href='./profile';
   }
   return (
-    <div className='myprofile'>
-    <h2 className="h2-profile">My profile</h2>
+    <div className='myedit'>
+    <h2 className="h2-edit">My profile</h2>
     <Box component="form" sx={{ display: 'grip'}}>
       <div>
           <TextField 

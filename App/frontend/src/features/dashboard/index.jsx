@@ -1,9 +1,9 @@
 import React from 'react';
 import TableFeature from '../table';
-import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
-import { Link, Outlet } from 'react-router-dom';
+// import { Link, Outlet } from 'react-router-dom';
 import './styles.scss'
 import AnalysisBoard from './analysis';
 function AppHeader({ excelData, setExcelData }) {
@@ -41,19 +41,6 @@ function AppHeader({ excelData, setExcelData }) {
                     LSTM
                 </ToggleButton>
             </ToggleButtonGroup>
-
-            {/* <div className='nav-analysis'>
-                <Button variant="warming">
-                    <Link to="" >Cluster</Link>
-                </Button>{' '}
-                <Button variant="warming">
-                    <Link to="">LSTM</Link>
-                </Button>{' '}
-                <Button variant="warming">
-                    <Link to="" >Chart</Link>
-                </Button>{' '}
-
-            </div> */}
             <AnalysisBoard type={choice} />
             {/* <Outlet /> */}
         </div>

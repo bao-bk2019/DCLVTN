@@ -3,14 +3,15 @@ import './styles.scss'
 import {Route, Routes, Outlet} from 'react-router-dom';
 import TableContent from './tableContent'
 import GetStarted from './getstarted/first';
+import Box from '@mui/material/Box';
 
 function Tutorial() {
   return (
     <div className='main-tutorial'>
       <TableContent/>
-      <div className='content-tutorial'>
+      <Box sx={{pl: 4, pt: 4, flex: '1 1 0%'}}>
         <Outlet/>
-      </div>
+      </Box>
     </div>
   )
 }
