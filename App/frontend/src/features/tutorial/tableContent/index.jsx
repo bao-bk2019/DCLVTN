@@ -30,7 +30,7 @@ function TableContent() {
     statistics: [{}]
   }
   return (
-    <Box sx={{ width: '30%', borderRight:'1px solid', height: '100vh'}}>
+    <Box sx={{ width: '25%', borderRight:'1px solid', height: '100vh'}}>
       <List>
       <ListItemButton onClick={handleClick} sx={{color: '#002B9A'}} >
         <ListItemIcon>

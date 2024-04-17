@@ -19,8 +19,8 @@ function Language() {
     setAge(event.target.value);
   };
   return (
-    <div className='myprofile'>
-      <h2 className="h2-profile">Language</h2>
+    <div className='mylanguage'>
+      <h2 className="h2-language">Language</h2>
       <List>
       <ListItem sx={{fontWeight: 'bold'}}>
         <ListItemText sx={{color:'#0048FF'}}

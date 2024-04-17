@@ -22,7 +22,7 @@ function Profile() {
   return (
     <div className='myprofile'>
     <h2 className="h2-profile">My profile</h2>
-    <Box component="form" sx={{ display: 'grip'}}>
+    <Box component="form" sx={{ display: 'grip', width: 'auto'}}>
       <div>
           <TextField 
           sx={{m: 3, ml:2}}

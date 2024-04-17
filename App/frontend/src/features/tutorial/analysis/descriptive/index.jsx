@@ -5,12 +5,10 @@ function GetStarted() {
   return (
     <Box>
     <Typography variant='h4' gutterBottom sx={{fontWeight: 'bold'}}>
-      First steps with Data&Retailers
+      Descriptive statistics
     </Typography>
     <Typography variant="body1" gutterBottom>
-      Data&Retailers is a web-based statistics software that runs right here in your browser window.<br/>
-      Since it is a web application, it does not need to be downloaded or installed. <br/>
-      You can start analyzing your data online in the statistics calculator on Data&Retailers at any time.
+    Descriptive statistics and inferential statistics, along with exploratory statistics, are the main areas of statistics. Descriptive statistics provides tools to describe a sample. Starting from the sample, inferential statistics can now be used to make a statement about the population.
     </Typography>
     </Box>
   )

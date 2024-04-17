@@ -3,8 +3,8 @@ import './style.scss';
 
 function Help() {
   return (
-    <div className='myprofile'>
-    <h2 className="h2-profile">Notification</h2>
+    <div className='myhelp'>
+    <h2 className="h2-help">Notification</h2>
     </div>
   )
 }
