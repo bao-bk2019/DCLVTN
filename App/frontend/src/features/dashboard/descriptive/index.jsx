@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Button from '@mui/material/Button';
 
-const AnalysisBoard = (props) => {
+const Descriptive = () => {
     const [metric, setMetric] = useState(['example', 'example', 'example']);
     const [ordinal, setOrdinal] = useState(['example', 'example', 'example']);
     const [nominal, setNominal] = useState(['example', 'example', 'example']);
@@ -16,7 +16,6 @@ const AnalysisBoard = (props) => {
 
     const metricCalculate = ['Mean', 'Median', 'Mode', 'Sum', 'Std. Deviation'];
     const relativeCalculate = ['Frequency', '%'];
-    if (props.type === 'Descriptive')
     return (
     <div className="classifi-value">
         <Box>
@@ -60,18 +59,6 @@ const AnalysisBoard = (props) => {
 
     </div>
     )
-    else if (props.type === "Cluster")
-    return (
-        <div>Not updated</div>
-    )
-    else if (props.type === "PCA")
-    return (
-        <div>Not updated</div>
-    )
-    else if (props.type === "LSTM")
-    return (
-        <div>Not updated</div>
-    )
 }
 
-export default AnalysisBoard
+export default Descriptive
