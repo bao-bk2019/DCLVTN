@@ -1,50 +1,43 @@
-from django.contrib.auth import get_user_model, login, logout
-from rest_framework.authentication import SessionAuthentication
+from django.shortcuts import render
+
+# Create your views here.
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
-from rest_framework import permissions, status
-from .validations import custom_validation, validate_email, validate_password
+from rest_framework import status, permissions
+from django.contrib.auth import authenticate, login, logout
+from .serializers import LoginSerializer, UserSerializer
 
+class LoginAPIView(APIView):
+    permission_classes = (permissions.AllowAny,)
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data['email']
+            password = serializer.validated_data['password']
+            user = authenticate(username=email, password=password)
+            if user is not None:
+                login(request, user)
+                return Response({"message": "Đăng nhập thành công."}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "Tên đăng nhập hoặc mật khẩu không đúng."}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class LogoutAPIView(APIView):
 
-class UserRegister(APIView):
-	permission_classes = (permissions.AllowAny,)
-	def post(self, request):
-		clean_data = custom_validation(request.data)
-		serializer = UserRegisterSerializer(data=clean_data)
-		if serializer.is_valid(raise_exception=True):
-			user = serializer.create(clean_data)
-			if user:
-				return Response(serializer.data, status=status.HTTP_201_CREATED)
-		return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-class UserLogin(APIView):
-	permission_classes = (permissions.AllowAny,)
-	authentication_classes = (SessionAuthentication,)
-	##
-	def post(self, request):
-		data = request.data
-		assert validate_email(data)
-		assert validate_password(data)
-		serializer = UserLoginSerializer(data=data)
-		if serializer.is_valid(raise_exception=True):
-			user = serializer.check_user(data)
-			login(request, user)
-			return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class UserLogout(APIView):
-	permission_classes = (permissions.AllowAny,)
-	authentication_classes = ()
-	def post(self, request):
-		logout(request)
-		return Response(status=status.HTTP_200_OK)
-
-
+    permission_classes = (permissions.AllowAny,)
+    def post(self, request):
+        logout(request)
+        return Response({"message": "Đăng xuất thành công."}, status=status.HTTP_200_OK)
+class RegisterUserAPIView(APIView):
+    permission_classes = (permissions.AllowAny,)
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class UserView(APIView):
 	permission_classes = (permissions.IsAuthenticated,)
-	authentication_classes = (SessionAuthentication,)
+	# authentication_classes = (SessionAuthentication,)
 	##
 	def get(self, request):
 		serializer = UserSerializer(request.user)
