@@ -5,16 +5,18 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
 // import { Link, Outlet } from 'react-router-dom';
 import './styles.scss'
-import AnalysisBoard from './analysis';
+import Descriptive from './descriptive';
+import LSTMPredict from './LSTM';
+import Clustering from './clustering';
+import PCA from './PCA';
 function AppHeader({ excelData, setExcelData }) {
     const [choice, setChoice] = React.useState('Descriptive');
-
     const handleChoice = (event, newChoice) => {
         if (newChoice !== null) {
             setChoice(newChoice);
         }
     };
-
+    // const listOfChoice = [];
     return (
         <div className='main-container'>
             <h2 className='h2-text' id='my-overview'>Overview</h2>
@@ -41,8 +43,10 @@ function AppHeader({ excelData, setExcelData }) {
                     LSTM
                 </ToggleButton>
             </ToggleButtonGroup>
-            <AnalysisBoard type={choice} />
-            {/* <Outlet /> */}
+            {(choice === "Descriptive")? <Descriptive />: null}
+            {(choice === "Cluster")? <Clustering />: null}
+            {(choice === "PCA")? <PCA />: null}
+            {(choice === "LSTM")? <LSTMPredict />: null}
         </div>
     );
 };
