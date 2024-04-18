@@ -45,8 +45,10 @@ function AppHeader({ excelData, setExcelData }) {
                     LSTM
                 </ToggleButton>
             </ToggleButtonGroup>
-            <AnalysisBoard type={choice} />
-            {/* <Outlet /> */}
+            {(choice === "Descriptive")? <Descriptive />: null}
+            {(choice === "Cluster")? <Clustering />: null}
+            {(choice === "PCA")? <PCA />: null}
+            {(choice === "LSTM")? <LSTMPredict />: null}
         </div>
     );
 };
