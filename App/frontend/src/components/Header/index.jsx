@@ -100,6 +100,7 @@ const Header = ({ currentPage }) => {
 
                     </div>
                     <AvatarDropdown />
+                    <AvatarDropdown />
 
                 </div>
             </div>
@@ -131,12 +132,15 @@ const Header = ({ currentPage }) => {
                     }}>Overview</button>
                     <button className="btn" style={{ color: "rgba(0, 72, 255, 1)", fontSize: "20px" }} onClick={() => {
                         window.location = '/calculate'
+                        window.location = '/calculate'
                     }}>Analysis</button>
                     <button className="btn" style={{ color: "rgba(0, 72, 255, 1)", fontSize: "20px" }} onClick={() => {
+                        window.location = '/tutorial/get-started'
                         window.location = '/tutorial/get-started'
                     }}>Tutorial</button>
 
                 </div>
+                <AvatarDropdown />
                 <AvatarDropdown />
             </div>
         </div>

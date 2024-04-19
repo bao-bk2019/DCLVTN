@@ -42,7 +42,7 @@ function Edit() {
   }
   return (
     <div className='myedit'>
-      <h2 className="h2-edit">My profile</h2>
+      <h2 className="h2-edit">Edit my profile</h2>
       <Box component="form" sx={{ display: 'grip' }}>
         <div>
           <TextField

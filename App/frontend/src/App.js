@@ -20,6 +20,7 @@ import Languague from './features/user/language/index.jsx'
 import Help from './features/user/help/index.jsx'
 import Notification from './features/user/notification/index.jsx'
 import Security from "./features/user/security/index.jsx";
+import Security from "./features/user/security/index.jsx";
 import Edit from './features/user/edit/index.jsx'
 import Tutorial from './features/tutorial/index.jsx';
 <<<<<<< HEAD
@@ -38,6 +39,8 @@ const client = axios.create({
 >>>>>>> 83fec3a (update account management with tutorial)
 
 import { AuthProvider } from "./AuthContext.js";
+import Tutorial from "./features/tutorial/index.jsx";
+import GetStarted from "./features/tutorial/getstarted/first/index.jsx";
 
 function Logout() {
   localStorage.clear()
@@ -65,7 +68,6 @@ function App() {
     else setPageLocation('main');
   }, [location]);
 
-<<<<<<< HEAD
   const userList = [
     { path: 'profile', element: <Profile /> },
     { path: 'edit', element: <Edit /> },
@@ -77,98 +79,6 @@ function App() {
   const tutorialList = [
     { path: 'get-started', element: <GetStarted /> },
   ];
-=======
-  function update_form_btn() {
-    if (registrationToggle) {
-      document.getElementById("form_btn").innerHTML = "Register";
-      setRegistrationToggle(false);
-    } else {
-      document.getElementById("form_btn").innerHTML = "Log in";
-      setRegistrationToggle(true);
-    }
-  }
-
-  function submitRegistration(e) {
-    e.preventDefault();
-    client.post(
-      "/api/register",
-      {
-        email: email,
-        username: username,
-        password: password
-      }
-    ).then(function (res) {
-      client.post(
-        "/api/login",
-        {
-          email: email,
-          password: password
-        }
-      ).then(function (res) {
-        setCurrentUser(true);
-      });
-    });
-  }
-
-  function submitLogin(e) {
-    e.preventDefault();
-    client.post(
-      "/api/login",
-      {
-        email: email,
-        password: password
-      }
-    ).then(function (res) {
-      setCurrentUser(true);
-      navigate("/calculate");
-    });
-  }
-
-  function submitLogout(e) {
-    e.preventDefault();
-    client.post(
-      "/api/logout",
-      { withCredentials: true }
-    ).then(function (res) {
-      setCurrentUser(false);
-
-      navigate("/home");
-    });
-  }
-  // ADD YOUR PATH TO USER MANAGEMENT HERE
-  const userList = [
-    {id: 0, path: 'profile', element: <Profile />},
-    {id: 1, path: 'edit', element: <Edit />},
-    {id: 2, path: 'notification', element: <Notification />},
-    {id: 3, path: 'security', element: <Security />},
-    {id: 4, path: 'language', element: <Languague />},
-    {id: 5, path: 'help', element: <Help />},
-  ];
-  // ADD YOUR PATH TO TUTORIAL PAGE HERE
-  const tutorialList = [
-    {id: 0, path: 'get-started', element: <GetStarted />},
-  ]
-
-  if (currentUser) {
-    return (
-      <div className='main-app'>
-        <Header nameActive={currentUser} currentPage={pageLocation} logoutFunction={submitLogout} />
-        <Routes>
-          <Route path='/home' element={<Home />} />
-          <Route path='/calculate' element={<AppHeader setExcelData={setExcelData} excelData={excelData} />}/>
-          <Route path="/user" element={<User />} >
-              <Route index element={<Profile />} />
-              {userList.map((item) => <Route path={item.path} element={item.element} />)}
-          </Route>
-          <Route path='/tutorial' element={<Tutorial/>}>
-            <Route index element={<GetStarted />} />
-            {tutorialList.map((item) => <Route path={item.path} element={item.element} />)}
-          </Route>
-        </Routes>
-      </div>
-    );
-  }
->>>>>>> 83fec3a (update account management with tutorial)
   return (
     <div className='main-app'>
       <Header nameActive={currentUser} />
@@ -182,21 +92,17 @@ function App() {
   {/* Protected routes */ }
         <Route path="/calculate" element={<ProtectedRoute><AppHeader setExcelData={setExcelData} excelData={excelData} /></ProtectedRoute>} />
         <Route path="/user/*" element={<ProtectedRoute><User /></ProtectedRoute>}>
-=======
-        <Route path='/home' element={<Home />} />
-        <Route path='/signin' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
-        <Route path='/signup' element={<SignupForm />} />
-        <Route path='/tutorial' element={<Tutorial/>}>
+          <Route index element={<Profile />} />
+          {userList.map((item) => <Route path={item.path} element={item.element} />)}
+        </Route>
+        <Route path="tutorial" element={<ProtectedRoute><Tutorial /></ProtectedRoute>}>
           <Route index element={<GetStarted />} />
           {tutorialList.map((item) => <Route path={item.path} element={item.element} />)}
         </Route>
-        <Route path="/user" element={<User />} >
-              <Route index element={<Profile />} />
-              {userList.map((item) => <Route path={item.path} element={item.element} />)}
-          </Route>
-        <Route path='/*' element={<SignIn submitLogin={submitLogin} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
-      </Routes>
-    </div>
+  {/* Not found route */ }
+  <Route path="*" element={<NotFound />} />
+      </Routes >
+    </div >
   );
 }
 
