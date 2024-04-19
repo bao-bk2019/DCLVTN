@@ -20,7 +20,7 @@ const AvatarDropdown = ({logoutFunction}) => {
 
       <Dropdown.Menu flip={true} >
         <Dropdown.Item href="/user/profile">Setting</Dropdown.Item>
-        <Dropdown.Item onClick={e => logoutFunction(e)}>Logout</Dropdown.Item>
+        <Dropdown.Item href='/logout'>Logout</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
