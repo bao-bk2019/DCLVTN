@@ -3,9 +3,9 @@ import { jwtDecode } from "jwt-decode";
 import api from "../api";
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
 import { useState, useEffect } from "react";
-
+import { useAuth } from "../AuthContext";
 function ProtectedRoute({ children }) {
-    const [isAuthorized, setIsAuthorized] = useState(null);
+    const { isAuthorized, setIsAuthorized } = useAuth();
     useEffect(() => {
         const auth = async () => {
             const token = localStorage.getItem(ACCESS_TOKEN);

@@ -15,6 +15,7 @@ import Languague from './features/user/language/index.jsx'
 import Help from './features/user/help/index.jsx'
 import Notification from './features/user/notification/index.jsx'
 import Edit from './features/user/edit/index.jsx'
+import { AuthProvider } from "./AuthContext.js";
 
 function Logout() {
   localStorage.clear()
@@ -42,15 +43,15 @@ function App() {
     else setPageLocation('main');
   }, [location]);
   return (
-    <>
-      <Header nameActive={true} currentPage={pageLocation} />
+    <AuthProvider>
+      <Header currentPage={pageLocation} />
       <Routes>
         <Route path="/login" element={<SignIn />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<RegisterAndLogout />} />
+        <Route path="/home" element={<Home />} />
 
         {/* Protected routes */}
-        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/calculate" element={<ProtectedRoute><AppHeader setExcelData={setExcelData} excelData={excelData} /></ProtectedRoute>} />
         <Route path="/user/*" element={<ProtectedRoute><User /></ProtectedRoute>}>
           <Route index element={<Profile />} />
@@ -64,7 +65,7 @@ function App() {
         {/* Not found route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 }
 
