@@ -3,7 +3,7 @@ import './styles.scss';
 import Dropdown from 'react-bootstrap/Dropdown';
 // import avatar from '../../Img/avatar.jpg'
 import Avatar from '@mui/material/Avatar';
-const AvatarDropdown = ({logoutFunction}) => {
+const AvatarDropdown = () => {
     const avatarimg = React.forwardRef(({ children, onClick }, ref) => (
         <Avatar 
         sx={{width: '54px', height: '54px'}}

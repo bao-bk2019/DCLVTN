@@ -14,8 +14,11 @@ import Profile from './features/user/profile/index.jsx'
 import Languague from './features/user/language/index.jsx'
 import Help from './features/user/help/index.jsx'
 import Notification from './features/user/notification/index.jsx'
+import Security from "./features/user/security/index.jsx";
 import Edit from './features/user/edit/index.jsx'
 import { AuthProvider } from "./AuthContext.js";
+import Tutorial from "./features/tutorial/index.jsx";
+import GetStarted from "./features/tutorial/getstarted/first/index.jsx";
 
 function Logout() {
   localStorage.clear()
@@ -42,6 +45,18 @@ function App() {
       setPageLocation('home');
     else setPageLocation('main');
   }, [location]);
+
+  const userList = [
+    {path:'profile', element: <Profile />},
+    {path:'edit', element: <Edit />},
+    {path:'notification', element: <Notification />},
+    {path:'security', element: <Security />},
+    {path:'language', element: <Languague />},
+    {path:'help', element: <Help />},
+  ];
+  const tutorialList =[
+    {path:'get-started', element: <GetStarted />},
+  ];
   return (
     <AuthProvider>
       <Header currentPage={pageLocation} />
@@ -55,13 +70,12 @@ function App() {
         <Route path="/calculate" element={<ProtectedRoute><AppHeader setExcelData={setExcelData} excelData={excelData} /></ProtectedRoute>} />
         <Route path="/user/*" element={<ProtectedRoute><User /></ProtectedRoute>}>
           <Route index element={<Profile />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="edit" element={<Edit />} />
-          <Route path="notification" element={<Notification />} />
-          <Route path="language" element={<Languague />} />
-          <Route path="help" element={<Help />} />
+          {userList.map((item) => <Route path={item.path} element={item.element} />)}
         </Route>
-
+        <Route path="tutorial" element={<ProtectedRoute><Tutorial /></ProtectedRoute>}>
+          <Route index element={<GetStarted />} />
+          {tutorialList.map((item) => <Route path={item.path} element={item.element} />)}
+        </Route>
         {/* Not found route */}
         <Route path="*" element={<NotFound />} />
       </Routes>

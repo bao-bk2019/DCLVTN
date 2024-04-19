@@ -5,7 +5,7 @@ import logo from '../Img/logo.png'
 import AvatarDropdown from './Dropdown/index.jsx'
 import { useAuth } from '../../AuthContext.js';
 
-const Header = ({ currentPage, logoutFunction }) => {
+const Header = ({ currentPage}) => {
     const { isAuthorized } = useAuth();
     console.log(isAuthorized);
     if (!isAuthorized) {
@@ -51,7 +51,6 @@ const Header = ({ currentPage, logoutFunction }) => {
 
                     </div>
                     <div className="div-10">
-
                         <Link to="/login" style={{ textDecoration: "none" }}>{"Login"}</Link>
                     </div>
                 </div>
@@ -100,7 +99,7 @@ const Header = ({ currentPage, logoutFunction }) => {
                         }}>Contact Us</button>
 
                     </div>
-                    <AvatarDropdown logoutFunction={logoutFunction} />
+                    <AvatarDropdown />
 
                 </div>
             </div>
@@ -131,15 +130,14 @@ const Header = ({ currentPage, logoutFunction }) => {
                         });
                     }}>Overview</button>
                     <button className="btn" style={{ color: "rgba(0, 72, 255, 1)", fontSize: "20px" }} onClick={() => {
-                        window.location = './calculate'
+                        window.location = '/calculate'
                     }}>Analysis</button>
                     <button className="btn" style={{ color: "rgba(0, 72, 255, 1)", fontSize: "20px" }} onClick={() => {
-                        window.location = './tutorial/get-started'
+                        window.location = '/tutorial/get-started'
                     }}>Tutorial</button>
 
                 </div>
-                <AvatarDropdown logoutFunction={logoutFunction} />
-
+                <AvatarDropdown />
             </div>
         </div>
     );
