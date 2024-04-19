@@ -6,6 +6,7 @@ import "./styles.scss"
 import "../../styles/Password.css"
 import LoadingIndicator from "../LoadingIndicator";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../AuthContext";
 
 function evaluatePasswordStrength(password) {
     const lengthCriteria = password.length >= 12;
@@ -30,7 +31,7 @@ function Form({ route, method }) {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [passwordStrength, setPasswordStrength] = useState('');
-
+    const { setIsAuthorized } = useAuth();
     const name = method === "login" ? "Login" : "Register";
     const handlePasswordChange = (e) => {
         const password = e.target.value;
@@ -59,6 +60,7 @@ function Form({ route, method }) {
             if (method === "login") {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+                setIsAuthorized(true);
                 navigate("/home")
             } else {
                 navigate("/login")

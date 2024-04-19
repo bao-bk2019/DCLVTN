@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 import './styles.scss';
 import logo from '../Img/logo.png'
 import AvatarDropdown from './Dropdown/index.jsx'
+import { useAuth } from '../../AuthContext.js';
 
-const Header = ({ nameActive, currentPage, logoutFunction }) => {
-    if (nameActive === false) {
+const Header = ({ currentPage, logoutFunction }) => {
+    const { isAuthorized } = useAuth();
+    console.log(isAuthorized);
+    if (!isAuthorized) {
         return (
             <div className="header-main">
                 <div className="div-2">
@@ -49,27 +52,26 @@ const Header = ({ nameActive, currentPage, logoutFunction }) => {
                     </div>
                     <div className="div-10">
 
-                        <Link to="signin" style={{ textDecoration: "none" }}>{"Login"}</Link>
+                        <Link to="/login" style={{ textDecoration: "none" }}>{"Login"}</Link>
                     </div>
                 </div>
             </div>
         );
     }
-    else if (currentPage === 'home')
-    {
+    else if (currentPage === 'home') {
         return (
             <div className="header-main">
                 <div className="div-2">
                     <div className="div-3">
                         <Link Link to="/home" style={{ textDecoration: "none" }}>
-                        <img
-                            loading="lazy"
-                            src={logo}
-                            alt="Company Logo"
-                            className="img"
-                        />
+                            <img
+                                loading="lazy"
+                                src={logo}
+                                alt="Company Logo"
+                                className="img"
+                            />
                         </Link>
-    
+
                     </div>
                     <div className="div-5">
                         <button className="btn" style={{ color: "rgba(0, 72, 255, 1)", fontSize: "20px" }} onClick={() => {
@@ -96,10 +98,10 @@ const Header = ({ nameActive, currentPage, logoutFunction }) => {
                                 behavior: 'smooth'
                             });
                         }}>Contact Us</button>
-    
+
                     </div>
-                    <AvatarDropdown logoutFunction={logoutFunction}/>
-                    
+                    <AvatarDropdown logoutFunction={logoutFunction} />
+
                 </div>
             </div>
         );
@@ -129,10 +131,7 @@ const Header = ({ nameActive, currentPage, logoutFunction }) => {
                         });
                     }}>Overview</button>
                     <button className="btn" style={{ color: "rgba(0, 72, 255, 1)", fontSize: "20px" }} onClick={() => {
-                        const element = document.getElementById('my-analysis');
-                        element?.scrollIntoView({
-                            behavior: 'smooth'
-                        });
+                        window.location = './calculate'
                     }}>Analysis</button>
                     <button className="btn" style={{ color: "rgba(0, 72, 255, 1)", fontSize: "20px" }} onClick={() => {
                         window.location = './tutorial/get-started'
