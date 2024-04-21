@@ -1,13 +1,7 @@
-import './App.css';
-import React from 'react';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-// import Container from 'react-bootstrap/Container';
-// import Navbar from 'react-bootstrap/Navbar';
-// import Button from 'react-bootstrap/Button';
-// import Form from 'react-bootstrap/Form';
-// import Dropdown from 'react-bootstrap/Dropdown';
-// import Footer from './components/Footer/index.jsx';
+
+import React from "react"
+import './App.css'
+import { Routes, Route, Navigate, useLocation } from "react-router-dom"
 import Home from './features/home/index.jsx'
 import SignIn from './features/signin/index.jsx';
 import SignupForm from './features/signup/index.jsx';
@@ -41,6 +35,7 @@ const client = axios.create({
 import { AuthProvider } from "./AuthContext.js";
 import Tutorial from "./features/tutorial/index.jsx";
 import GetStarted from "./features/tutorial/getstarted/first/index.jsx";
+import { Box } from "@mui/material";
 
 function Logout() {
   localStorage.clear()
@@ -80,9 +75,10 @@ function App() {
     { path: 'get-started', element: <GetStarted /> },
   ];
   return (
-    <div className='main-app'>
-      <Header nameActive={currentUser} />
-      <Routes>
+    <AuthProvider>
+      <Box className="main-app">
+        <Header currentPage={pageLocation} />
+        <Routes>
 <<<<<<< HEAD
         <Route path="/login" element={<SignIn />} />
         <Route path="/logout" element={<Logout />} />
@@ -102,7 +98,8 @@ function App() {
   {/* Not found route */ }
   <Route path="*" element={<NotFound />} />
       </Routes >
-    </div >
+      </Box >
+    </AuthProvider >
   );
 }
 
