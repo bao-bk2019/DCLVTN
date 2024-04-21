@@ -1,5 +1,6 @@
 
 import React from "react"
+import './App.css'
 import { Routes, Route, Navigate, useLocation } from "react-router-dom"
 import Home from './features/home/index.jsx'
 import SignIn from './features/signin/index.jsx';
@@ -19,6 +20,7 @@ import Edit from './features/user/edit/index.jsx'
 import { AuthProvider } from "./AuthContext.js";
 import Tutorial from "./features/tutorial/index.jsx";
 import GetStarted from "./features/tutorial/getstarted/first/index.jsx";
+import { Box } from "@mui/material";
 
 function Logout() {
   localStorage.clear()
@@ -59,6 +61,7 @@ function App() {
   ];
   return (
     <AuthProvider>
+      <Box className="main-app">
       <Header currentPage={pageLocation} />
       <Routes>
         <Route path="/login" element={<SignIn />} />
@@ -79,6 +82,7 @@ function App() {
         {/* Not found route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </Box>
     </AuthProvider>
   );
 }
