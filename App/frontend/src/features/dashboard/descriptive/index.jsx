@@ -18,6 +18,7 @@ const Descriptive = () => {
     const [ordinal, setOrdinal] = useState(['example', 'example', 'example']);
     const [nominal, setNominal] = useState(['example', 'example', 'example']);
     const [metricShow, setMetricShow] = useState(true);
+    const [multiMetric, setMultiMetric] = useState(true);
     const [labelShow, setLabelShow] = useState(true);
     const [ms, setMs] = useState(false);
     const [ls, setLs] = useState(false);
@@ -36,14 +37,22 @@ const Descriptive = () => {
     const allUnchecked = (list) => {
         return list.every((checked) => !checked);
     };
+    const twoMoreMetric = () => {
+        let count = 0;
+        for (let i=0; i < metricCheckboxes.length; i++){
+            if (metricCheckboxes[i] === true) {
+                count += 1;
+            }
+        }
+        if (count >= 2) return true;
+        else return false;
+    }
     const metricCalculate = ['Mean', 'Median', 'Mode', 'Sum', 'Std. Deviation'];
     const relativeCalculate = ['Frequency', '%'];
 
     const handleMetricChange = (e) => {
         const nextmetricCheckboxes = metricCheckboxes.map((c, i) => {
             if (i === Number(e.target.value)) {
-              // Increment the clicked counter
-              console.log('Change');
               return e.target.checked;
             } else {
               // The rest haven't changed
@@ -55,8 +64,6 @@ const Descriptive = () => {
     const handleLabelChange = (e) => {
         const nextlabelCheckboxes = labelCheckboxes.map((c, i) => {
             if (i === Number(e.target.value)) {
-              // Increment the clicked counter
-              console.log('Change');
               return e.target.checked;
             } else {
               // The rest haven't changed
@@ -75,6 +82,15 @@ const Descriptive = () => {
         else {
             setMetricShow(true);
         }
+
+        if (twoMoreMetric()) {
+            setMultiMetric(true);
+            // Perform any other side effect when all metricCheckboxes are unchecked
+          }
+        else {
+            setMultiMetric(false);
+        }
+
         if (allUnchecked(labelCheckboxes)) {
             setLabelShow(false);
             // Perform any other side effect when all metricCheckboxes are unchecked
@@ -82,6 +98,7 @@ const Descriptive = () => {
         else {
             setLabelShow(true);
         }
+        
         }, [metricCheckboxes, labelCheckboxes]);
 
     return (
@@ -183,7 +200,8 @@ const Descriptive = () => {
     </FormControl>
     <Plot
         data={[
-          {type: 'bar', x: [1, 2, 3], y: [2, 5, 3]},
+            {x: [1,2,4,5,9,7,8,5,4,3,2,1],
+            type: 'histogram'}
         ]}
         layout={ {width: 640, height: 480, title: 'Histogram'} }
         style={{flex: '1 1 0%'}}
@@ -227,7 +245,7 @@ const Descriptive = () => {
         style={{flex: '1 1 0%'}}
       />
     </Box>
-
+    
     <h2 className='histogram-heading'>Line chart</h2>
     <Box sx={{display:'flex'}}>
     <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
@@ -259,7 +277,7 @@ const Descriptive = () => {
     </div>  
     : null}
     
-    {labelShow?
+    {labelShow||multiMetric?
 
     <div>
     <h2 className='histogram-heading'>Bar chart</h2>
@@ -300,7 +318,10 @@ const Descriptive = () => {
         style={{flex: '1 1 0%'}}
       />
     </Box>
-
+    </div>
+    : null}
+    {labelShow?
+    <div>
     <h2 className='histogram-heading'>Pie chart</h2>
     <Box sx={{display:'flex'}}>
     <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
@@ -341,6 +362,49 @@ const Descriptive = () => {
     </Box>
 
     </div>
+    : null}
+    {multiMetric? 
+        <div>
+        <h2 className='histogram-heading'>Scatter plot</h2>
+        <Box sx={{display:'flex'}}>
+        <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
+            
+            <FormLabel id="orientation-radio-label">Orientation</FormLabel>
+            <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="vertical"
+                name="orientation-radio-buttons-group"
+            >
+                <FormControlLabel value="vertical" control={<Radio />} label="Vertical" />
+                <FormControlLabel value="horizontal" control={<Radio />} label="Horizontal" />
+            </RadioGroup>
+            <FormLabel id="size-radio-label">Size of the graphic</FormLabel>
+            <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="medium"
+                name="radio-buttons-group"
+            >
+                <FormControlLabel value="small" control={<Radio />} label="Small" />
+                <FormControlLabel value="medium" control={<Radio />} label="Medium" />
+                <FormControlLabel value="large" control={<Radio />} label="Large" />
+                <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
+            </RadioGroup>
+    
+        </FormControl>
+        <Plot
+            data={[
+                {
+                    x: [2, 3, 4, 5],
+                    y: [16, 5, 11, 9],
+                    mode: 'markers',
+                    type: 'scatter'
+                },
+            ]}
+            layout={ {width: 640, height: 480, title: 'Basic Bar Chart',xaxis: {title: 'Country'}, yaxis: {title: 'Medals'} } }
+            style={{flex: '1 1 0%'}}
+          />
+        </Box>
+        </div>
     : null}
     </div>
     )
