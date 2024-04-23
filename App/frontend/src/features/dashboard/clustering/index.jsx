@@ -9,6 +9,10 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Plot from 'react-plotly.js';
 
 function Clustering() {
   const [metric, setMetric] = useState(['example', 'example', 'example']);
@@ -44,7 +48,7 @@ function Clustering() {
                   <FormGroup onChange={onOptionChange}>
                   <RadioGroup row
                       aria-labelledby="demo-radio-buttons-group-label"
-                      defaultValue="kmeans"
+                      defaultValue=""
                       name="radio-buttons-group"
                     >
                       <FormControlLabel value="kmeans" control={<Radio />} label='K-Means Clustering' />
@@ -56,16 +60,43 @@ function Clustering() {
       </Box>
     </div>
       {(show === 'kmeans')? 
-      <Box sx={{width:100}}>
-        Kmeans 
+      <div>
+      <h2 className='cluster-heading'>K-Means</h2>
+      <Box sx={{display:'flex', flexDirection: 'column'}} >
+      <label className='var-item'>Number of clusters</label>
+      <TextField
+          id="outlined-number"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          sx={{width:'30%'}}
+        />
+    <Box sx={{display:'flex', pt:4}}>
+    <Plot
+        data={[
+            {
+                x: [1, 2, 3, 4, 5, 6, 7],
+                y: [3.8, 1.4, 0.8, 0.6, 0.44, 0.28, 0.24],
+                type: 'scatter'
+              },
+        ]}
+        layout={ {width: 640, height: 480, title: 'Elbow Method', xaxis:{title:'Number of clusters k'}, yaxis:{title:'Sum of squared distance'}} }
+        style={{flex: '1 1 0%'}}
+      />
+    </Box>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       </Box>
-      :null }
-
-      {(show === 'hierachical')? 
+      </div>
+      :(show === 'hierachical')? 
       <Box>
-        Hierachical Clustering
+      Hierachical Clustering
       </Box>
-      :null }
+      :null
+      }
 
       
   </div>
