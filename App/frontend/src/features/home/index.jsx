@@ -2,7 +2,15 @@ import * as React from "react";
 import { Link } from 'react-router-dom';
 import './styles.scss';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
+import SecurityIcon from '@mui/icons-material/Security';
+import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
+import InsightsIcon from '@mui/icons-material/Insights';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 function MyComponent(props) {
     return (
         <div className="div">
@@ -15,10 +23,10 @@ function MyComponent(props) {
                                 <br />
                             </div>
                             <div className="div-15">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Habitant cras morbi hendrerit nunc vel sapien. In habitasse at
-                                diam suspendisse non vitae fermentum, pharetra arcu. Viverra a
-                                morbi ut donec in. Ac diam, at sed cras nisi.{" "}
+                            Are you a retailer? <br/> 
+                            Don't have experience or knowledge in data analysis? <br/>
+                            Don't worry, visit our website, and we will provide you with the best BUSINESS ANALYSIS AND FORECASTING system.
+                            {" "}
                             </div>
                             <div className="div-16">
                                 <div className="div-17">Get Started</div>
@@ -48,10 +56,7 @@ function MyComponent(props) {
                     </div>
                     <div className="column-4">
                         <div className="div-21">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget
-                            duis mi nunc bibendum. Tellus elementum nec lorem eget dictumst.
-                            Risus in gravida eu, enim lorem. Sed consequat ut suspendisse
-                            eros. Nunc nunc accumsan, viverra enim. Mi.
+                        Our group consists of students from the Ho Chi Minh City University of Technology. With the goal of building a business analysis and forecasting system together, we joined forces to create this website.
                         </div>
                     </div>
                 </div>
@@ -62,11 +67,9 @@ function MyComponent(props) {
                     <div className="div-25">
                         <div className="column-5">
                             <div className="div-26">
-                                <div className="div-27">Non-IT enterprises</div>
+                                <div className="div-27">BUSINESS ANALYSIS</div>
                                 <div className="div-28">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Consequat bibendum sit felis, sollicitudin et. Nulla aliquet
-                                    integer hac ac morbi.
+                                Data&Retailer is a business analytics support system specifically designed for retailers. With data in hand, users can easily perform analysis using our system.
                                 </div>
                                 <div className="div-29">
                                     <div className="div-30">Learn More</div>
@@ -98,11 +101,9 @@ function MyComponent(props) {
                         </div>
                         <div className="column-8">
                             <div className="div-34">
-                                <div className="div-35">Software product companies</div>
+                                <div className="div-35">FORECASTING</div>
                                 <div className="div-36">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Blandit viverra porta tortor, elementum ultrices. Blandit
-                                    quam nec aliquam.
+                                By understanding AI trends and the demand for business forecasting, we provide highly reliable forecasting solutions that support users in gaining insights into data trends and making the best decisions.
                                 </div>
                                 <div className="div-37">
                                     <div className="div-38">Learn More</div>
@@ -118,11 +119,9 @@ function MyComponent(props) {
                     <div className="div-41">
                         <div className="column-9">
                             <div className="div-42">
-                                <div className="div-43">Non-IT enterprises</div>
+                                <div className="div-43">DATA VISUALIZATION</div>
                                 <div className="div-44">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Blandit viverra porta tortor, elementum ultrices. Blandit
-                                    quam nec aliquam.
+                                The website will provide a convenient data visualization tool, helping users efficiently grasp information from their datasets.
                                 </div>
                                 <div className="div-45">
                                     <div className="div-46">Learn More</div>
@@ -141,70 +140,51 @@ function MyComponent(props) {
                     </div>
                 </div>
             </div>
-            <div className="div-47" id="my-andvantages">The advantages of </div>
-            <div className="div-48">
-                <div className="div-49">
-                    <div className="div-50">
-                        <div className="column-11">
-                            <div className="div-51">IT consulting</div>
-                        </div>
-                        <div className="column-12">
-                            <div className="div-52">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Blandit viverra porta tortor, elementum ultrices. Blandit quam
-                                nec aliquam.
-                                <br />
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Blandit viverra porta tortor, elementum ultrices. Blandit quam
-                                nec aliquam.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="div-53">
-                <div className="div-54">
-                    <div className="div-55">
-                        <div className="column-13">
-                            <div className="div-56">Software Development</div>
-                        </div>
-                        <div className="column-14">
-                            <div className="div-57">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Blandit viverra porta tortor, elementum ultrices. Blandit quam
-                                nec aliquam.
-                                <br />
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Blandit viverra porta tortor, elementum ultrices. Blandit quam
-                                nec aliquam.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="div-58">
-                <div className="div-59">
-                    <div className="div-60">
-                        <div className="column-15">
-                            <div className="div-61">Testing and QA </div>
-                        </div>
-                        <div className="column-16">
-                            <div className="div-62">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Blandit viverra porta tortor, elementum ultrices. Blandit quam
-                                nec aliquam.
-                                <br />
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Blandit viverra porta tortor, elementum ultrices. Blandit quam
-                                nec aliquam.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="div-63">
-                <Link to="/calculate">View All Services</Link>
-            </div>
+            <div className="div-47" id="my-andvantages">The advantages of Data&Retailer</div>
+            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} sx={{pt:4}} >
+                <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
+                <SentimentSatisfiedAltIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
+                    <h3>Statistics, as simple as never before.</h3>
+                    <p>
+                    Data&Retailer is a modern statistics software, with unique user-friendliness. Statistical analyses are done with just a few clicks, so Data&Retailer is perfect for statistics beginners and for professionals who want more flow in the user experience.                    
+                    </p>
+                </Grid>
+                <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
+                    <OpenInBrowserIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
+                    <h3>Directly in the browser, fully flexible.</h3>
+                    <p>
+                    Directly in the browser, fully flexible. Data&Retailer works directly in your web browser. You have no installation and maintenance effort whatsoever. Wherever and whenever you want to use Data&Retailer, just go to the website and get started.
+                    </p>
+                </Grid>
+                <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
+                    <SecurityIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
+                    <h3>Data security is a top priority.</h3>
+                    <p>
+                    All data that you insert and evaluate on Data&Retailer always remain on your end device. The data is not sent to any server or stored by us (not even temporarily). Furthermore, we do not pass on your data to third parties in order to analyze your user behavior.
+                    </p>
+                </Grid>
+                <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
+                <InsightsIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
+                <h3>Charts, simple and clear.</h3>
+                    <p>
+                    With Data&Retailer data visualization is fun! Here you can easily create meaningful charts that optimally illustrate your results.
+                    </p>
+                </Grid>
+                <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
+                    <TipsAndUpdatesIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
+                    <h3>Many tutorials with simple examples.</h3>
+                    <p>
+                    In order to facilitate the introduction, Data&Retailer offers a large number of free tutorials with focused explanations in simple language. We explain the statistical background of the methods and give step-by-step explanations for performing the analyses in the statistics calculator.
+                    </p>
+                </Grid>
+                <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
+                <QueryStatsIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
+                    <h3>Simple prediction with your data </h3>
+                    <p>
+                    Data&Retailer will support you in making actual predictions using your own data. By uploading your data, the system will provide the most accurate predictions with high reliability that can be derived from the data.
+                    </p>
+                </Grid>
+            </Grid>
             <div className="div-64">
                 <div className="div-65">
                     <div className="column-17">
