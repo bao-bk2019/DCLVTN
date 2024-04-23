@@ -16,22 +16,6 @@ import Notification from './features/user/notification/index.jsx'
 import Security from "./features/user/security/index.jsx";
 import Security from "./features/user/security/index.jsx";
 import Edit from './features/user/edit/index.jsx'
-import Tutorial from './features/tutorial/index.jsx';
-<<<<<<< HEAD
-import GetStarted from './features/tutorial/getstarted/first/index.jsx';
-=======
-import Security from './features/user/security/index.jsx';
-import GetStarted from './features/tutorial/getstarted/first/index.jsx';
-
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-axios.defaults.withCredentials = true;
-
-const client = axios.create({
-  baseURL: "http://127.0.0.1:8000"
-});
->>>>>>> 83fec3a (update account management with tutorial)
-
 import { AuthProvider } from "./AuthContext.js";
 import Tutorial from "./features/tutorial/index.jsx";
 import GetStarted from "./features/tutorial/getstarted/first/index.jsx";
