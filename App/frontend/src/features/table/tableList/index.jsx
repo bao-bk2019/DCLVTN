@@ -43,7 +43,7 @@ function TableList(props) {
                 rowIndex={0}
             >
                 {({ measure }) => (
-                    <div style={{ width: ' 10000px ' }}>
+                    <div style={{ width: 200 * columns.length }}>
                         {columns.map((key, columnIndex) => (
                             <div key={key} style={{ display: 'inline-block', width: '200px' }}>
                                 <input
@@ -191,7 +191,7 @@ function TableList(props) {
                                         <div style={{ overflowX: 'auto', maxWidth: '100%' }} onScroll={onScroll}>
                                             {renderHeaderRow()}
                                             <List
-                                                width={1800}
+                                                width={200 * Object.keys(props.excelData[0]).length}
                                                 height={300}
                                                 rowCount={props.excelData.length}
                                                 rowHeight={cacheRef.current.rowHeight}
