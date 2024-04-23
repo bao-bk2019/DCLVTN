@@ -144,42 +144,42 @@ function MyComponent(props) {
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} sx={{pt:4}} >
                 <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
                 <SentimentSatisfiedAltIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
-                    <h3>Statistics, as simple as never before.</h3>
+                    <h3 className='h3-text'>Statistics, as simple as never before.</h3>
                     <p>
                     Data&Retailer is a modern statistics software, with unique user-friendliness. Statistical analyses are done with just a few clicks, so Data&Retailer is perfect for statistics beginners and for professionals who want more flow in the user experience.                    
                     </p>
                 </Grid>
                 <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
                     <OpenInBrowserIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
-                    <h3>Directly in the browser, fully flexible.</h3>
+                    <h3 className='h3-text'>Directly in the browser, fully flexible.</h3>
                     <p>
                     Directly in the browser, fully flexible. Data&Retailer works directly in your web browser. You have no installation and maintenance effort whatsoever. Wherever and whenever you want to use Data&Retailer, just go to the website and get started.
                     </p>
                 </Grid>
                 <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
                     <SecurityIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
-                    <h3>Data security is a top priority.</h3>
+                    <h3 className='h3-text'>Data security is a top priority.</h3>
                     <p>
                     All data that you insert and evaluate on Data&Retailer always remain on your end device. The data is not sent to any server or stored by us (not even temporarily). Furthermore, we do not pass on your data to third parties in order to analyze your user behavior.
                     </p>
                 </Grid>
                 <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
                 <InsightsIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
-                <h3>Charts, simple and clear.</h3>
+                <h3 className='h3-text'>Charts, simple and clear.</h3>
                     <p>
                     With Data&Retailer data visualization is fun! Here you can easily create meaningful charts that optimally illustrate your results.
                     </p>
                 </Grid>
                 <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
                     <TipsAndUpdatesIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
-                    <h3>Many tutorials with simple examples.</h3>
+                    <h3 className='h3-text'>Many tutorials with simple examples.</h3>
                     <p>
                     In order to facilitate the introduction, Data&Retailer offers a large number of free tutorials with focused explanations in simple language. We explain the statistical background of the methods and give step-by-step explanations for performing the analyses in the statistics calculator.
                     </p>
                 </Grid>
                 <Grid item xs={2} sm={4} md={4} sx={{display:'flex', flexDirection:'column'}}>
                 <QueryStatsIcon sx={{width:'100px', height:'100px', color:'#002B9A'}} />
-                    <h3>Simple prediction with your data </h3>
+                    <h3 className='h3-text'>Simple prediction with your data </h3>
                     <p>
                     Data&Retailer will support you in making actual predictions using your own data. By uploading your data, the system will provide the most accurate predictions with high reliability that can be derived from the data.
                     </p>
