@@ -11,11 +11,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+password = os.environ.get("MONGO_PASSWORD")
+print(password)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -98,13 +99,14 @@ WSGI_APPLICATION = 'server.wsgi.application'
 #     }
 # }
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'da_app',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': "mongodb+srv://tintra:ohNfBF5mzeAv0qbK@cluster0-tintra.6zpbvme.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0-TinTra"
+            'host': f"mongodb+srv://tintra:{password}@cluster0-tintra.6zpbvme.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0-TinTra"
         }
     }
 }

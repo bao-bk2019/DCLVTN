@@ -7,6 +7,9 @@ from rest_framework.decorators import api_view
 
 from minio import Minio
 
+from pandas.api.types import is_numeric_dtype
+
+
 import pandas as pd
 
 MINIO_ACCESS_KEY="P3sjX5cy7fgvk1iF"
@@ -53,7 +56,7 @@ def get_columns(request):
         metric_columns = []
         nomiinal_columns = []
         for i in df.columns:
-            if "int" in str(df[i].dtype):
+            if is_numeric_dtype(df[i]):
                 metric_columns += [i]
             else:
                 nomiinal_columns += [i]
