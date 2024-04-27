@@ -175,6 +175,8 @@ function RFMAnalysis() {
     {/* Illustration: https://rfm.rsquaredacademy.com/articles/rfm-customer-level-data_files/figure-html/rfmhist-1.png */}
     <h2 className='rfm-heading'>Segmented Customer Data</h2>
     <Button variant="contained">Export</Button>
+    {/* Excel data here*/}
+    <h2 className='rfm-heading'>Segment Size</h2>
     {/* Excel data here */}
     </div>
   )
