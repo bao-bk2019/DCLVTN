@@ -70,6 +70,7 @@ function Clustering() {
           InputLabelProps={{
             shrink: true,
           }}
+          size="small"
           sx={{width:'30%'}}
         />
     <Box sx={{display:'flex', pt:4}}>
