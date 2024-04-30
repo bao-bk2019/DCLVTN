@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import {React, useEffect, useState} from 'react'
 import './styles.scss'
 import Grid from '@mui/material/Grid';
 import FormGroup from '@mui/material/FormGroup';
@@ -13,6 +13,15 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Plot from 'react-plotly.js';
+import { DataGrid } from '@mui/x-data-grid';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import TablePagination from '@mui/material/TablePagination';
 
 function Clustering() {
   const [metric, setMetric] = useState(['example', 'example', 'example']);
@@ -24,6 +33,39 @@ function Clustering() {
   const onOptionChange = e => {
     setShow(e.target.value)
   }
+  const centerData = [  
+    {Cluster: 1, Salary: 2000, Age: 20},
+    {Cluster: 2, Salary: 3000, Age: 40},
+    {Cluster: 3, Salary: 2500, Age: 30},
+  ]
+  const allocationData = [
+    {Cluster: 1 ,Salary: 2000, Age: 20 },
+    {Cluster: 1 ,Salary: 2000, Age: 20 },
+    {Cluster: 1 ,Salary: 2000, Age: 20 },
+    {Cluster: 1 ,Salary: 2000, Age: 20 },
+    {Cluster: 2, Salary: 3000, Age: 40},
+    {Cluster: 2, Salary: 3000, Age: 40},
+    {Cluster: 2, Salary: 3000, Age: 40},
+    {Cluster: 2, Salary: 3000, Age: 40},
+    {Cluster: 3, Salary: 2500, Age: 30},
+    {Cluster: 3, Salary: 2500, Age: 30},
+    {Cluster: 3, Salary: 2500, Age: 30},
+    {Cluster: 3, Salary: 2500, Age: 30},
+  ]
+  // const columns = Object.keys(data[0]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+  
+
   return (
   <div>
     <div className="classifi-value">
@@ -62,7 +104,7 @@ function Clustering() {
       {(show === 'kmeans')? 
       <div>
       <h2 className='cluster-heading'>K-Means</h2>
-      <Box sx={{display:'flex', flexDirection: 'column'}} >
+    <Box sx={{display:'flex', flexDirection: 'column', rowGap: '10px'}} >
       <label className='var-item'>Number of clusters</label>
       <TextField
           id="outlined-number"
@@ -73,7 +115,35 @@ function Clustering() {
           size="small"
           sx={{width:'30%'}}
         />
-    <Box sx={{display:'flex', pt:4}}>
+      <Button variant="contained" sx={{width:'10%'}}>Analysis</Button>
+    </Box>
+    <Box sx={{display:'flex', pt:4, flexDirection: 'column'}}>
+    <h3 className='h3-heading'>Cluster Center</h3>
+    <Button variant="outlined" startIcon={<ContentCopyIcon />} sx={{mt: 1, mb:1, maxWidth:'90px'}}>Copy</Button>
+    <TableContainer component={Paper} sx={{width: '50%'}} >
+      <Table aria-label="simple table" size='small'>
+        <TableHead>
+          <TableRow>
+          {Object.keys(centerData[0]).map((item) => <TableCell>{item}</TableCell>)}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {centerData.map((row) => {
+            const name = Object.keys(row);
+            return(
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 }, width:'auto' }}
+            >
+            {name.map((item) => <TableCell>{row[item]}</TableCell>)}
+            </TableRow>)
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
+    <br/>
+    <h3 className='h3-heading'>Elbow Curve Chart</h3>
     <Plot
         data={[
             {
@@ -82,19 +152,43 @@ function Clustering() {
                 type: 'scatter'
               },
         ]}
-        layout={ {width: 640, height: 480, title: 'Elbow Method', xaxis:{title:'Number of clusters k'}, yaxis:{title:'Sum of squared distance'}} }
+        layout={ {width: 640, height: 480, title: 'Elbow Curve', xaxis:{title:'Number of clusters k'}, yaxis:{title:'Sum of squared distance'}} }
         style={{flex: '1 1 0%'}}
       />
+    <h3 className='h3-heading'>Cluster Allocation</h3>
+    <Button variant="outlined" startIcon={<ContentCopyIcon />} sx={{mt: 1, mb:1, maxWidth:'90px'}}>Copy</Button>
+    <Paper sx={{ width: '50%', overflowX: 'auto', maxHeight: 400}}>
+    <TableContainer sx={{}} >
+      <Table aria-label="simple table" size='small'>
+        <TableHead>
+          <TableRow>
+          {Object.keys(allocationData[0]).map((item) => <TableCell style={{minWidth: 100 }}>{item}</TableCell>)}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {allocationData.map((row) => {
+            const name = Object.keys(row);
+            return(
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 }, width:'auto' }}
+            >
+            {name.map((item) => <TableCell style={{minWidth: 100 }}>{row[item]}</TableCell>)}
+            </TableRow>)
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    </Paper>
     </Box>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      </Box>
-      </div>
+    </div>
       :(show === 'hierachical')? 
       <Box>
       Hierachical Clustering
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       </Box>
       :null
       }

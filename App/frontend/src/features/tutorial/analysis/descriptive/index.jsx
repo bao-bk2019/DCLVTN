@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-function GetStarted() {
+function DescriptivePage() {
   return (
     <Box>
     <Typography variant='h4' gutterBottom sx={{fontWeight: 'bold'}}>
@@ -14,4 +14,4 @@ function GetStarted() {
   )
 }
 
-export default GetStarted
+export default DescriptivePage

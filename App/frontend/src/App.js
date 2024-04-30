@@ -20,6 +20,7 @@ import Edit from './features/user/edit/index.jsx'
 import { AuthProvider } from "./AuthContext.js";
 import Tutorial from "./features/tutorial/index.jsx";
 import GetStarted from "./features/tutorial/getstarted/first/index.jsx";
+import DescriptivePage from "./features/tutorial/analysis/descriptive/index.jsx";
 import { Box } from "@mui/material";
 
 function Logout() {
@@ -58,6 +59,7 @@ function App() {
   ];
   const tutorialList = [
     { path: 'get-started', element: <GetStarted /> },
+    { path: 'descriptive', element: <DescriptivePage /> },
   ];
   return (
     <AuthProvider>
