@@ -12,17 +12,28 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Plot from 'react-plotly.js';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import TablePagination from '@mui/material/TablePagination';
 
 const Descriptive = () => {
-    const [metric, setMetric] = useState(['example', 'example', 'example']);
-    const [ordinal, setOrdinal] = useState(['example', 'example', 'example']);
-    const [nominal, setNominal] = useState(['example', 'example', 'example']);
+    // Add UseFetch api/get-columns    
+    const [metric, setMetric] = useState(['example1', 'example2', 'example3']);
+    const [label, setLabel] = useState(['example1', 'example2', 'example3']);
+    //
     const [metricShow, setMetricShow] = useState(true);
     const [multiMetric, setMultiMetric] = useState(true);
     const [labelShow, setLabelShow] = useState(true);
+
     const [ms, setMs] = useState(false);
     const [ls, setLs] = useState(false);
 
+    // Change depend to metric and label change
     const [metricCheckboxes, setMetricCheckboxes] = useState([
         false, // Checkbox 1
         false, // Checkbox 2
@@ -33,7 +44,13 @@ const Descriptive = () => {
         false, // Checkbox 2
         false  // Checkbox 3
     ]);
-    
+    const descriptiveData = 
+    [  
+        {Gender: 'Female', Mean: 30.17, StdDeviation: 5.95, Minimum: 7.22},
+        {Gender: 'Male', Mean: 45.83, StdDeviation: 7.22, Minimum: 34},
+    ]
+    // const [disabelLabel, setDisabelLabel] = useState([false, false, false]);
+
     const allUnchecked = (list) => {
         return list.every((checked) => !checked);
     };
@@ -47,6 +64,17 @@ const Descriptive = () => {
         if (count >= 2) return true;
         else return false;
     }
+    const twoMoreLabel = () => {
+        let count = 0;
+        for (let i=0; i < labelCheckboxes.length; i++){
+            if (labelCheckboxes[i] === true) {
+                count += 1;
+            }
+        }
+        if (count >= 2) return true;
+        else return false;
+    }
+
     const metricCalculate = ['Mean', 'Median', 'Mode', 'Sum', 'Std. Deviation'];
     const relativeCalculate = ['Frequency', '%'];
 
@@ -74,6 +102,12 @@ const Descriptive = () => {
     }
 
     useEffect(() => {
+        if(metric.length != metricCheckboxes.length) {
+            setMetricCheckboxes(metric.fill(false));
+        }
+        if (label.length != labelCheckboxes.length) {
+            setLabelCheckboxes(label.fill(false));
+        }
         // Update the document title using the browser API
         if (allUnchecked(metricCheckboxes)) {
             setMetricShow(false);
@@ -90,7 +124,19 @@ const Descriptive = () => {
         else {
             setMultiMetric(false);
         }
-
+        var checkedBoxes = document.querySelectorAll('input[id=labelcheckbox]');
+        if (twoMoreLabel()) {
+            for (let i = 0; i < checkedBoxes.length; i++ ) {
+                if (checkedBoxes[i].checked === false) {
+                    checkedBoxes[i].disabled = true;
+                }
+            }
+           
+        }
+        else 
+            for (let i = 0; i < checkedBoxes.length; i++ ) {
+                    checkedBoxes[i].disabled = false;
+            }
         if (allUnchecked(labelCheckboxes)) {
             setLabelShow(false);
             // Perform any other side effect when all metricCheckboxes are unchecked
@@ -99,7 +145,7 @@ const Descriptive = () => {
             setLabelShow(true);
         }
         
-        }, [metricCheckboxes, labelCheckboxes]);
+        }, [metricCheckboxes, labelCheckboxes, metric, label]);
 
     return (
     <div>
@@ -117,8 +163,8 @@ const Descriptive = () => {
             <Grid item xs={6}>
                 <div className="var-item">Label Variables:</div>
                 <FormGroup row>
-                    {ordinal.map((item, index) => <FormControlLabel control={
-                    <Checkbox onChange={handleLabelChange} value={index} />} label={item} />)}
+                    {label.map((item, index) => <FormControlLabel control={
+                    <Checkbox onChange={handleLabelChange} name={item} id='labelcheckbox' value={index} />} label={item} />)}
                 </FormGroup> 
             </Grid>
         </Grid>
@@ -138,7 +184,6 @@ const Descriptive = () => {
                     </FormGroup> 
                 </Grid>
             </Grid>
-        <Button variant="outlined" startIcon={<ContentCopyIcon />} sx={{mt: 4 }}>Copy</Button>
         </Box>
         : metricShow?
         <Box sx={{pt: 4}}>
@@ -151,7 +196,6 @@ const Descriptive = () => {
                     </FormGroup> 
                 </Grid>
             </Grid>
-        <Button variant="outlined" startIcon={<ContentCopyIcon />} sx={{mt: 4 }}>Copy</Button>
         </Box>
         : labelShow ?
         <Box sx={{pt: 4}}>
@@ -164,11 +208,35 @@ const Descriptive = () => {
                 </FormGroup> 
             </Grid>
         </Grid>
-    <Button variant="outlined" startIcon={<ContentCopyIcon />} sx={{mt: 4 }}>Copy</Button>
     </Box>
     :null}
 
-        </Box>
+     <Button variant="outlined" startIcon={<ContentCopyIcon />} sx={{mt: 4 }}>Copy</Button>
+    <Paper sx={{ width: '50%', overflowX: 'auto', maxHeight: 400}}>
+        <TableContainer sx={{}} >
+        <Table aria-label="simple table" size='small'>
+            <TableHead>
+            <TableRow>
+            {Object.keys(descriptiveData[0]).map((item) => <TableCell style={{minWidth: 100 }}>{item}</TableCell>)}
+            </TableRow>
+            </TableHead>
+            <TableBody>
+            {descriptiveData.map((row) => {
+                const name = Object.keys(row);
+                return(
+                <TableRow
+                key={row.name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 }, width:'auto' }}
+                >
+                {name.map((item) => <TableCell style={{minWidth: 100 }}>{row[item]}</TableCell>)}
+                </TableRow>)
+            })}
+            </TableBody>
+        </Table>
+        </TableContainer>
+    </Paper>
+
+    </Box>
     </div>
     {metricShow?
     <div>

@@ -31,7 +31,7 @@ function AppHeader({ excelData, setExcelData }) {
     const listOfChoice = [
         {name: 'Descriptive', element: <Descriptive />},
         {name: 'Cluster', element: <Clustering />},
-        {name: 'PCA', element: <PCA />},
+        // {name: 'PCA', element: <PCA />},
         {name: 'Forecasting ', element: <Forecasting />},
         {name: 'RFM', element: <RFMAnalysis />},
     ];

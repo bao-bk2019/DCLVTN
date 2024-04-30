@@ -25,7 +25,7 @@ function RFMAnalysis() {
     const [ftype, setFtype] = useState('');
     const [mtype, setMtype] = useState('');
     const [id, setId] = useState('');
-
+    // API GET name of the columns
     const [columns, setColumns] = useState(['example1', 'example2']);
 
     const recencyType = [{name: 'Number of days', value:'num'}, {name: 'Date', value:'date'}];
@@ -141,16 +141,19 @@ function RFMAnalysis() {
         </FormControl>
         </Box>
         <Button variant="contained">Analysis</Button>
+        <FormHelperText>Before clicking the Analysis button, you should select the data fields accurately, otherwise the system will return an error.</FormHelperText>
         </Box>
     </div>
+    
     <h2 className='rfm-heading'>RFM Score Table and Ranking</h2>
     <Button variant="contained">Export</Button>
+    
     {/* Excel data here */}
     <h2 className='rfm-heading'>RFM Histogram</h2>
     <Plot
         data={[
             {
-                x: [1,2,4,5,9,7,8,5,4,3,2,1],
+                x: [1,2,4,5,9,7,8,5,4,3,2,1,2,3,4,5,6,1,2,3,4,5],
                 type: 'histogram',
                 name: 'Monetary',
             },
