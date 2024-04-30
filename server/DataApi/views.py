@@ -4,6 +4,7 @@ from rest_framework import status
 from io import BytesIO
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.parsers import JSONParser
 
 from minio import Minio
 
@@ -62,3 +63,22 @@ def get_columns(request):
                 nomiinal_columns += [i]
         respone = {"metric": metric_columns, "nominal": nomiinal_columns}
         return Response(respone, status=status.HTTP_202_ACCEPTED)
+    
+
+@api_view(['POST'])
+def descriptive(request):
+    if request.method == "POST":
+
+        data = JSONParser().parse(request)
+        metric = data['metric']
+        ordinal = data['ordinal']
+        method = data['method']
+
+        df = read_data()
+        method += [ordinal]
+        df = df.groupby(ordinal)[metric].describe().reset_index()
+        response_data = []
+        for i in range(len(df.index)):
+            for j in method:
+                response_data += [{str(j): df.iloc[i][j]}]
+        return Response({"data": response_data}, status=status.HTTP_200_OK)

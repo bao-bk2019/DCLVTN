@@ -3,6 +3,7 @@ from DataApi import views
  
 urlpatterns = [ 
 
-    re_path(r'^api/upload$',views.upload),
-    re_path(r'^api/get_columns$', views.get_columns)
-]
+    re_path(r'^api/user/data$',views.upload),
+    re_path(r'^api/user/data-column$', views.get_columns),
+    re_path(r'^api/user/descriptive-analysis$', views.descriptive)
+]   
