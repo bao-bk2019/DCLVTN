@@ -19,15 +19,6 @@ function AppHeader({ excelData, setExcelData }) {
             setChoice(newChoice);
         }
     };
-    // useEffect(() => {
-    //     fetch('http://127.0.0.1:8000/api/get_columns')
-    //       .then((res) => {
-    //         return res.json();
-    //       })
-    //       .then((data) => {
-    //         console.log(data);
-    //       });
-    //   }, []);
     const listOfChoice = [
         {name: 'Descriptive', element: <Descriptive />},
         {name: 'Cluster', element: <Clustering />},

@@ -19,7 +19,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import TablePagination from '@mui/material/TablePagination';
+// import TablePagination from '@mui/material/TablePagination';
 
 const Descriptive = () => {
     // Add UseFetch api/get-columns    
@@ -30,27 +30,24 @@ const Descriptive = () => {
     const [multiMetric, setMultiMetric] = useState(true);
     const [labelShow, setLabelShow] = useState(true);
 
-    const [ms, setMs] = useState(false);
-    const [ls, setLs] = useState(false);
-
     // Change depend to metric and label change
-    const [metricCheckboxes, setMetricCheckboxes] = useState([
-        false, // Checkbox 1
-        false, // Checkbox 2
-        false  // Checkbox 3
-      ]);
-    const [labelCheckboxes, setLabelCheckboxes] = useState([
-        false, // Checkbox 1
-        false, // Checkbox 2
-        false  // Checkbox 3
-    ]);
-    const descriptiveData = 
-    [  
-        {Gender: 'Female', Mean: 30.17, StdDeviation: 5.95, Minimum: 7.22},
-        {Gender: 'Male', Mean: 45.83, StdDeviation: 7.22, Minimum: 34},
-    ]
-    // const [disabelLabel, setDisabelLabel] = useState([false, false, false]);
+    const [metricCheckboxes, setMetricCheckboxes] = useState([false, false, false]);
+    const [labelCheckboxes, setLabelCheckboxes] = useState([false, false, false]);
 
+    const [curMetric, setCurMetric] = useState([]);
+    const [curLabel, setCurLabel] = useState([]);
+    const [method, setMethod] = useState([]);
+
+    const [isCalculate, setIsCalculate] = useState(false);
+
+    // const [descriptiveData, setDescriptiveData] = useState([  
+    //     {" ": 'Age', Gender: 'Female', Mean: 30.17, StdDeviation: 5.95, Minimum: 7.22},
+    //     {" ": 'Age', Gender: 'Male', Mean: 45.83, StdDeviation: 7.22, Minimum: 34},
+    // ]);
+    const [columns, setColumns] = useState([" "]);
+    // const [disabelLabel, setDisabelLabel] = useState([false, false, false]);
+    
+    
     const allUnchecked = (list) => {
         return list.every((checked) => !checked);
     };
@@ -75,7 +72,20 @@ const Descriptive = () => {
         else return false;
     }
 
-    const metricCalculate = ['Mean', 'Median', 'Mode', 'Sum', 'Std. Deviation'];
+    const metricCalculate = [
+        {id:0, name: 'Count', value:'count'}, 
+        {id:1, name: 'Mean', value:'mean'},
+        // {id:2, name: 'Sum', value:'sum'},
+        {id:3, name: 'Quartile 1', value:'25%'},
+        {id:4, name: 'Median', value:'50%'},
+        {id:5, name: 'Quartile 3', value:'75%'},
+        // {name: 'Mode', value:'mode'},
+        {id:6, name: 'Standard deviation', value:'std'},
+        // {name: 'Variance', value:'var'},
+        {id:7, name: 'Minimum', value:'min'},
+        {id:8, name: 'Maximum', value:'max'},
+    ];
+
     const relativeCalculate = ['Frequency', '%'];
 
     const handleMetricChange = (e) => {
@@ -88,6 +98,15 @@ const Descriptive = () => {
             }
         });
         setMetricCheckboxes(nextmetricCheckboxes);
+
+        if (e.target.checked) {
+            setCurMetric(curMetric => [...curMetric, metric[e.target.value]]);
+        }
+        else {
+            const index = curMetric.indexOf(metric[e.target.value]);
+            setCurMetric(curMetric => curMetric.filter((m, i) => i !== index));
+        }
+
     }
     const handleLabelChange = (e) => {
         const nextlabelCheckboxes = labelCheckboxes.map((c, i) => {
@@ -99,13 +118,40 @@ const Descriptive = () => {
             }
         });
         setLabelCheckboxes(nextlabelCheckboxes);
+        if (e.target.checked) {
+            setCurLabel(curLabel => [...curLabel, label[e.target.value]]);
+        }
+        else {
+            const index = curLabel.indexOf(label[e.target.value]);
+            setCurLabel(curLabel => curLabel.filter((m, i) => i !== index));
+        }
     }
-
+    const handleMethodChange = (e) => {
+        if (e.target.checked) {
+            setMethod(method => [...method, e.target.value]);
+        }
+        else {
+            const index = method.indexOf(e.target.value);
+            setMethod(method => method.filter((m, i) => i !== index));
+        }
+    }
     useEffect(() => {
-        if(metric.length != metricCheckboxes.length) {
+        fetch('http://127.0.0.1:8000/api/user/data-column')
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {
+            setMetric(data.metric);
+            setLabel(data.nominal);
+        })
+        .catch((err) => console.error(err))
+    },[])
+ 
+    useEffect(() => {
+        if(metric.length !== metricCheckboxes.length) {
             setMetricCheckboxes(metric.fill(false));
         }
-        if (label.length != labelCheckboxes.length) {
+        if (label.length !== labelCheckboxes.length) {
             setLabelCheckboxes(label.fill(false));
         }
         // Update the document title using the browser API
@@ -146,38 +192,128 @@ const Descriptive = () => {
         }
         
         }, [metricCheckboxes, labelCheckboxes, metric, label]);
+    
+
+    async function postData(url = "", data = {}) {
+        // Default options are marked with *
+        const response = await fetch(url, {
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          mode: "cors", // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "same-origin", // include, *same-origin, omit
+          headers: {
+            "Content-Type": "application/json",
+          },
+          redirect: "follow", // manual, *follow, error
+          referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(data), // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+      };
+
+    const [result, setResult] = useState([]);
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        // console.log(method.length);
+        // console.log(curMetric.length)
+        // console.log(curLabel.length)
+        console.log(method.length !== 0 && (curMetric.length!==0 || curLabel.length !== 0));
+
+        if (method.length !== 0 && (curMetric.length!==0 || curLabel.length !== 0)) {
+            
+            for(const cur of curMetric){
+                const dataImport = {"metric": cur, "ordinal": curLabel, "method": method};
+                console.log(dataImport);    
+                // fetch("http://127.0.0.1:8000/api/user/descriptive-analysis", {
+                //     method: "POST", // *GET, POST, PUT, DELETE, etc.
+                //     body: JSON.stringify(dataImport), // body data type must match "Content-Type" header
+                // }).then((data) => {  
+                //     setCount(count => count + 1); 
+                //     for (const val of data["data"]){
+                //         setResult(result => [...result, val])
+                //     };
+                // }).catch((err) => console.error(err));
+                postData("http://127.0.0.1:8000/api/user/descriptive-analysis", dataImport)
+                    .then((data) => {  
+                        setCount(count => count + 1); 
+                        for (const val of data["data"]){
+                            setResult(result => [...result, val])
+                        };
+                    }).catch((err) => console.error(err));
+            };
+    }
+    },[method, curMetric, curLabel]);
+
+    useEffect(()=>{
+        console.log(count + "=" + curMetric.length + "+" + curLabel.length);
+        if (count === (curMetric.length + curLabel.length) && count !== 0){
+            setIsCalculate(true);
+            setColumns(Object.keys(result[0]));
+            console.log(result);
+        }
+        else setIsCalculate(false);
+
+    },[count, curMetric.length, curLabel.length])
 
     return (
     <div>
-    <div className="classifi-value">
-        <Box>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={6}>
-                <div className="var-item">Metric Variables: </div>
-                <FormGroup row >
-                    {metric.map((item, index) => <FormControlLabel control={
-                    <Checkbox onChange={handleMetricChange} value={index}/>} 
-                    label={item} />)}
-                </FormGroup>        
-            </Grid>
+        <div className="classifi-value">
+            <Box>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid item xs={6}>
-                <div className="var-item">Label Variables:</div>
-                <FormGroup row>
-                    {label.map((item, index) => <FormControlLabel control={
-                    <Checkbox onChange={handleLabelChange} name={item} id='labelcheckbox' value={index} />} label={item} />)}
-                </FormGroup> 
+                    <div className="var-item">Metric Variables: </div>
+                    <FormGroup row >
+                        {metric.map((item, index) => <FormControlLabel control={
+                        <Checkbox onChange={handleMetricChange} value={index}/>} 
+                        label={item} />)}
+                    </FormGroup>        
+                </Grid>
+                <Grid item xs={6}>
+                    <div className="var-item">Label Variables:</div>
+                    <FormGroup row>
+                        {label.map((item, index) => <FormControlLabel control={
+                        <Checkbox onChange={handleLabelChange} name={item} id='labelcheckbox' value={index} />} label={item} />)}
+                    </FormGroup> 
+                </Grid>
             </Grid>
-        </Grid>
-        {(metricShow===true)&&(labelShow===true)? 
-        <Box sx={{pt: 4}}>
+            {(metricShow===true)&&(labelShow===true)? 
+            <Box sx={{pt: 4}}>
+                <div className="var-item">Calculate:</div>
+
+                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                    <Grid item xs={6}>
+                        <FormGroup row>
+                            {metricCalculate.map((item) => <FormControlLabel control=
+                            {<Checkbox onChange={handleMethodChange}  value={item.value}/>} label={item.name} />)}
+                        </FormGroup> 
+                    </Grid>
+                    <Grid item xs={6}>
+                    <FormGroup row>
+                            {relativeCalculate.map((item) => <FormControlLabel control={
+                            <Checkbox />} label={item} />)}
+                        </FormGroup> 
+                    </Grid>
+                </Grid>
+            </Box>
+            : metricShow?
+            <Box sx={{pt: 4}}>
+                <div className="var-item">Calculate:</div>
+
+                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                    <Grid item xs={6}>
+                        <FormGroup row>
+                            {metricCalculate.map((item) => <FormControlLabel control=
+                            {<Checkbox onChange={handleMethodChange}  value={item.value}/>} label={item.name} />)}
+                        </FormGroup> 
+                    </Grid>
+                </Grid>
+            </Box>
+            : labelShow ?
+            <Box sx={{pt: 4}}>
             <div className="var-item">Calculate:</div>
 
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={6}>
-                    <FormGroup row>
-                        {metricCalculate.map((item) => <FormControlLabel control={<Checkbox  />} label={item} />)}
-                    </FormGroup> 
-                </Grid>
                 <Grid item xs={6}>
                 <FormGroup row>
                         {relativeCalculate.map((item) => <FormControlLabel control={<Checkbox />} label={item} />)}
@@ -185,255 +321,149 @@ const Descriptive = () => {
                 </Grid>
             </Grid>
         </Box>
-        : metricShow?
-        <Box sx={{pt: 4}}>
-            <div className="var-item">Calculate:</div>
-
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={6}>
-                    <FormGroup row>
-                        {metricCalculate.map((item) => <FormControlLabel control={<Checkbox  />} label={item} />)}
-                    </FormGroup> 
-                </Grid>
-            </Grid>
+        :null}
+        {/* Descriptive table */}
+        {isCalculate?
+            <div>
+                <Button variant="outlined" startIcon={<ContentCopyIcon />} sx={{mt: 4 }}>Copy</Button>
+                <Paper sx={{ width: '50%', overflowX: 'auto', maxHeight: 400}}>
+                    <TableContainer sx={{}} >
+                    <Table aria-label="simple table" size='small'>
+                        <TableHead>
+                        <TableRow>
+                        {columns.map((item) => <TableCell style={{minWidth: 100 }}>{item}</TableCell>)}
+                        </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        {result.map((row) => {
+                            const name = Object.keys(row);
+                            return(
+                            <TableRow
+                            key={row.name}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 }, width:'auto' }}
+                            >
+                            {name.map((item) => <TableCell style={{minWidth: 100 }}>{row[item]}</TableCell>)}
+                            </TableRow>)
+                        })}
+                        </TableBody>
+                    </Table>
+                    </TableContainer>
+                </Paper>
+            </div>
+        : null}
         </Box>
-        : labelShow ?
-        <Box sx={{pt: 4}}>
-        <div className="var-item">Calculate:</div>
-
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-            <Grid item xs={6}>
-            <FormGroup row>
-                    {relativeCalculate.map((item) => <FormControlLabel control={<Checkbox />} label={item} />)}
-                </FormGroup> 
-            </Grid>
-        </Grid>
-    </Box>
-    :null}
-
-     <Button variant="outlined" startIcon={<ContentCopyIcon />} sx={{mt: 4 }}>Copy</Button>
-    <Paper sx={{ width: '50%', overflowX: 'auto', maxHeight: 400}}>
-        <TableContainer sx={{}} >
-        <Table aria-label="simple table" size='small'>
-            <TableHead>
-            <TableRow>
-            {Object.keys(descriptiveData[0]).map((item) => <TableCell style={{minWidth: 100 }}>{item}</TableCell>)}
-            </TableRow>
-            </TableHead>
-            <TableBody>
-            {descriptiveData.map((row) => {
-                const name = Object.keys(row);
-                return(
-                <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 }, width:'auto' }}
-                >
-                {name.map((item) => <TableCell style={{minWidth: 100 }}>{row[item]}</TableCell>)}
-                </TableRow>)
-            })}
-            </TableBody>
-        </Table>
-        </TableContainer>
-    </Paper>
-
-    </Box>
-    </div>
-    {metricShow?
-    <div>
-    <h2 className='histogram-heading'>Histogram</h2>
-    <Box sx={{display:'flex'}}>
-    <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
-        <FormLabel id="location-radio-label">Location parameter</FormLabel>
-        <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="non"
-            name="location-radio-buttons-group"
-        >
-            <FormControlLabel value="non" control={<Radio />} label="Non" />
-            <FormControlLabel value="mean" control={<Radio />} label="Mean" />
-            <FormControlLabel value="median" control={<Radio />} label="Median" />
-            <FormControlLabel value="mean&median" control={<Radio />} label="Mean & Median" />
-        </RadioGroup>
-        <FormLabel id="size-radio-label">Size of the graphic</FormLabel>
-        <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="medium"
-            name="radio-buttons-group"
-        >
-            <FormControlLabel value="small" control={<Radio />} label="Small" />
-            <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-            <FormControlLabel value="large" control={<Radio />} label="Large" />
-            <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
-        </RadioGroup>
-    </FormControl>
-    <Plot
-        data={[
-            {x: [1,2,4,5,9,7,8,5,4,3,2,1],
-            type: 'histogram'}
-        ]}
-        layout={ {width: 640, height: 480, title: 'Histogram'} }
-        style={{flex: '1 1 0%'}}
-      />
-    </Box>
-    <h2 className='histogram-heading'>Box plot</h2>
-    <Box sx={{display:'flex'}}>
-    <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
-        <FormLabel id="orientation-radio-label">Orientation</FormLabel>
-        <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="vertical"
-            name="orientation-radio-buttons-group"
-        >
-            <FormControlLabel value="vertical" control={<Radio />} label="Vertical" />
-            <FormControlLabel value="horizontal" control={<Radio />} label="Horizontal" />
-        </RadioGroup>
-        <FormLabel id="size-radio-label">Size of the graphic</FormLabel>
-        <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="medium"
-            name="radio-buttons-group"
-        >
-            <FormControlLabel value="small" control={<Radio />} label="Small" />
-            <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-            <FormControlLabel value="large" control={<Radio />} label="Large" />
-            <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
-        </RadioGroup>
-    </FormControl>
-    <Plot
-        data={[
-          {
-            y: [0, 1, 1, 2, 3, 5, 8, 13, 21],
-                // boxpoints: 'all',
-                // jitter: 0.3,
-                // pointpos: -1.8,
-                type: 'box'
-          },
-        ]}
-        layout={ {width: 640, height: 480, title: 'A Fancy Plot'} }
-        style={{flex: '1 1 0%'}}
-      />
-    </Box>
-    
-    <h2 className='histogram-heading'>Line chart</h2>
-    <Box sx={{display:'flex'}}>
-    <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
-
-        <FormLabel id="size-radio-label">Size of the graphic</FormLabel>
-        <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="medium"
-            name="radio-buttons-group"
-        >
-            <FormControlLabel value="small" control={<Radio />} label="Small" />
-            <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-            <FormControlLabel value="large" control={<Radio />} label="Large" />
-            <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
-        </RadioGroup>
-    </FormControl>
-    <Plot
-        data={[
-            {
-                x: [1, 2, 3, 4],
-                y: [10, 15, 13, 17],
-                type: 'scatter'
-              },
-        ]}
-        layout={ {width: 640, height: 480, title: 'A Fancy Plot'} }
-        style={{flex: '1 1 0%'}}
-      />
-    </Box>
-    </div>  
-    : null}
-    
-    {labelShow||multiMetric?
-
-    <div>
-    <h2 className='histogram-heading'>Bar chart</h2>
-    <Box sx={{display:'flex'}}>
-    <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
-        
-        <FormLabel id="orientation-radio-label">Orientation</FormLabel>
-        <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="vertical"
-            name="orientation-radio-buttons-group"
-        >
-            <FormControlLabel value="vertical" control={<Radio />} label="Vertical" />
-            <FormControlLabel value="horizontal" control={<Radio />} label="Horizontal" />
-        </RadioGroup>
-        <FormLabel id="size-radio-label">Size of the graphic</FormLabel>
-        <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="medium"
-            name="radio-buttons-group"
-        >
-            <FormControlLabel value="small" control={<Radio />} label="Small" />
-            <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-            <FormControlLabel value="large" control={<Radio />} label="Large" />
-            <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
-        </RadioGroup>
-
-    </FormControl>
-    <Plot
-        data={[
-            {
-            x: ['giraffes', 'orangutans', 'monkeys'],
-            y: [20, 14, 23],
-            type: 'bar'
-            }
-        ]}
-        layout={ {width: 640, height: 480, title: 'Basic Bar Chart'} }
-        style={{flex: '1 1 0%'}}
-      />
-    </Box>
-    </div>
-    : null}
-    {labelShow?
-    <div>
-    <h2 className='histogram-heading'>Pie chart</h2>
-    <Box sx={{display:'flex'}}>
-    <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
-        
-        <FormLabel id="orientation-radio-label">Orientation</FormLabel>
-        <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="vertical"
-            name="orientation-radio-buttons-group"
-        >
-            <FormControlLabel value="vertical" control={<Radio />} label="Vertical" />
-            <FormControlLabel value="horizontal" control={<Radio />} label="Horizontal" />
-        </RadioGroup>
-        <FormLabel id="size-radio-label">Size of the graphic</FormLabel>
-        <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="medium"
-            name="radio-buttons-group"
-        >
-            <FormControlLabel value="small" control={<Radio />} label="Small" />
-            <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-            <FormControlLabel value="large" control={<Radio />} label="Large" />
-            <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
-        </RadioGroup>
-
-    </FormControl>
-    <Plot
-        data={[
-            {
-            values: [19, 26, 55],
-            labels: ['Residential', 'Non-Residential', 'Utility'],
-            type: 'pie'
-            }
-        ]}
-        layout={ {width: 640, height: 480, title: 'Basic Pie Chart'} }
-        style={{flex: '1 1 0%'}}
-      />
-    </Box>
-
-    </div>
-    : null}
-    {multiMetric? 
+        </div>
+        {metricShow?
         <div>
-        <h2 className='histogram-heading'>Scatter plot</h2>
+        <h2 className='histogram-heading'>Histogram</h2>
+        <Box sx={{display:'flex'}}>
+        <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
+            <FormLabel id="location-radio-label">Location parameter</FormLabel>
+            <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="non"
+                name="location-radio-buttons-group"
+            >
+                <FormControlLabel value="non" control={<Radio />} label="Non" />
+                <FormControlLabel value="mean" control={<Radio />} label="Mean" />
+                <FormControlLabel value="median" control={<Radio />} label="Median" />
+                <FormControlLabel value="mean&median" control={<Radio />} label="Mean & Median" />
+            </RadioGroup>
+            <FormLabel id="size-radio-label">Size of the graphic</FormLabel>
+            <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="medium"
+                name="radio-buttons-group"
+            >
+                <FormControlLabel value="small" control={<Radio />} label="Small" />
+                <FormControlLabel value="medium" control={<Radio />} label="Medium" />
+                <FormControlLabel value="large" control={<Radio />} label="Large" />
+                <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
+            </RadioGroup>
+        </FormControl>
+        <Plot
+            data={[
+                {x: [1,2,4,5,9,7,8,5,4,3,2,1],
+                type: 'histogram'}
+            ]}
+            layout={ {width: 640, height: 480, title: 'Histogram'} }
+            style={{flex: '1 1 0%'}}
+        />
+        </Box>
+        <h2 className='histogram-heading'>Box plot</h2>
+        <Box sx={{display:'flex'}}>
+        <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
+            <FormLabel id="orientation-radio-label">Orientation</FormLabel>
+            <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="vertical"
+                name="orientation-radio-buttons-group"
+            >
+                <FormControlLabel value="vertical" control={<Radio />} label="Vertical" />
+                <FormControlLabel value="horizontal" control={<Radio />} label="Horizontal" />
+            </RadioGroup>
+            <FormLabel id="size-radio-label">Size of the graphic</FormLabel>
+            <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="medium"
+                name="radio-buttons-group"
+            >
+                <FormControlLabel value="small" control={<Radio />} label="Small" />
+                <FormControlLabel value="medium" control={<Radio />} label="Medium" />
+                <FormControlLabel value="large" control={<Radio />} label="Large" />
+                <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
+            </RadioGroup>
+        </FormControl>
+        <Plot
+            data={[
+            {
+                y: [0, 1, 1, 2, 3, 5, 8, 13, 21],
+                    // boxpoints: 'all',
+                    // jitter: 0.3,
+                    // pointpos: -1.8,
+                    type: 'box'
+            },
+            ]}
+            layout={ {width: 640, height: 480, title: 'A Fancy Plot'} }
+            style={{flex: '1 1 0%'}}
+        />
+        </Box>
+        
+        <h2 className='histogram-heading'>Line chart</h2>
+        <Box sx={{display:'flex'}}>
+        <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
+
+            <FormLabel id="size-radio-label">Size of the graphic</FormLabel>
+            <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="medium"
+                name="radio-buttons-group"
+            >
+                <FormControlLabel value="small" control={<Radio />} label="Small" />
+                <FormControlLabel value="medium" control={<Radio />} label="Medium" />
+                <FormControlLabel value="large" control={<Radio />} label="Large" />
+                <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
+            </RadioGroup>
+        </FormControl>
+        <Plot
+            data={[
+                {
+                    x: [1, 2, 3, 4],
+                    y: [10, 15, 13, 17],
+                    type: 'scatter'
+                },
+            ]}
+            layout={ {width: 640, height: 480, title: 'A Fancy Plot'} }
+            style={{flex: '1 1 0%'}}
+        />
+        </Box>
+        </div>  
+        : null}
+        
+        {labelShow||multiMetric?
+
+        <div>
+        <h2 className='histogram-heading'>Bar chart</h2>
         <Box sx={{display:'flex'}}>
         <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
             
@@ -457,23 +487,108 @@ const Descriptive = () => {
                 <FormControlLabel value="large" control={<Radio />} label="Large" />
                 <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
             </RadioGroup>
-    
+
         </FormControl>
         <Plot
             data={[
                 {
-                    x: [2, 3, 4, 5],
-                    y: [16, 5, 11, 9],
-                    mode: 'markers',
-                    type: 'scatter'
-                },
+                x: ['giraffes', 'orangutans', 'monkeys'],
+                y: [20, 14, 23],
+                type: 'bar'
+                }
             ]}
-            layout={ {width: 640, height: 480, title: 'Basic Bar Chart',xaxis: {title: 'Country'}, yaxis: {title: 'Medals'} } }
+            layout={ {width: 640, height: 480, title: 'Basic Bar Chart'} }
             style={{flex: '1 1 0%'}}
-          />
+        />
         </Box>
         </div>
-    : null}
+        : null}
+        {labelShow?
+        <div>
+        <h2 className='histogram-heading'>Pie chart</h2>
+        <Box sx={{display:'flex'}}>
+        <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
+            
+            <FormLabel id="orientation-radio-label">Orientation</FormLabel>
+            <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="vertical"
+                name="orientation-radio-buttons-group"
+            >
+                <FormControlLabel value="vertical" control={<Radio />} label="Vertical" />
+                <FormControlLabel value="horizontal" control={<Radio />} label="Horizontal" />
+            </RadioGroup>
+            <FormLabel id="size-radio-label">Size of the graphic</FormLabel>
+            <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="medium"
+                name="radio-buttons-group"
+            >
+                <FormControlLabel value="small" control={<Radio />} label="Small" />
+                <FormControlLabel value="medium" control={<Radio />} label="Medium" />
+                <FormControlLabel value="large" control={<Radio />} label="Large" />
+                <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
+            </RadioGroup>
+
+        </FormControl>
+        <Plot
+            data={[
+                {
+                values: [19, 26, 55],
+                labels: ['Residential', 'Non-Residential', 'Utility'],
+                type: 'pie'
+                }
+            ]}
+            layout={ {width: 640, height: 480, title: 'Basic Pie Chart'} }
+            style={{flex: '1 1 0%'}}
+        />
+        </Box>
+
+        </div>
+        : null}
+        {multiMetric? 
+            <div>
+            <h2 className='histogram-heading'>Scatter plot</h2>
+            <Box sx={{display:'flex'}}>
+            <FormControl sx={{width:'20%', borderRight:'1px solid rgba(0, 43, 154, .3)'}}>
+                
+                <FormLabel id="orientation-radio-label">Orientation</FormLabel>
+                <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="vertical"
+                    name="orientation-radio-buttons-group"
+                >
+                    <FormControlLabel value="vertical" control={<Radio />} label="Vertical" />
+                    <FormControlLabel value="horizontal" control={<Radio />} label="Horizontal" />
+                </RadioGroup>
+                <FormLabel id="size-radio-label">Size of the graphic</FormLabel>
+                <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="medium"
+                    name="radio-buttons-group"
+                >
+                    <FormControlLabel value="small" control={<Radio />} label="Small" />
+                    <FormControlLabel value="medium" control={<Radio />} label="Medium" />
+                    <FormControlLabel value="large" control={<Radio />} label="Large" />
+                    <FormControlLabel value="extralarge" control={<Radio />} label="Extra Large" />
+                </RadioGroup>
+        
+            </FormControl>
+            <Plot
+                data={[
+                    {
+                        x: [2, 3, 4, 5],
+                        y: [16, 5, 11, 9],
+                        mode: 'markers',
+                        type: 'scatter'
+                    },
+                ]}
+                layout={ {width: 640, height: 480, title: 'Basic Bar Chart',xaxis: {title: 'Country'}, yaxis: {title: 'Medals'} } }
+                style={{flex: '1 1 0%'}}
+            />
+            </Box>
+            </div>
+        : null}
     </div>
     )
 }

@@ -11,7 +11,11 @@ TableFeature.propTypes = {
 function TableFeature(props) {
     const [excelFile, setExcelFile] = useState(null);
     const [typeError, setTypeError] = useState(null);
+    const [file, setFile] = useState(null);
 
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+      };
     // submit state
 
     // onchange event
@@ -35,10 +39,11 @@ function TableFeature(props) {
         else {
             console.log('Please select your file');
         }
+        setFile(e.target.files[0]);
     }
 
     // submit event
-    const handleFileSubmit = (e) => {
+    const handleFileSubmit = async (e) => {
         e.preventDefault();
         if (excelFile !== null) {
             const workbook = XLSX.read(excelFile, { type: 'buffer' });
@@ -47,7 +52,18 @@ function TableFeature(props) {
             const data = XLSX.utils.sheet_to_json(worksheet);
             props.setExcelData(data);
         }
-    }
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/user/data', {
+              method: 'POST',
+              body: formData,
+            });
+            // Handle response as needed
+          } catch (error) {
+            console.error('Error uploading file:', error);
+          }
+    };
     return (
 
         <div>
