@@ -6,7 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+// import DialogContentText from '@mui/material/DialogContentText';
 
 import './styles.scss'
 TableList.propTypes = {
@@ -18,6 +18,24 @@ TableList.propTypes = {
 };
 
 function TableList(props) {
+    // const [file, setFile] = useState(null);
+    // const handleFileChange = (e) => {
+    //     setFile(e.target.files[0]);
+    // };
+    // const handleUpload = async () => {
+    //     const formData = new FormData();
+    //     formData.append('file', file);
+    //     try {
+    //         const response = await fetch('http://127.0.0.1:8000/api/upload', {
+    //           method: 'POST',
+    //           body: formData,
+    //         });
+    //         // Handle response as needed
+    //       } catch (error) {
+    //         console.error('Error uploading file:', error);
+    //       }
+    // };
+
     const handleCellChange = (rowIndex, columnIndex, newValue) => {
         const updatedData = [...props.excelData];
         updatedData[rowIndex][Object.keys(updatedData[0] || {})[columnIndex]] = newValue;
