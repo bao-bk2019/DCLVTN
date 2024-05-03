@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, ButtonGroup } from 'react-bootstrap';
-import { List, CellMeasurer, CellMeasurerCache, ScrollSync } from 'react-virtualized';
+import { List, CellMeasurer, CellMeasurerCache, ScrollSync, Grid } from 'react-virtualized';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -91,13 +91,24 @@ function TableList(props) {
             </CellMeasurer>
         );
     };
-    function cellRenderer({ columnIndex, key, rowIndex, style }) {
+    const handleInputChange = (e, rowIndex, columnIndex) => {
+        const { value } = e.target;
+        const newData = [...props.excelData];
+        newData[rowIndex][columnIndex] = value;
+        props.setExcelData(newData);
+    };
+
+    // Render mỗi ô là một input
+    const cellRenderer = ({ columnIndex, key, rowIndex, style }) => {
         return (
-            <div key={key} style={style}>
-                {props.excelData[rowIndex][columnIndex]}
-            </div>
+            <input
+                key={key}
+                style={style}
+                value={props.excelData[rowIndex][Object.keys(props.excelData[0])[columnIndex]]}
+                onChange={(e) => handleCellChange(rowIndex, columnIndex, e.target.value)}
+            />
         );
-    }
+    };
 
     const [open, setOpen] = useState(false);
     const ReturnProfilePage = () => {
@@ -113,13 +124,7 @@ function TableList(props) {
         // props.excelData.columnscount = Object.keys(props.excelData.reduce((row, curentvalue) => Object.keys(row).length > curentvalue? Object.keys(row).length: curentvalue , -1 )).length;
 
     }
-    // const ColumnCountandLength = {
-    //     count: Object.keys(props.excelData.reduce((row, curentvalue) => Object.keys(row).length > curentvalue? Object.keys(row).length: curentvalue , -1 )).length ,
-    //     length: 100
-    // }
-    // function CountColumns(data) {
-    //     return Object.keys(data[0]).length
-    // }
+
     return (
         <div >
             <ButtonGroup aria-label="Basic example" style={{ paddingLeft: 0 }}>
@@ -128,87 +133,25 @@ function TableList(props) {
                 <Button variant="secondary">Transform Data</Button>
                 <Button variant="secondary">Settings</Button>
             </ButtonGroup>
-            <div >
-                {/* form */}
-                {/* <form className="form-group custom-form" onSubmit={props.handleFileSubmit}>
-                    <input type="file" className="form-control" required onChange={props.handleFile} />
-                    <ButtonGroup aria-label="Basic example" >
-                        <Button type="submit" variant="secondary" >UPLOAD</Button>
-                    </ButtonGroup>
-
-                    {props.typeError && (
-                        <div className="alert alert-danger" role="alert">{props.typeError}</div>
-                    )}
-                </form> */}
-
-                {/* view data */}
-                <div >
+            {/* view data */}
+            <div  >
+                {props.excelData ? (
                     <div className='table-content'>
-                        {props.excelData ? (
-                            // <div className="table-responsive" style={{ maxHeight: 300 }}>
-                            //     <table className="table">
-
-                            //         <thead>
-                            //             <tr>
-                            //                 {Object.keys(props.excelData[0]).map((key) => (
-                            //                     <th key={key}>{key}</th>
-                            //                 ))}
-                            //             </tr>
-                            //         </thead>
-
-                            //         <tbody>
-                            //             {props.excelData.map((individualExcelData, rowIndex) => (
-                            //                 <tr key={rowIndex}>
-                            //                     {Object.keys(props.excelData[0]).map((key, columnIndex) => (
-                            //                         (individualExcelData[key]) ? (
-                            //                             <td key={key}>
-                            //                                 <input
-                            //                                     type="text"
-                            //                                     value={individualExcelData[key]}
-                            //                                     onChange={(e) => handleCellChange(rowIndex, columnIndex, e.target.value)}
-                            //                                 />
-                            //                             </td>
-                            //                         ) : (
-                            //                             <td key={key}>
-                            //                                 <input
-                            //                                     type="text"
-                            //                                     value=""
-                            //                                     placeholder='No value'
-                            //                                     onChange={(e) => handleCellChange(rowIndex, columnIndex, e.target.value)}
-                            //                                 />
-                            //                             </td>
-                            //                         )
-                            //                     ))}
-                            //                 </tr>
-                            //             ))}
-                            //         </tbody>
-
-                            //     </table>
-                            // </div>
-                            <ScrollSync>
-                                {({ onScroll, scrollTop, scrollLeft }) => (
-                                    <div style={{ paddingLeft: '60px', paddingRight: '60px' }}>
-                                        <div style={{ overflowX: 'auto', maxWidth: '100%' }} onScroll={onScroll}>
-                                            {renderHeaderRow()}
-                                            <List
-                                                width={200 * Object.keys(props.excelData[0]).length}
-                                                height={300}
-                                                rowCount={props.excelData.length}
-                                                rowHeight={cacheRef.current.rowHeight}
-                                                rowRenderer={renderRow}
-                                                scrollTop={scrollTop}
-                                                scrollLeft={scrollLeft}
-                                            />
-                                        </div>
-                                    </div>
-                                )}
-                            </ScrollSync>
-                        ) : (
-                            <div style={{ width: '100%', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No File is uploaded yet!</div>
-                        )}
+                        <div style={{ overflowX: 'auto', overflowY: 'hidden', maxWidth: '100%' }} >
+                            <Grid
+                                rowCount={props.excelData.length}
+                                columnCount={Object.keys(props.excelData[0]).length}
+                                rowHeight={cacheRef.current.rowHeight}
+                                columnWidth={200}
+                                height={400}
+                                width={1200}
+                                cellRenderer={cellRenderer}
+                            />
+                        </div>
                     </div>
-                </div>
-
+                ) : (
+                    <div style={{ width: '100%', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No File is uploaded yet!</div>
+                )}
             </div>
             <Dialog
                 open={open}
@@ -225,7 +168,7 @@ function TableList(props) {
                     <Button type="submit" variant="secondary" >UPLOAD</Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </div >
     );
 }
 
