@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import TableFeature from '../table';
 // import { Button } from 'react-bootstrap';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -10,25 +10,27 @@ import Forecasting from './Forecasting';
 import Clustering from './clustering';
 import PCA from './PCA';
 import RFMAnalysis from './RFM';
-function AppHeader({ excelData, setExcelData }) {
+import { useScrollTrigger } from '@mui/material';
+function AppHeader({ excelData, setExcelData}) {
     const [choice, setChoice] = React.useState('Descriptive');
     const handleChoice = (event, newChoice) => {
         if (newChoice !== null) {
             setChoice(newChoice);
         }
     };
+    const [isUpload, setIsUpload] = useState(false);
     const listOfChoice = [
-        {name: 'Descriptive', element: <Descriptive />},
-        {name: 'Cluster', element: <Clustering />},
+        {name: 'Descriptive', element: <Descriptive isUpload={isUpload} excelData={excelData} />},
+        {name: 'Cluster', element: <Clustering isUpload={isUpload} excelData={excelData} />},
         // {name: 'PCA', element: <PCA />},
-        {name: 'Forecasting ', element: <Forecasting />},
-        {name: 'RFM', element: <RFMAnalysis />},
+        {name: 'Forecasting ', element: <Forecasting isUpload={isUpload} excelData={excelData} />},
+        {name: 'RFM', element: <RFMAnalysis isUpload={isUpload} excelData={excelData} />},
     ];
     return (
         <div className='main-container'>
             <h2 className='h2-text' id='my-overview'>Overview</h2>
             <div className='mx-auto'>   
-                <TableFeature excelData={excelData} setExcelData={setExcelData} />
+                <TableFeature excelData={excelData} setExcelData={setExcelData} isUpload={isUpload} setIsUpload={setIsUpload}/>
             </div>
             <h2 className='h2-text' id='my-analysis'>Analysis</h2>
             <ToggleButtonGroup
