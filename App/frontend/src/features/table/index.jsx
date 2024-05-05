@@ -6,6 +6,8 @@ import TableList from './tableList';
 TableFeature.propTypes = {
     excelData: PropTypes.arrayOf(PropTypes.object),
     setExcelData: PropTypes.func,
+    isUpload: PropTypes.bool,
+    setIsUpload: PropTypes.func
 };
 
 function TableFeature(props) {
@@ -63,6 +65,7 @@ function TableFeature(props) {
           } catch (error) {
             console.error('Error uploading file:', error);
           }
+          props.setIsUpload(true);
     };
     return (
 

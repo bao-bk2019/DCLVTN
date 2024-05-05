@@ -19,10 +19,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import CalculateIcon from '@mui/icons-material/Calculate';
 // import TablePagination from '@mui/material/TablePagination';
 
-const Descriptive = () => {
-    // Add UseFetch api/get-columns    
+const Descriptive = (props) => {
     const [metric, setMetric] = useState(['example1', 'example2', 'example3']);
     const [label, setLabel] = useState(['example1', 'example2', 'example3']);
     //
@@ -39,15 +39,8 @@ const Descriptive = () => {
     const [method, setMethod] = useState([]);
 
     const [isCalculate, setIsCalculate] = useState(false);
+    
 
-    // const [descriptiveData, setDescriptiveData] = useState([  
-    //     {" ": 'Age', Gender: 'Female', Mean: 30.17, StdDeviation: 5.95, Minimum: 7.22},
-    //     {" ": 'Age', Gender: 'Male', Mean: 45.83, StdDeviation: 7.22, Minimum: 34},
-    // ]);
-    const [columns, setColumns] = useState([" "]);
-    // const [disabelLabel, setDisabelLabel] = useState([false, false, false]);
-    
-    
     const allUnchecked = (list) => {
         return list.every((checked) => !checked);
     };
@@ -135,24 +128,26 @@ const Descriptive = () => {
             setMethod(method => method.filter((m, i) => i !== index));
         }
     }
+    // const [getMetricData, setGetMetricData] = useState(false);
+    // const [getLabelData, setGetLabelData] = useState(false);
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/user/data-column')
-        .then((res) => {
-            return res.json();
-        })
-        .then((data) => {
-            setMetric(data.metric);
-            setLabel(data.nominal);
-        })
-        .catch((err) => console.error(err))
-    },[])
- 
+        const fetchData = async () => {
+            const data = await fetch('http://127.0.0.1:8000/api/user/data-column');
+            const json = await data.json();
+            setMetric(json.metric);
+            setLabel(json.nominal);
+        }; 
+        if (props.isUpload){
+            fetchData().catch(console.error);
+        };
+    },[props.isUpload, props.excelData])
+
     useEffect(() => {
         if(metric.length !== metricCheckboxes.length) {
-            setMetricCheckboxes(metric.fill(false));
+            setMetricCheckboxes(Array(metric.length).fill(false));
         }
         if (label.length !== labelCheckboxes.length) {
-            setLabelCheckboxes(label.fill(false));
+            setLabelCheckboxes(Array(label.length).fill(false));
         }
         // Update the document title using the browser API
         if (allUnchecked(metricCheckboxes)) {
@@ -193,6 +188,8 @@ const Descriptive = () => {
         
         }, [metricCheckboxes, labelCheckboxes, metric, label]);
     
+    const [result, setResult] = useState([]);
+    // const [count, setCount] = useState(0);
 
     async function postData(url = "", data = {}) {
         // Default options are marked with *
@@ -208,53 +205,30 @@ const Descriptive = () => {
           referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
           body: JSON.stringify(data), // body data type must match "Content-Type" header
         });
-        return response.json(); // parses JSON response into native JavaScript objects
-      };
 
-    const [result, setResult] = useState([]);
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-        // console.log(method.length);
-        // console.log(curMetric.length)
-        // console.log(curLabel.length)
-        console.log(method.length !== 0 && (curMetric.length!==0 || curLabel.length !== 0));
-
-        if (method.length !== 0 && (curMetric.length!==0 || curLabel.length !== 0)) {
-            
-            for(const cur of curMetric){
-                const dataImport = {"metric": cur, "ordinal": curLabel, "method": method};
-                console.log(dataImport);    
-                // fetch("http://127.0.0.1:8000/api/user/descriptive-analysis", {
-                //     method: "POST", // *GET, POST, PUT, DELETE, etc.
-                //     body: JSON.stringify(dataImport), // body data type must match "Content-Type" header
-                // }).then((data) => {  
-                //     setCount(count => count + 1); 
-                //     for (const val of data["data"]){
-                //         setResult(result => [...result, val])
-                //     };
-                // }).catch((err) => console.error(err));
-                postData("http://127.0.0.1:8000/api/user/descriptive-analysis", dataImport)
-                    .then((data) => {  
-                        setCount(count => count + 1); 
-                        for (const val of data["data"]){
-                            setResult(result => [...result, val])
-                        };
-                    }).catch((err) => console.error(err));
-            };
+        const json = await response.json(); // parses JSON response into native JavaScript objects
+        // setCount(count => count + 1); 
+        for (const val of json["data"]){
+            setResult(result => [...result, val])
+        };
+    };
+    const clearData = async () => {
+        setResult([]);
+        setIsCalculate(false);
+        console.log("It's clear")
     }
-    },[method, curMetric, curLabel]);
-
-    useEffect(()=>{
-        console.log(count + "=" + curMetric.length + "+" + curLabel.length);
-        if (count === (curMetric.length + curLabel.length) && count !== 0){
+    const handleClickCalculate = () => {
+        clearData();
+        if (method.length !== 0 && (curMetric.length!==0 || curLabel.length !== 0)) {
+            if (curMetric.length!==0) {
+                for(const cur of curMetric){
+                    const dataImport = {"metric": cur, "ordinal": curLabel, "method": method};
+                    postData("http://127.0.0.1:8000/api/user/descriptive-analysis", dataImport).catch((err) => console.error(err));
+                }
+            }
             setIsCalculate(true);
-            setColumns(Object.keys(result[0]));
-            console.log(result);
         }
-        else setIsCalculate(false);
-
-    },[count, curMetric.length, curLabel.length])
+    }
 
     return (
     <div>
@@ -262,22 +236,28 @@ const Descriptive = () => {
             <Box>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid item xs={6}>
-                    <div className="var-item">Metric Variables: </div>
+                <div className="var-item">Metric Variables: </div>
+                {props.isUpload? 
                     <FormGroup row >
-                        {metric.map((item, index) => <FormControlLabel control={
+                    {metric.map((item, index) => <FormControlLabel control={
                         <Checkbox onChange={handleMetricChange} value={index}/>} 
-                        label={item} />)}
-                    </FormGroup>        
-                </Grid>
-                <Grid item xs={6}>
-                    <div className="var-item">Label Variables:</div>
-                    <FormGroup row>
-                        {label.map((item, index) => <FormControlLabel control={
-                        <Checkbox onChange={handleLabelChange} name={item} id='labelcheckbox' value={index} />} label={item} />)}
+                    label={item} />)}
                     </FormGroup> 
-                </Grid>
+                : null}           
             </Grid>
-            {(metricShow===true)&&(labelShow===true)? 
+            <Grid item xs={6}>
+                <div className="var-item">Label Variables:</div>
+                {props.isUpload? 
+                <FormGroup row>
+                    {label.map((item, index) => <FormControlLabel control={
+                        <Checkbox onChange={handleLabelChange} id='labelcheckbox' value={index} />} 
+                    label={item} />)}
+
+                </FormGroup> 
+                :null}
+            </Grid>
+            </Grid> 
+            {(metricShow===true)&&(labelShow===true)?  
             <Box sx={{pt: 4}}>
                 <div className="var-item">Calculate:</div>
 
@@ -295,6 +275,7 @@ const Descriptive = () => {
                         </FormGroup> 
                     </Grid>
                 </Grid>
+                <Button variant="outlined" onClick={handleClickCalculate} startIcon={<CalculateIcon />} sx={{mt: 4 }}>Calculate</Button>
             </Box>
             : metricShow?
             <Box sx={{pt: 4}}>
@@ -308,6 +289,7 @@ const Descriptive = () => {
                         </FormGroup> 
                     </Grid>
                 </Grid>
+                <Button variant="outlined" onClick={handleClickCalculate} startIcon={<CalculateIcon />} sx={{mt: 4 }}>Calculate</Button>
             </Box>
             : labelShow ?
             <Box sx={{pt: 4}}>
@@ -320,18 +302,19 @@ const Descriptive = () => {
                     </FormGroup> 
                 </Grid>
             </Grid>
-        </Box>
+            <Button variant="outlined" onClick={handleClickCalculate} startIcon={<CalculateIcon />} sx={{mt: 4 }}>Calculate</Button>
+            </Box>
         :null}
         {/* Descriptive table */}
         {isCalculate?
             <div>
                 <Button variant="outlined" startIcon={<ContentCopyIcon />} sx={{mt: 4 }}>Copy</Button>
-                <Paper sx={{ width: '50%', overflowX: 'auto', maxHeight: 400}}>
+                <Paper sx={{pt:2, overflowX: 'auto', maxHeight: 400}}>
                     <TableContainer sx={{}} >
                     <Table aria-label="simple table" size='small'>
                         <TableHead>
                         <TableRow>
-                        {columns.map((item) => <TableCell style={{minWidth: 100 }}>{item}</TableCell>)}
+                        {(result.length !==0 )? Object.keys(result[0]).map((item) => <TableCell style={{minWidth: 100 }}>{item}</TableCell>): null}
                         </TableRow>
                         </TableHead>
                         <TableBody>
@@ -589,6 +572,11 @@ const Descriptive = () => {
             </Box>
             </div>
         : null}
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    
     </div>
     )
 }

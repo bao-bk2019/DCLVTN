@@ -18,24 +18,6 @@ TableList.propTypes = {
 };
 
 function TableList(props) {
-    // const [file, setFile] = useState(null);
-    // const handleFileChange = (e) => {
-    //     setFile(e.target.files[0]);
-    // };
-    // const handleUpload = async () => {
-    //     const formData = new FormData();
-    //     formData.append('file', file);
-    //     try {
-    //         const response = await fetch('http://127.0.0.1:8000/api/upload', {
-    //           method: 'POST',
-    //           body: formData,
-    //         });
-    //         // Handle response as needed
-    //       } catch (error) {
-    //         console.error('Error uploading file:', error);
-    //       }
-    // };
-
     const handleCellChange = (rowIndex, columnIndex, newValue) => {
         const updatedData = [...props.excelData];
         updatedData[rowIndex][Object.keys(updatedData[0] || {})[columnIndex]] = newValue;
@@ -142,7 +124,6 @@ function TableList(props) {
         // props.excelData.columnscount = Object.keys(props.excelData.reduce((row, curentvalue) => Object.keys(row).length > curentvalue? Object.keys(row).length: curentvalue , -1 )).length;
 
     }
-
     return (
         <div >
             <ButtonGroup aria-label="Basic example" style={{ paddingLeft: 0 }}>
