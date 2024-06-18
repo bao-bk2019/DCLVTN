@@ -1,11 +1,14 @@
 
-import React from "react"
+import React, { Fragment } from "react"
 import './App.css'
 import { Routes, Route, Navigate, useLocation } from "react-router-dom"
 import Home from './features/home/index.jsx'
-import SignIn from './features/signin/index.jsx';
-import SignupForm from './features/signup/index.jsx';
-import { useNavigate, Route, Routes, useLocation } from 'react-router-dom';
+import SignIn from "./components/Auth/SignIn.jsx"
+import SignupForm from "./components/Auth/SignUp.jsx"
+
+import ProtectedRoute from "./components/ProtectedRoute"
+import NotFound from "./features/notfound/NotFound.jsx";
+import AppHeader from './features/dashboard/index.jsx';
 import Header from './components/Header/index.jsx';
 import { useState, useEffect } from 'react';
 import User from './features/user/index.jsx'
@@ -16,11 +19,12 @@ import Notification from './features/user/notification/index.jsx'
 import Security from "./features/user/security/index.jsx";
 import Security from "./features/user/security/index.jsx";
 import Edit from './features/user/edit/index.jsx'
-import { AuthProvider } from "./AuthContext.js";
+import { AuthProvider } from "./components/Auth/AuthContext.js";
 import Tutorial from "./features/tutorial/index.jsx";
 import GetStarted from "./features/tutorial/getstarted/first/index.jsx";
 import DescriptivePage from "./features/tutorial/analysis/descriptive/index.jsx";
 import { Box } from "@mui/material";
+import Layout from "./components/Layout.jsx";
 
 function Logout() {
   localStorage.clear()
@@ -63,29 +67,29 @@ function App() {
   return (
     <AuthProvider>
       <Box className="main-app">
-        <Header currentPage={pageLocation} />
+        {/* <Header currentPage={pageLocation} />  */}
         <Routes>
-<<<<<<< HEAD
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/register" element={<RegisterAndLogout />} />
-        <Route path="/home" element={<Home />} />
-
-  {/* Protected routes */ }
-        <Route path="/calculate" element={<ProtectedRoute><AppHeader setExcelData={setExcelData} excelData={excelData} /></ProtectedRoute>} />
-        <Route path="/user/*" element={<ProtectedRoute><User /></ProtectedRoute>}>
-          <Route index element={<Profile />} />
-          {userList.map((item) => <Route path={item.path} element={item.element} />)}
-        </Route>
-        <Route path="tutorial" element={<ProtectedRoute><Tutorial /></ProtectedRoute>}>
-          <Route index element={<GetStarted />} />
-          {tutorialList.map((item) => <Route path={item.path} element={item.element} />)}
-        </Route>
-  {/* Not found route */ }
-  <Route path="*" element={<NotFound />} />
-      </Routes >
-      </Box >
-    </AuthProvider >
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/register" element={<RegisterAndLogout />} />
+          <Route element={<Layout />}>
+            <Route path="/home" element={<Home />} />
+            {/* Protected routes */}
+            <Route path="/calculate" element={<ProtectedRoute><AppHeader setExcelData={setExcelData} excelData={excelData} /></ProtectedRoute>} />
+            <Route path="/user/*" element={<ProtectedRoute><User /></ProtectedRoute>}>
+              <Route index element={<Profile />} />
+              {userList.map((item) => <Route path={item.path} element={item.element} />)}
+            </Route>
+            <Route path="tutorial" element={<ProtectedRoute><Tutorial /></ProtectedRoute>}>
+              <Route index element={<GetStarted />} />
+              {tutorialList.map((item) => <Route path={item.path} element={item.element} />)}
+            </Route>
+            {/* Not found route */}
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </Box>
+    </AuthProvider>
   );
 }
 

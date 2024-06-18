@@ -1,12 +1,12 @@
 import { useState } from "react";
-import api from "../Auth/api";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../Auth/constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import "./styles.scss"
-import "../../styles/Password.css"
+import "../../../styles/Password.css"
 import LoadingIndicator from "../LoadingIndicator";
 import { Link } from "react-router-dom";
-import { useAuth } from "../Auth/AuthContext";
+import { useAuth } from "../AuthContext";
 
 function evaluatePasswordStrength(password) {
     const lengthCriteria = password.length >= 12;
