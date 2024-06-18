@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 import './styles.scss';
 import logo from '../Img/logo.png'
 import AvatarDropdown from './Dropdown/index.jsx'
-import { useAuth } from '../../AuthContext.js';
+import { useAuth } from '../Auth/AuthContext.js';
 
 const Header = ({ currentPage}) => {
     const { isAuthorized } = useAuth();
-    console.log(isAuthorized);
     if (!isAuthorized) {
         return (
-            <div className="header-main">
+            <header className="header-main">
                 <div className="div-2">
                     <div className="div-3">
                         <Link Link to="/home" style={{ textDecoration: "none" }}>
@@ -54,7 +53,7 @@ const Header = ({ currentPage}) => {
                         <Link to="/login" style={{ textDecoration: "none" }}>{"Login"}</Link>
                     </div>
                 </div>
-            </div>
+            </header>
         );
     }
     else if (currentPage === 'home') {
