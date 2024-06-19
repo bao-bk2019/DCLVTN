@@ -1,16 +1,9 @@
 import {React, useState, useEffect, forwardRef, Fragment} from 'react'
 import './styles.scss'
 import Grid from '@mui/material/Grid';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Button from '@mui/material/Button';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import Plot from 'react-plotly.js';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -23,7 +16,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { getNativeSelectUtilityClasses } from '@mui/material';
+// import { getNativeSelectUtilityClasses } from '@mui/material';
 // import { DataGrid } from '@mui/x-data-grid';
 import { TableVirtuoso } from 'react-virtuoso';
 

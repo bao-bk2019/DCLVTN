@@ -1,4 +1,4 @@
-import {React, useEffect, useState} from 'react'
+import {React, useState} from 'react'
 import './styles.scss'
 import Grid from '@mui/material/Grid';
 import FormGroup from '@mui/material/FormGroup';
@@ -10,8 +10,8 @@ import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import TextField from '@mui/material/TextField';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+// import FormControl from '@mui/material/FormControl';
+// import FormLabel from '@mui/material/FormLabel';
 import Plot from 'react-plotly.js';
 // import { DataGrid } from '@mui/x-data-grid';
 import Table from '@mui/material/Table';
@@ -21,15 +21,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import TablePagination from '@mui/material/TablePagination';
+// import TablePagination from '@mui/material/TablePagination';
 
 function Clustering() {
   const [metric, setMetric] = useState(['example', 'example', 'example']);
   const [label, setLabel] = useState(['example', 'example', 'example']);
   const [show, setShow] = useState('');
 
-  const metricCalculate = ['Mean', 'Median', 'Mode', 'Sum', 'Std. Deviation'];
-  const relativeCalculate = ['Frequency', '%'];
+  // const metricCalculate = ['Mean', 'Median', 'Mode', 'Sum', 'Std. Deviation'];
+  // const relativeCalculate = ['Frequency', '%'];
   const onOptionChange = e => {
     setShow(e.target.value)
   }
@@ -53,17 +53,17 @@ function Clustering() {
     {Cluster: 3, Salary: 2500, Age: 30},
   ]
   // const columns = Object.keys(data[0]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  // const [page, setPage] = useState(0);
+  // const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  // const handleChangePage = (event, newPage) => {
+  //   setPage(newPage);
+  // };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  // const handleChangeRowsPerPage = (event) => {
+  //   setRowsPerPage(+event.target.value);
+  //   setPage(0);
+  // };
   
 
   return (

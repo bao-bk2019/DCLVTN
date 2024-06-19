@@ -3,17 +3,17 @@ import './style.scss';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
+// import OutlinedInput from '@mui/material/OutlinedInput';
+// import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 function Language() {
-  const languages = [
-    'English',
-    'Vietnamese'
-  ];
+  // const languages = [
+  //   'English',
+  //   'Vietnamese'
+  // ];
   const [age, setAge] = React.useState('');
   const handleChange = (event) => {
     setAge(event.target.value);

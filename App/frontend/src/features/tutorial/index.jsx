@@ -1,10 +1,8 @@
 import React from 'react'
 import './styles.scss'
-<<<<<<< HEAD
-import { Route, Routes, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import TableContent from './tableContent'
-import GetStarted from './getstarted/first';
-import Box from '@mui/material/Box';
+
 import Box from '@mui/material/Box';
 
 function Tutorial() {

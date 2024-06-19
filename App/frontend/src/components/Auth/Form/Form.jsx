@@ -61,7 +61,7 @@ function Form({ route, method }) {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
                 setIsAuthorized(true);
-                navigate("/home")
+                navigate("/calculate")
             } else {
                 navigate("/login")
             }
