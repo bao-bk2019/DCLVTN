@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import TableFeature from '../table';
 // import { Button } from 'react-bootstrap';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -8,9 +8,9 @@ import './styles.scss'
 import Descriptive from './descriptive';
 import Forecasting from './Forecasting';
 import Clustering from './clustering';
-import PCA from './PCA';
+// import PCA from './PCA';
 import RFMAnalysis from './RFM';
-import { useScrollTrigger } from '@mui/material';
+// import { useScrollTrigger } from '@mui/material';
 function AppHeader({ excelData, setExcelData}) {
     const [choice, setChoice] = React.useState('Descriptive');
     const handleChoice = (event, newChoice) => {

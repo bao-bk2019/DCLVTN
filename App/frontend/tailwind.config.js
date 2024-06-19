@@ -54,6 +54,8 @@ module.exports = {
       colors: {
         lBlue: '#0048FF',
         dBlue: '#002B9A',
+        'logo-color': '#38bdf8',
+        'header-color': '#0f172a',
       },
     },
   },

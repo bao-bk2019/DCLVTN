@@ -1,5 +1,5 @@
 
-import React, { Fragment } from "react"
+import React from "react"
 import './App.css'
 import { Routes, Route, Navigate, useLocation } from "react-router-dom"
 import Home from './features/home/index.jsx'
@@ -9,7 +9,7 @@ import SignupForm from "./components/Auth/SignUp.jsx"
 import ProtectedRoute from "./components/ProtectedRoute"
 import NotFound from "./features/notfound/NotFound.jsx";
 import AppHeader from './features/dashboard/index.jsx';
-import Header from './components/Header/index.jsx';
+// import Header from './components/Header/Header.jsx';
 import { useState, useEffect } from 'react';
 import User from './features/user/index.jsx'
 import Profile from './features/user/profile/index.jsx'
@@ -44,8 +44,8 @@ function App() {
 
   useEffect(() => {
     // execute on location change
-    setCount(count + 1);
-    console.log('Location changed!', location.pathname);
+    // setCount(count + 1);
+    // console.log('Location changed!', location.pathname);
     if (location === '/home')
       setPageLocation('home');
     else setPageLocation('main');
@@ -65,13 +65,13 @@ function App() {
   ];
   return (
     <AuthProvider>
-      <Box className="main-app">
+      <Box className="w-screen">
       {/* <Header currentPage={pageLocation} />  */}
       <Routes>
         <Route path="/login" element={<SignIn />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<RegisterAndLogout />} />
-          <Route element={<Layout/>}>
+          <Route element={<Layout currentPage={pageLocation}/>}>
             <Route path="/home" element={<Home />} />
             {/* Protected routes */}
             <Route path="/calculate" element={<ProtectedRoute><AppHeader setExcelData={setExcelData} excelData={excelData} /></ProtectedRoute>} />

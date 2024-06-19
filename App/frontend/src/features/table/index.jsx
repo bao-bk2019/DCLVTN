@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss'
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+// import Button from 'react-bootstrap/Button';
+// import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import * as XLSX from 'xlsx';
 import TableList from './tableList';
 TableFeature.propTypes = {

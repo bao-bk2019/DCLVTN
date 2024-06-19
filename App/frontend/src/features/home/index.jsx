@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './styles.scss';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+// import Box from '@mui/material/Box';
+// import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
 import SecurityIcon from '@mui/icons-material/Security';
