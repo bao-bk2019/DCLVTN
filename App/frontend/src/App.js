@@ -2,12 +2,12 @@
 import React from "react"
 import './App.css'
 import { Routes, Route, Navigate, useLocation } from "react-router-dom"
-import Home from './features/home/index.jsx'
+import Home from './components/HomePage.jsx'
 import SignIn from "./components/Auth/SignIn.jsx"
 import SignupForm from "./components/Auth/SignUp.jsx"
 
 import ProtectedRoute from "./components/ProtectedRoute"
-import NotFound from "./features/notfound/NotFound.jsx";
+import NotFound from "./components/NotFound.jsx"
 import AppHeader from './features/dashboard/index.jsx';
 // import Header from './components/Header/Header.jsx';
 import { useState, useEffect } from 'react';
