@@ -1,12 +1,11 @@
 import { useState } from "react";
-import api from "../Auth/api";
+import api from "./api";
 import { useNavigate } from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../Auth/constants";
-import "./styles.scss"
-import "../../styles/Password.css"
-import LoadingIndicator from "../LoadingIndicator";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
+import LoadingIndicator from "./LoadingIndicator";
 import { Link } from "react-router-dom";
-import { useAuth } from "../Auth/AuthContext";
+import { useAuth } from "./AuthContext";
+import { getCLS } from "web-vitals";
 
 function evaluatePasswordStrength(password) {
     const lengthCriteria = password.length >= 12;
@@ -38,7 +37,11 @@ function Form({ route, method }) {
         setPasswordStrength(evaluatePasswordStrength(password));
         setPassword(password);
     };
-
+    function getColor(str){
+        if (str === 'Strong') return 'text-green';
+        else if (str == 'Medium') return 'text-orange';
+        else return 'text-red';
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -61,11 +64,12 @@ function Form({ route, method }) {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
                 setIsAuthorized(true);
-                navigate("/home")
+                navigate("/calculate")
             } else {
                 navigate("/login")
             }
         } catch (error) {
+            console.log(error);
             setErrorMessage('Tên đăng nhập hoặc mật khẩu không đúng!');
         } finally {
             setLoading(false)
@@ -73,84 +77,84 @@ function Form({ route, method }) {
     };
     if (name === "Login") {
         return (
-            <div className="container-1">
-                <header className="title">Sign in</header>
-                <div className="subtitle">Sign in and start your work!</div>
+            <div className="block items-center text-center bg-slate-200 pt-28">
+                <header className="text-vivid-blue text-6xl font-sans">Sign in</header>
+                <div className="text-vivid-blue mt-4 font-sans">Sign in and start your work!</div>
                 <form onSubmit={handleSubmit} >
                     <div>
-                        <label htmlFor="email" className="visually-hidden">Enter Email</label>
+                        <label htmlFor="email" className="absolute w-px h-px p-0 truncate">Enter Email</label>
                         <input
                             id="email"
                             type="email"
                             placeholder="Enter Email"
-                            className="input-field"
-                            value={email}
+                            className="w-72 p-3 mt-5 max-w-full border border-vivid-blue rounded-lg"
+                            value={email}   
                             onChange={e => setEmail(e.target.value)}
                         />
                     </div>
                     <div>
-                        <label htmlFor="password" className="visually-hidden">Password</label>
+                        <label htmlFor="password" className="absolute w-px h-px p-0 truncate">Password</label>
                         <input
                             id="password"
                             type="password"
                             placeholder="Password"
-                            className="input-field"
+                            className="w-72 p-3 mt-5 max-w-full border border-vivid-blue rounded-lg"
                             value={password}
                             onChange={handlePasswordChange}
                         />
                     </div>
                     {loading && <LoadingIndicator />}
-                    {errorMessage && <p className="error-message">{errorMessage}</p>}
-                    <button className="button" type="submit">Login</button>
+                    {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+                    <button className="w-72 p-3 mt-5 max-w-full border rounded-lg bg-pinkish-purple capitalize text-white text-xl font-medium" type="submit">Login</button>
                 </form>
-                <div className="link">
+                <div className="text-vivid-blue mt-4">
                     <Link to="/register">Don’t have an account?</Link>
                 </div>
-                <div className="info">
-                    <span className="link" >Forgot password? </span>
+                <div className="text-vivid-blue mt-4">  
+                    <span className="text-vivid-blue mt-4" >Forgot password? </span>
                     <Link to="/register" style={{ fontSize: 18 }}>Sign up</Link>
                 </div>
-                <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7cb08ccd3d75cd9302262765155183963ba140f9795f48a3ba8f472b701079f7?apiKey=afa45b72ad7c46798aa3d2761c2357ac&" alt="Sign in visual representation" className="img-container" />
+                <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7cb08ccd3d75cd9302262765155183963ba140f9795f48a3ba8f472b701079f7?apiKey=afa45b72ad7c46798aa3d2761c2357ac&" alt="Sign in visual representation" className="w-full self-stretch mt-28" />
             </div>
         );
     }
 
     return (
-        <div className="container-1">
-            <header className="title">Sign up</header>
-            <div className="subtitle">Create your account!</div>
+        <div className="block items-center text-center bg-slate-200 pt-28">
+            <header className="text-vivid-blue text-6xl font-sans">Sign up</header>
+            <div className="text-vivid-blue mt-4 font-sans">Create your account!</div>
             <form onSubmit={handleSubmit} >
                 <div>
-                    <label htmlFor="email" className="visually-hidden">Enter Email</label>
+                    <label htmlFor="email" className="absolute w-px h-px p-0 truncate">Enter Email</label>
                     <input
                         id="email"
                         type="email"
                         placeholder="Enter Email"
-                        className="input-field"
+                        className="w-72 p-3 mt-5 max-w-full border border-vivid-blue rounded-lg"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
                 </div>
                 <div>
-                    <label htmlFor="password" className="visually-hidden">Password</label>
+                    <label htmlFor="password" className="absolute w-px h-px p-0 truncate">Password</label>
                     <input
                         id="password"
                         type="password"
                         placeholder="Password"
-                        className="input-field"
+                        className="w-72 p-3 mt-5 max-w-full border border-vivid-blue rounded-lg"
                         value={password}
                         onChange={handlePasswordChange}
                     />
                 </div>
                 {loading && <LoadingIndicator />}
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
-                {<p className={`password-strength ${passwordStrength.toLowerCase()}`}>Password strength: {passwordStrength}</p>}
-                <button className="button" type="submit">Sign up</button>
+                {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+                {<p className={getColor(passwordStrength)}>Password strength: {passwordStrength}</p>}
+                <button className="w-72 p-3 mt-5 max-w-full border rounded-lg bg-pinkish-purple capitalize text-white text-xl font-medium" type="submit">Sign up</button>
             </form>
-            <div className="link">
+            <div className="text-vivid-blue mt-4">
                 <Link to="/login">Have an account?</Link>
             </div>
-            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7cb08ccd3d75cd9302262765155183963ba140f9795f48a3ba8f472b701079f7?apiKey=afa45b72ad7c46798aa3d2761c2357ac&" alt="Sign in visual representation" className="img-container" />
+            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7cb08ccd3d75cd9302262765155183963ba140f9795f48a3ba8f472b701079f7?apiKey=afa45b72ad7c46798aa3d2761c2357ac&" alt="Sign in visual representation" className="w-full self-stretch mt-28" />
         </div>
     );
 }

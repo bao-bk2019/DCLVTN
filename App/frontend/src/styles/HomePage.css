@@ -294,8 +294,6 @@
     border-right: 3px solid rgba(196, 212, 255, 1);
     background-color: var(--White, #fff);
     text-align: center;
-    // justify-content: center;
-    // align-items: center;
     padding-top: 35%;
     color: #0048ff;
     aspect-ratio: 1;

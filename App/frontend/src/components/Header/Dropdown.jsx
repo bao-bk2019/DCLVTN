@@ -3,18 +3,10 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Avatar from '@mui/material/Avatar';
+// import Avatar from '@mui/material/Avatar';
 import { useNavigate } from 'react-router-dom';
 
 const AvatarDropdown = () => {
-  // const avatarimg = React.forwardRef(({ children, onClick }, ref) => (
-  //   <Avatar
-  //     sx={{ width: '54px', height: '54px' }}
-  //     onClick={(e) => {
-  //       e.preventDefault();
-  //       onClick(e);
-  //     }} />
-  // ));
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open= Boolean(anchorEl);

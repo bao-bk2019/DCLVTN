@@ -1,6 +1,7 @@
 import * as React from "react";
 // import { Link } from 'react-router-dom';
-import './styles.scss';
+import "../styles/HomePage.css"
+// import './HomePage.css'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 // import Box from '@mui/material/Box';
 // import Paper from '@mui/material/Paper';
@@ -185,6 +186,7 @@ function MyComponent(props) {
                     </p>
                 </Grid>
             </Grid>
+            
             <div className="div-64">
                 <div className="div-65">
                     <div className="column-17">
