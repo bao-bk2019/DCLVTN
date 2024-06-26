@@ -24,6 +24,8 @@ import GetStarted from "./features/tutorial/getstarted/first/index.jsx";
 import DescriptivePage from "./features/tutorial/analysis/descriptive/index.jsx";
 import { Box } from "@mui/material";
 import Layout from "./components/Layout.jsx";
+import Overview from "./components/Dashboard/Overview.jsx"
+import Dashboard from "./components/Dashboard/Dashboard.jsx"
 
 function Logout() {
   localStorage.clear()
@@ -40,17 +42,17 @@ function App() {
   const [excelData, setExcelData] = useState(null);
   const [pageLocation, setPageLocation] = useState('home')
   const location = useLocation();
-  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    // execute on location change
-    // setCount(count + 1);
-    // console.log('Location changed!', location.pathname);
     if (location === '/home')
       setPageLocation('home');
     else setPageLocation('main');
   }, [location]);
 
+  const mainList = [
+    { path: '/overview', element: <Overview /> },
+    { path: '/dashboard', element: <Dashboard /> },
+  ];
   const userList = [
     { path: 'profile', element: <Profile /> },
     { path: 'edit', element: <Edit /> },
@@ -75,6 +77,9 @@ function App() {
             <Route path="/home" element={<Home />} />
             {/* Protected routes */}
             <Route path="/calculate" element={<ProtectedRoute><AppHeader setExcelData={setExcelData} excelData={excelData} /></ProtectedRoute>} />
+            {/* <Route path="/dashboard" element={<ProtectedRoute><MainPage/></ProtectedRoute>}/> */}
+            {mainList.map((item) => <Route path={item.path} element={<ProtectedRoute>{item.element}</ProtectedRoute>} />)}
+
             <Route path="/user/*" element={<ProtectedRoute><User /></ProtectedRoute>}>
               <Route index element={<Profile />} />
               {userList.map((item) => <Route path={item.path} element={item.element} />)}
