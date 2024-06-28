@@ -46,6 +46,14 @@ module.exports = {
         350: '350px',
         620: '620px',
       },
+      minHeight: {
+        1000: "1000px",
+      },
+      maxWidth:{
+        1024: "1024px",
+        1280: "1280px",
+        1536: "1536px",
+      },
       screens: {
         sm: '640px',
         md: '768px',
