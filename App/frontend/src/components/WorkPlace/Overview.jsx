@@ -21,7 +21,8 @@ function Overview() {
   function createData(name, description, systemfield) {
     return { name, description, systemfield};
   }
-  const option = [{value: "TransactionID", label: "Transaction ID"},
+  const option = [
+    {value: "Transaction ID", label: "Transaction ID"},
     {value: "Date", label: "Date"},
     {value: "Time", label: "Time"},
     {value: "Customer ID", label: "Customer ID"},
@@ -63,9 +64,9 @@ function Overview() {
   ]
 
   return (
-    <div className='mx-32 mt-12'> 
-      <h1 className=" font-sans text-xl font-bold">Overview</h1>
-      <div className='flex'>
+    <div className='mx-32 mt-8 min-h-1000'> 
+      <h1 className=" font-sans text-xl font-bold ">Overview</h1>
+      <div className='flex text-vivid-blue'>
         <PreviewIcon sx={{height:"auto", width:"36px"}} />
         <h2 className=" font-sans text-3xl font-bold"> Data Review</h2>
       </div>
@@ -86,7 +87,7 @@ function Overview() {
         </div>
       </Box>:null 
       }
-      <div className="flex">
+      <div className="flex text-vivid-blue">
         <EditIcon sx={{height:"auto", width:"36px"}} />
         <h2 className=" font-sans text-3xl font-bold">Setting Fields</h2>
       </div>
@@ -108,8 +109,10 @@ function Overview() {
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.description}</TableCell>
                 <TableCell><Select 
-                // defaultValue="TransactionID"
-                defaultMenuIsOpen="TransactionID"
+                // value={row.systemfield}
+                defaultValue={{value: row.systemfield, label: row.systemfield}}
+                // defaultInputValue='Transaction ID'
+                // defaultMenuIsOpen="Transaction ID"
                 options={option}
                 />
                 </TableCell>
