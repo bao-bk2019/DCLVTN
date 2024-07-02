@@ -63,15 +63,28 @@ module.exports = {
       },
       colors: {
         'vivid-blue': '#0048FF',
-        dBlue: '#002B9A',
+        'deep-blue': '#002B9A',
         'logo-color': '#38bdf8',
         'header-color': '#0f172a',
         'pinkish-purple': 'rgba(214, 0, 141, 0.64)',
         'light-blue': 'rgba(138,215,224,255)',
+        'vivid-pink': '#D6008D',
         green: 'green',
         orange: 'orange',
         red: 'red',
       },
+      keyframes:{
+        scaling: {
+          '0%, 100%': {
+            transform: 'scale(0.2)',
+            background: '#D6008D',
+          },
+          '50%': {
+            transform: 'scale(1)',
+            background: '#0761ff',
+          }
+        }
+      }
     },
   },
   plugins: [],
