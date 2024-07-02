@@ -68,7 +68,7 @@ function App() {
   ];
   return (
     <AuthProvider>
-      <Box className="w-screen">
+      <Box className="w-screen bg-slate-200">
         {/* <Header currentPage={pageLocation} />  */}
         <Routes>
           <Route path="/login" element={<SignIn />} />

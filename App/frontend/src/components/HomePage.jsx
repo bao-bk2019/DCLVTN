@@ -15,7 +15,7 @@ import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import GetBackToTopButton from './GetBackToTopButton'
 function MyComponent(props) {
     return (
-        <div className="bg-white flex flex-col mx-auto p-0 lg:max-w-1024">
+        <div className="bg-slate-200 flex flex-col mx-auto p-0 lg:max-w-1024">
             <div className="div-11">
                 <div className="div-12">
                     <div className="column">
