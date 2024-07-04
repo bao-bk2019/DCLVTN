@@ -39,7 +39,7 @@ module.exports = {
         685: '685px',
         800: '800px',
         '90vh': '90vh',
-        
+        '100vh': '100vh',
       },
       minWidth: {
         210: '210px',

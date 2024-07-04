@@ -64,7 +64,7 @@ function Form({ route, method }) {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
                 setIsAuthorized(true);
-                navigate("/calculate")
+                navigate("/overview")
             } else {
                 navigate("/login")
             }
@@ -77,7 +77,7 @@ function Form({ route, method }) {
     };
     if (name === "Login") {
         return (
-            <div className="block items-center text-center bg-slate-200 pt-28">
+            <div className="block items-center text-center bg-slate-200 pt-28 h-100vh">
                 <header className="text-vivid-blue text-6xl font-sans">Sign in</header>
                 <div className="text-vivid-blue mt-4 font-sans">Sign in and start your work!</div>
                 <form onSubmit={handleSubmit} >
@@ -114,7 +114,9 @@ function Form({ route, method }) {
                     <span className="text-vivid-blue mt-4" >Forgot password? </span>
                     <Link to="/register" style={{ fontSize: 18 }}>Sign up</Link>
                 </div>
-                <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7cb08ccd3d75cd9302262765155183963ba140f9795f48a3ba8f472b701079f7?apiKey=afa45b72ad7c46798aa3d2761c2357ac&" alt="Sign in visual representation" className="w-full self-stretch mt-28" />
+                <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7cb08ccd3d75cd9302262765155183963ba140f9795f48a3ba8f472b701079f7?apiKey=afa45b72ad7c46798aa3d2761c2357ac&"
+                alt="Sign in visual representation" 
+                className=" absolute w-full self-stretch bottom-0" />
             </div>
         );
     }
