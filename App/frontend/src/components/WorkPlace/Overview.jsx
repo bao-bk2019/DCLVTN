@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -19,12 +19,21 @@ import CircularProgress from '@mui/material/CircularProgress';
 import HomeIcon from '@mui/icons-material/Home';
 import LoadingDot from '../Animation/LoadingDot';
 import { DataGrid } from '@mui/x-data-grid';
+import { create } from '@mui/material/styles/createTransitions';
 // import { Home } from '@mui/icons-material';
 
 function Overview() {
   // Define state
   const [isUpload, setIsUpload] = useState(false); //Test file is upload here
   const [loading, setLoading] = useState(false);
+  // Sample state
+  const [rows, setRows] = useState([
+    createData("id", "Transaction ID"),
+    createData("date", "Date"),
+  ]);
+  // Define Ref
+  const excelFileInputRef = useRef();
+  const textFileInputRef = useRef();
   // Define data
   const option = [
     {value: "Transaction ID", label: "Transaction ID"},
@@ -61,7 +70,7 @@ function Overview() {
       "Salesperson ID": "A unique identifier for the salesperson handling the transaction.",
       "Profit Margin": "The profit margin on the product sold.",
       "Other": "Other",
-  }
+  };
   const keysColumn = {
     "Transaction ID": {field: 'Transaction ID', headerName:"Transaction ID", width: 130},
       "Date": {field: 'Date', headerName:"Date", width: 130},
@@ -89,11 +98,20 @@ function Overview() {
   function getColumns(colName){
     return keysColumn[colName]
   };
+  function getSelect(val, index){
+    setRows(rows.map((row, i) =>
+      i === index? {...row, systemfield: val.value}:row
+    ));
+  }
+  // Handle change 
+  // useEffect(()=>{
+  //   console.log(rows);
+  // },[rows])
   // Sample data
-  const rows = [
-    createData("id", "Transaction ID"),
-    createData("date", "Date"),
-  ];
+  // const rows = [
+  //   createData("id", "Transaction ID"),
+  //   createData("date", "Date"),
+  // ];
   const columns = [keysColumn["Transaction ID"], keysColumn["Customer ID"], keysColumn["Product ID"], keysColumn["Payment Method"], keysColumn["Store Location"], keysColumn["Salesperson ID"]];
   const rows1 =[
     {"Transaction ID": 1, "Customer ID":2 , "Product ID": 3, "Payment Method": 4, "Store Location": 5, "Salesperson ID": 6,},
@@ -112,10 +130,11 @@ function Overview() {
     <div className='mx-32 mt-8 min-h-1000'>
       <div className='flex items-center text-deep-blue'>
         <Link to='../home' ><HomeIcon/></Link>
-        <span className='font-bold px-1'> &gt; </span>
+        <span className='font-bold px-1 font-mono'> &gt; </span>
         <Link to='../overview'>
           <h1 className=" font-sans text-xl font-bold ">Overview</h1>
         </Link>
+        <span className='font-bold px-1 font-mono'> &gt; </span>
       </div>
       <div className='flex text-vivid-blue'>
         <PreviewIcon sx={{height:"auto", width:"36px"}} />
@@ -127,13 +146,19 @@ function Overview() {
         <div className="text-xl">Add your data in here</div>
         <div className="text-xl">Once loaded, your data will appear in this section.</div>
         <div className='flex flex-row space-x-4 mt-4'>
-        <button className='flex flex-col border rounded w-36 p-1 items-center justify-center bg-light-blue'>
+        <button className='flex flex-col border rounded w-36 p-1 items-center justify-center bg-light-blue'
+        onClick={() => excelFileInputRef.current.click()}
+        >
           <img src={ExcelLogo}></img>
           <span >Import from Excel</span>
+          <input type='file' ref={excelFileInputRef} accept='application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' hidden/>
         </button>
-        <button className='flex flex-col border rounded w-36 p-1 items-center justify-center bg-light-blue'>
+        <button className='flex flex-col border rounded w-36 p-1 items-center justify-center bg-light-blue'
+        onClick={() => textFileInputRef.current.click()}
+        >
           <img src={TxtLogo}></img>
           <span>Import from Text/csv</span> 
+          <input type='file' ref={textFileInputRef} accept='text/csv' hidden/>
         </button>
         </div>
       </Box>:
@@ -150,7 +175,7 @@ function Overview() {
               }}
               pageSizeOptions={[5, 10]}
               checkboxSelection
-              getRowId={(row)=>row["Transaction ID"]}
+              getRowId={(row)=>row["Transaction ID"]} /// Fix when add api
             />
           </div>
       }
@@ -171,7 +196,7 @@ function Overview() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {rows.map((row, index) => (
               <TableRow
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -181,8 +206,7 @@ function Overview() {
                 <TableCell><Select 
                 // value={row.systemfield}
                 defaultValue={{value: row.systemfield, label: row.systemfield}}
-                // defaultInputValue='Transaction ID'
-                // defaultMenuIsOpen="Transaction ID"
+                onChange={(value) => getSelect(value, index)}
                 options={option}
                 />
                 </TableCell>
