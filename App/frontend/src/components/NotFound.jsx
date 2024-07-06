@@ -14,7 +14,7 @@ function NotFound() {
             Sorry, we couldn't find this page.
             </p>
             <p style={{color:'#002B9A', padding: '10px'}}>
-            But dont worry, you can find plenty of other things on our homepage.
+            But don't worry, you can find plenty of other things on our homepage.
             </p>
             <Button variant="contained" href={getPath()}>Back to Homepage</Button>
         </Box>
