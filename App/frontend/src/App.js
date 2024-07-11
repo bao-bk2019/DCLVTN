@@ -11,13 +11,13 @@ import NotFound from "./components/NotFound.jsx"
 import AppHeader from './features/dashboard/index.jsx';
 // import Header from './components/Header/Header.jsx';
 import { useState, useEffect } from 'react';
-import User from './features/user/index.jsx'
-import Profile from './features/user/profile/index.jsx'
-import Languague from './features/user/language/index.jsx'
-import Help from './features/user/help/index.jsx'
-import Notification from './features/user/notification/index.jsx'
-import Security from "./features/user/security/index.jsx";
-import Edit from './features/user/edit/index.jsx'
+// import User from './features/user/index.jsx'
+// import Profile from './features/user/profile/index.jsx'
+// import Languague from './features/user/language/index.jsx'
+// import Help from './features/user/help/index.jsx'
+// import Notification from './features/user/notification/index.jsx'
+// import Security from "./features/user/security/index.jsx";
+// import Edit from './features/user/edit/index.jsx'
 import { AuthProvider } from "./components/Auth/AuthContext.js";
 import Tutorial from "./features/tutorial/index.jsx";
 import GetStarted from "./features/tutorial/getstarted/first/index.jsx";
@@ -53,14 +53,14 @@ function App() {
     { path: '/overview', element: <Overview /> },
     { path: '/dashboard', element: <Dashboard /> },
   ];
-  const userList = [
-    { path: 'profile', element: <Profile /> },
-    { path: 'edit', element: <Edit /> },
-    { path: 'notification', element: <Notification /> },
-    { path: 'security', element: <Security /> },
-    { path: 'language', element: <Languague /> },
-    { path: 'help', element: <Help /> },
-  ];
+  // const userList = [
+  //   { path: 'profile', element: <Profile /> },
+  //   { path: 'edit', element: <Edit /> },
+  //   { path: 'notification', element: <Notification /> },
+  //   { path: 'security', element: <Security /> },
+  //   { path: 'language', element: <Languague /> },
+  //   { path: 'help', element: <Help /> },
+  // ];
   const tutorialList = [
     { path: 'get-started', element: <GetStarted /> },
     { path: 'descriptive', element: <DescriptivePage /> },
@@ -80,10 +80,10 @@ function App() {
             {/* <Route path="/dashboard" element={<ProtectedRoute><MainPage/></ProtectedRoute>}/> */}
             {mainList.map((item) => <Route path={item.path} element={<ProtectedRoute>{item.element}</ProtectedRoute>} />)}
 
-            <Route path="/user/*" element={<ProtectedRoute><User /></ProtectedRoute>}>
+            {/* <Route path="/user/*" element={<ProtectedRoute><User /></ProtectedRoute>}>
               <Route index element={<Profile />} />
               {userList.map((item) => <Route path={item.path} element={item.element} />)}
-            </Route>
+            </Route> */}
             <Route path="tutorial" element={<ProtectedRoute><Tutorial /></ProtectedRoute>}>
               <Route index element={<GetStarted />} />
               {tutorialList.map((item) => <Route path={item.path} element={item.element} />)}
