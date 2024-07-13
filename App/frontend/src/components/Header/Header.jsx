@@ -119,7 +119,7 @@ const Header = () => {
                         Go for analysis
                     </Button>
                     <Button>
-                        <NotificationsActiveIcon/>
+                        <NotificationsActiveIcon sx={{width:30, height: 30}}/>
                     </Button>
                     <AvatarDropdown/>
                 </div>
@@ -171,7 +171,7 @@ const Header = () => {
                 </div>
                 <div className="flex flex-1 justify-end">
                     <Button>
-                        <NotificationsActiveIcon/>
+                        <NotificationsActiveIcon sx={{width:30, height: 30}} />
                     </Button>
                     <AvatarDropdown/>
                 </div>
