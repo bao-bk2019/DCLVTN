@@ -40,12 +40,14 @@ function RegisterAndLogout() {
 function App() {
 
   const [excelData, setExcelData] = useState(null);
-  const location = useLocation();
-
+  // const location = useLocation();
+  // const [data, setData] = useState(null);
+  // const [columnList, setColumnList] = useState(null);
+  // const [isUpload, setIsUpload] = useState(false); //Test file is upload here
 
   const mainList = [
-    { path: '/overview', element: <Overview /> },
-    { path: '/dashboard', element: <Dashboard /> },
+    { path: '/overview', element: <Overview/> },
+    { path: '/dashboard', element: <Dashboard/> },
   ];
   // const userList = [
   //   { path: 'profile', element: <Profile /> },

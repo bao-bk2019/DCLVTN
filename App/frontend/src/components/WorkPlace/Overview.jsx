@@ -20,17 +20,28 @@ import HomeIcon from '@mui/icons-material/Home';
 import LoadingDot from '../Animation/LoadingDot';
 import { DataGrid } from '@mui/x-data-grid';
 import { create } from '@mui/material/styles/createTransitions';
+import Papa from "papaparse";
 // import { Home } from '@mui/icons-material';
 
+
 function Overview() {
+  const [data, setData] = useState([]);
+  const [columnTest, setColumnTest] = useState([]);
+  const [isReady, setIsReady] = useState(false);
+
+  const [isUpload, setIsUpload] = useState(false);
+  const allowedExtensions = ["csv"];
   // Define state
-  const [isUpload, setIsUpload] = useState(false); //Test file is upload here
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [file, setFile] = useState("");
+
   // Sample state
   const [rows, setRows] = useState([
     createData("id", "Transaction ID"),
     createData("date", "Date"),
   ]);
+  // const [columnTest, setColumnTest] = useState([]);
   // Define Ref
   const excelFileInputRef = useRef();
   const textFileInputRef = useRef();
@@ -103,15 +114,68 @@ function Overview() {
       i === index? {...row, systemfield: val.value}:row
     ));
   }
-  // Handle change 
-  // useEffect(()=>{
-  //   console.log(rows);
-  // },[rows])
-  // Sample data
-  // const rows = [
-  //   createData("id", "Transaction ID"),
-  //   createData("date", "Date"),
-  // ];
+  function handleFileChange(e){
+    setError("");
+ 
+    // Check if user has entered the file
+    if (e.target.files.length) {
+        const inputFile = e.target.files[0];
+
+        // Check the file extensions, if it not
+        // included in the allowed extensions
+        // we show the error
+        const fileExtension =
+            inputFile?.type.split("/")[1];
+        if (
+            !allowedExtensions.includes(fileExtension)
+        ) {
+            setError("Please input a csv file");
+            return;
+        }
+
+        // If input type is correct set the state
+        setFile(inputFile);
+    }
+  }
+  const handleParse = () => {
+     
+    // If user clicks the parse button without
+    // a file we show a error
+    if (!file) return ;
+
+    // Initialize a reader which allows user
+    // to read any file or blob.
+    const reader = new FileReader();
+
+    // Event listener on reader when the file
+    // loads, we parse it and set the data.
+    reader.onload = async ({ target }) => {
+        const csv = Papa.parse(target.result, {
+            header: true,
+        });
+        const parsedData = csv?.data;
+
+        setColumnTest(Object.keys(parsedData[0]));
+
+        setData(parsedData);
+        setLoading(true);
+        setTimeout(()=>{
+          setIsUpload(true);
+          setLoading(false);
+        },1000);
+        
+    };
+    reader.readAsText(file);
+  };
+  function createTestField(){
+    if (columnTest) 
+      return columnTest.map((item)=> ({field: item, headerName:item, width: 130}));
+    return [];
+  }
+  useEffect(() => {
+    handleParse();
+  },[file]);
+
   const columns = [keysColumn["Transaction ID"], keysColumn["Customer ID"], keysColumn["Product ID"], keysColumn["Payment Method"], keysColumn["Store Location"], keysColumn["Salesperson ID"]];
   const rows1 =[
     {"Transaction ID": 1, "Customer ID":2 , "Product ID": 3, "Payment Method": 4, "Store Location": 5, "Salesperson ID": 6,},
@@ -151,23 +215,27 @@ function Overview() {
         >
           <img src={ExcelLogo}></img>
           <span >Import from Excel</span>
-          <input type='file' ref={excelFileInputRef} accept='application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' hidden/>
+          <input type='file' ref={excelFileInputRef} onChange={handleFileChange} accept='application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' hidden/>
         </button>
         <button className='flex flex-col border rounded w-36 p-1 items-center justify-center bg-light-blue'
         onClick={() => textFileInputRef.current.click()}
         >
           <img src={TxtLogo}></img>
           <span>Import from Text/csv</span> 
-          <input type='file' ref={textFileInputRef} accept='text/csv' hidden/>
+          <input type='file' ref={textFileInputRef} onChange={handleFileChange} accept='text/csv' hidden/>
         </button>
         </div>
       </Box>:
-        loading? <CircularProgress/>
+        loading? 
+        <div className='text-center flex flex-col items-center h-400 w-80vw'>
+          <LoadingDot/>
+          <h3 className='text-3xl font-bold text-vivid-pink'>Loading</h3>
+        </div> 
           // Sample table
           :<div style={{ height: 400, width: '100%', margin: "16px 0px"}}>
             <DataGrid
-              rows={rows1}
-              columns={columns}
+              rows={data}
+              columns={createTestField()}
               initialState={{
                 pagination: {
                   paginationModel: { page: 0, pageSize: 5 },
@@ -175,7 +243,7 @@ function Overview() {
               }}
               pageSizeOptions={[5, 10]}
               checkboxSelection
-              getRowId={(row)=>row["Transaction ID"]} /// Fix when add api
+              getRowId={(row)=>row[columnTest[0]]} /// Fix when add api
             />
           </div>
       }
@@ -220,7 +288,7 @@ function Overview() {
       :loading? <CircularProgress/>
       :<div className='text-center flex flex-col items-center bg-white my-4 mx-0 w-80vw'>
       <LoadingDot/>
-      <h3 className='text-2xl font-bold text-vivid-pink'>I'm waiting for your data</h3>
+      <h3 className='text-3xl font-bold text-vivid-pink'>I'm waiting for your data</h3>
       </div>
       }
       <GetBackToTopButton/>
