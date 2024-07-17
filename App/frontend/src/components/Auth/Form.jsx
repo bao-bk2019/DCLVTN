@@ -71,7 +71,7 @@ function Form({ route, method }) {
                 console.log(error);
                 setErrorMessage('Username or password incorrect.');
             } finally {
-                setLoading(false)
+                setLoading(false);
             }
         }
         else {
