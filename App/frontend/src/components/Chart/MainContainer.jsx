@@ -8,6 +8,8 @@ import SingleValue from './Content/SingleValue';
 import LineChart from './Content/LineChart';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import BarChart from './Content/BarChart';
+import PieChart from './Content/PieChart';
 
 // import AddDialog from './Dialog/AddDialog';
 function MainContainer(props) {
@@ -17,11 +19,15 @@ function MainContainer(props) {
     'value': '100px',
     'line': '400px',
     'area': '400px',
+    'bar': '400px',
+    'pie': '400px',
   }
   const widthTypes ={
     'value': '8vw',
     'line': '20vw',
     'area': '20vw',
+    'bar' : '20vw',
+    'pie': '10vw',
   }
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -39,7 +45,7 @@ function MainContainer(props) {
     <>
       <Card sx={{width: `calc(${widthTypes[type]}* ${width})`, height: heightTypes[type], margin:"5px",  padding:'10px', background:'white'}}>
           <CardHeader
-          title={<h3 className='font-bold text-xl'>{title}</h3>}
+          title={<h3 className='font-bold text-xl text-dark-blue'>{title}</h3>}
           action={
               <IconButton aria-label="settings" onClick={(e)=>handleClick(e)}>
                 <MoreVertIcon />
@@ -47,8 +53,10 @@ function MainContainer(props) {
           }
           sx={{padding:0}}
           />
-          {type === 'value'? <SingleValue  column={option.column1} cal={option.cal} />: null}
+          {type === 'value'? <SingleValue  column={option.label} cal={option.cal} />: null}
           {type === 'line'? <LineChart />: null}
+          {type === 'bar'? <BarChart />: null}
+          {type === 'pie'? <PieChart />: null}
       </Card>
       <Menu
         id="basic-menu"

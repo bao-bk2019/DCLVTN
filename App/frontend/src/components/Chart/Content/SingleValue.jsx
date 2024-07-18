@@ -10,9 +10,7 @@ import {IconButton} from '@mui/material';
 function SingleValue(props) {
   const {column, cal} = props;
   return (
-    <CardContent >
-    <div>{column} {cal}</div>
-    </CardContent>
+    <div className='text-3xl font-bold text-center text-dark-blue'>{column} {cal}</div>
   )
 }
 

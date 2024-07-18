@@ -115,13 +115,8 @@ function Dashboard(props) {
       
       <Box sx={{display: "flex", flexDirection: "row", margin: "16px 0px", width:"82vw", height:"auto", background:"inherit", flexWrap:'wrap'}}>
         {listOfCharts.map((chart, index) =>
-        chart.type === 'value'?
           <MainContainer index={index} width={chart.width} title={chart.title} type={chart.type} listOfCharts={listOfCharts} setListOfCharts={setListOfCharts} option={chart.option}/>
-        :chart.type === 'line'?
-          <MainContainer index={index} width={chart.width} title={chart.title} type={chart.type} listOfCharts={listOfCharts} setListOfCharts={setListOfCharts} option={chart.option}/>
-        :null
-      )} 
-        {(listOfCharts) && <></>}
+        )}
       </Box>
       <FormDialog title="Add Visualization" method='add' open={open} setOpen={setOpen} listOfCharts={listOfCharts} setListOfCharts={setListOfCharts} type='add' listCols={columnTest}/>
       <input type='file' ref={textFileInputRef} onChange={handleFileChange} accept='text/csv' hidden/>

@@ -6,6 +6,7 @@ import {
 
 ChartJs.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
+
 const testData = {
   labels: [
     "Monday",
@@ -20,6 +21,11 @@ const testData = {
     {
       label:"Steps",
       data: [3000,5000,6000,9000,7000,6000,4000,],
+      borderColor: "rgb(75, 192, 192)",
+    },
+    {
+      label:"Steps 2",
+      data: [5000,3000,9000,4000,5000,7000,8000,],
       borderColor: "rgb(75, 192, 192)",
     },
   ]
