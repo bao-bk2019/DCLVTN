@@ -83,6 +83,7 @@ module.exports = {
         'light-blue': 'rgba(138,215,224,255)',
         'vivid-pink': '#D6008D',
         'dark-gray': '#222',
+        'dark-blue': '#0D2A41',
         green: 'green',
         orange: 'orange',
         red: 'red',
