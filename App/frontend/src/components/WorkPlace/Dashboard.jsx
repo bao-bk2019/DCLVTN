@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Papa from "papaparse";
 import HomeIcon from '@mui/icons-material/Home';
 import { Box, Button} from '@mui/material';
+import ResponsiveReactGridLayout  from "react-grid-layout";
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -13,12 +14,12 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 // import AddDialog from '../Chart/Dialog/AddDialog';
 import MainContainer from '../Chart/MainContainer';
 import FormDialog from '../Chart/Dialog/FormDialog';
-import LineChart from '../Chart/Content/LineChart';
 
-function Dashboard(props) {
+function Dashboard() {
   const [data, setData] = useState([]);
   const [isUpload, setIsUpload] = useState(false);
   const [open, setOpen] = useState(false);
+  const [layout, setLayout] = useState([]);
   const [listOfCharts, setListOfCharts] = useState([]);
   const [rows, setRows] = useState([]);
   const [file, setFile] = useState(null);
@@ -26,13 +27,16 @@ function Dashboard(props) {
   const [error, setError] = useState(null);
   const allowedExtensions = ["csv"];
   const textFileInputRef = useRef();
-
+  const [props, setProps] = useState(
+    {
+      layout:[],
+    }
+  );
   function handleFileChange(e){
     
     // Check if user has entered the file
     if (e.target.files.length) {
         const inputFile = e.target.files[0];
-
         // Check the file extensions, if it not
         // included in the allowed extensions
         // we show the error
@@ -77,7 +81,6 @@ function Dashboard(props) {
   function clearAll(){
     setListOfCharts([]);
   };
-
   useEffect(() => {
     handleParse();
   },[file]);
@@ -88,9 +91,43 @@ function Dashboard(props) {
       complete: data => {
           setRows(data.data);
       }
-  });
-
+    });
   },[])
+
+  const heightLayoutTypes ={
+    'value': 2,
+    'line': 4,
+    'area': 4,
+    'bar': 4,
+    'pie': 4,
+  }
+  const widthTypes ={
+    'value': 1,
+    'line': 2,
+    'area': 2,
+    'bar' : 2,
+    'pie': 2,
+  }
+
+  useEffect(()=>{
+    if (layout.length < listOfCharts.length) {
+      // console.log('Trigger add chart');
+      var index = listOfCharts.length -1;
+      var type = listOfCharts[index].type;
+      var width = listOfCharts[index].width;
+      setLayout([...layout, {i: String(index), x: 0, y: Infinity, w: widthTypes[type]*width, h: heightLayoutTypes[type]}]);
+    }
+  },[listOfCharts]);
+
+  useEffect(()=>{
+    function ChangeLayout(newLayout){
+      // console.log(newLayout);
+      setProps({layout: newLayout});
+    }
+    // console.log("trigger change layout");
+    ChangeLayout(layout);
+  },[layout]);
+
   return (
     <div className='mx-32 mt-8 min-h-1000'>
       <div className='flex items-center text-deep-blue'>
@@ -110,14 +147,31 @@ function Dashboard(props) {
           <Button variant='contained'> <FilterAltIcon/> Add Filter</Button>
           <Button variant='contained' onClick={()=>clearAll()}> <ClearIcon/> Clear All</Button>
           <Button variant='contained'> <GetAppIcon/> Export</Button>
-          <Button variant='contained' onClick={() => textFileInputRef.current.click()}><FileUploadIcon/> Add Data(Test)</Button>
+          <Button variant='contained' onClick={() => textFileInputRef.current.click()}><FileUploadIcon/> Add Data(For Test)</Button>
       </div>
-      
-      <Box sx={{display: "flex", flexDirection: "row", margin: "16px 0px", width:"82vw", height:"auto", background:"inherit", flexWrap:'wrap'}}>
+      {/* <Box sx={{display: "flex", flexDirection: "row", margin: "16px 0px", width:"82vw", height:"auto", background:"inherit", flexWrap:'wrap'}}>
+
         {listOfCharts.map((chart, index) =>
           <MainContainer index={index} width={chart.width} title={chart.title} type={chart.type} listOfCharts={listOfCharts} setListOfCharts={setListOfCharts} option={chart.option}/>
         )}
-      </Box>
+      </Box> */}
+      <div className='relative'>
+        <ResponsiveReactGridLayout  
+            rowHeight={100} 
+            className="layout"
+            cols={12}
+            width={1200}
+            margin={[0, 0]}
+            {...props}
+            measureBeforeMount
+          >
+            {listOfCharts.map((chart, index) =>{
+            return <div key={String(index)}>
+              <MainContainer index={index} width={chart.width} title={chart.title} type={chart.type} listOfCharts={listOfCharts} setListOfCharts={setListOfCharts} layout={layout} setLayout={setLayout} option={chart.option}/>
+            </div>}
+            )}
+          </ResponsiveReactGridLayout>
+        </div>
       <FormDialog title="Add Visualization" method='add' open={open} setOpen={setOpen} listOfCharts={listOfCharts} setListOfCharts={setListOfCharts} type='add' listCols={columnTest}/>
       <input type='file' ref={textFileInputRef} onChange={handleFileChange} accept='text/csv' hidden/>
     </div>

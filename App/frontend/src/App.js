@@ -26,6 +26,7 @@ import { Box } from "@mui/material";
 import Layout from "./components/Layout.jsx";
 import Overview from "./components/WorkPlace/Overview.jsx"
 import Dashboard from "./components/WorkPlace/Dashboard.jsx"
+import TestPage from "./components/TestPage.jsx"
 
 function Logout() {
   localStorage.clear()
@@ -79,6 +80,7 @@ function App() {
               <Route index element={<GetStarted />} />
               {tutorialList.map((item) => <Route path={item.path} element={item.element} />)}
             </Route>
+            {/* <Route path="/test" element={<TestPage />} /> */}
             {/* Not found route */}
             <Route path="*" element={<NotFound />} />
           </Route>

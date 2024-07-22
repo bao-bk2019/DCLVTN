@@ -90,7 +90,7 @@ function FormDialog(props) {
     useEffect(() =>{
         console.log(col0,col1,col2,col3,col4);
     },[col0,col1,col2,col3,col4]);
-
+    
     return (
         <Dialog
         open={open}
