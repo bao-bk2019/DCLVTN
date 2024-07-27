@@ -20,8 +20,9 @@ function Dashboard() {
   const [isUpload, setIsUpload] = useState(false);
   const [open, setOpen] = useState(false);
   const [layout, setLayout] = useState([]);
+  const [curX, setCurX] = useState(0);
+  const [curY, setCurY] = useState(0);
   const [listOfCharts, setListOfCharts] = useState([]);
-  const [rows, setRows] = useState([]);
   const [file, setFile] = useState(null);
   const [columnTest, setColumnTest] = useState([]);
   const [error, setError] = useState(null);
@@ -70,9 +71,9 @@ function Dashboard() {
             header: true,
         });
         const parsedData = csv?.data;
-
+        
         setColumnTest(Object.keys(parsedData[0]));
-
+        let remove = parsedData.pop();
         setData(parsedData);     
     };
     reader.readAsText(file);
@@ -85,17 +86,9 @@ function Dashboard() {
     handleParse();
   },[file]);
 
-  useEffect(()=>{
-    Papa.parse("../Data/customer_shopping_data.csv", {
-      download: true,
-      complete: data => {
-          setRows(data.data);
-      }
-    });
-  },[])
 
   const heightLayoutTypes ={
-    'value': 2,
+    'value': 1,
     'line': 4,
     'area': 4,
     'bar': 4,
@@ -108,23 +101,25 @@ function Dashboard() {
     'bar' : 2,
     'pie': 2,
   }
-
+  useEffect(()=>{console.log(layout)},[curX, curY])
   useEffect(()=>{
     if (layout.length < listOfCharts.length) {
-      // console.log('Trigger add chart');
       var index = listOfCharts.length -1;
       var type = listOfCharts[index].type;
       var width = listOfCharts[index].width;
-      setLayout([...layout, {i: String(index), x: 0, y: Infinity, w: widthTypes[type]*width, h: heightLayoutTypes[type]}]);
+      setLayout([...layout, {i: String(index), x: curX, y: curY, w: widthTypes[type]*width, h: heightLayoutTypes[type]}]);
+      if (curX + widthTypes[type]*width >= 12){
+        setCurX(0);
+        setCurY(curY + 4);
+      }
+      else setCurX(curX + widthTypes[type]*width);
     }
   },[listOfCharts]);
 
   useEffect(()=>{
     function ChangeLayout(newLayout){
-      // console.log(newLayout);
       setProps({layout: newLayout});
     }
-    // console.log("trigger change layout");
     ChangeLayout(layout);
   },[layout]);
 
@@ -155,7 +150,7 @@ function Dashboard() {
           <MainContainer index={index} width={chart.width} title={chart.title} type={chart.type} listOfCharts={listOfCharts} setListOfCharts={setListOfCharts} option={chart.option}/>
         )}
       </Box> */}
-      <div className='relative'>
+      <div className='relative mt-2'>
         <ResponsiveReactGridLayout  
             rowHeight={100} 
             className="layout"
@@ -167,7 +162,7 @@ function Dashboard() {
           >
             {listOfCharts.map((chart, index) =>{
             return <div key={String(index)}>
-              <MainContainer index={index} width={chart.width} title={chart.title} type={chart.type} listOfCharts={listOfCharts} setListOfCharts={setListOfCharts} layout={layout} setLayout={setLayout} option={chart.option}/>
+              <MainContainer data={data} index={index} width={chart.width} title={chart.title} type={chart.type} listOfCharts={listOfCharts} setListOfCharts={setListOfCharts} layout={layout} setLayout={setLayout} option={chart.option}/>
             </div>}
             )}
           </ResponsiveReactGridLayout>

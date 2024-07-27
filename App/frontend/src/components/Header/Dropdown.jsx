@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,20 +16,31 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
+import api from "../Auth/api";
+// import Acount from '../Management/Acount';
 // import Stack from '@mui/material/Stack';
 
 // import Avatar from '@mui/material/Avatar';
 import { useNavigate } from 'react-router-dom';
+import Account from '../Management/Account';
 
 const AvatarDropdown = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
-  const open= Boolean(anchorEl);
-  // const open = Boolean(anchorEl);
-
+  const open = Boolean(anchorEl);
+  const [openProfile, setOpenProfile] = useState(false);
+  const [openSetting, setOpenSetting] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   function pressProfile() {
     setAnchorEl(null);
-    navigate('/user/profile');
+    setOpenProfile(true);
+    //TODO
+  }
+  function pressSetting() {
+    setAnchorEl(null);
+    setOpenSetting(true);
+    //TODO
   }
   function pressLogout(){
     setAnchorEl(null);
@@ -41,7 +52,27 @@ const AvatarDropdown = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  useEffect(()=>{
+    async function getUser(){
+      try {
+        const res = await api.get('/api/user/me/');
+        setName(res.data.name);
+        setEmail(res.data.email);
+        } catch (error) {
+            console.log(error.response.status);
+            if (error.response.status === 401){
+              localStorage.clear();
+              window.location.href = './login';
+            }
+            
+        } finally {
+            
+        }
+    };
+    getUser();
+  },[])
   return (
+    <>
     <Box sx={{display:'flex', flexGrow: 0 }}>
       <Button
         onClick={handleClick}
@@ -74,17 +105,16 @@ const AvatarDropdown = () => {
        }} 
       >
         <Box sx={{display: 'flex', flexDirection:'column', alignItems: 'center'}} >
-          <>
-          <Badge
+          {/* <Badge
           overlap="circular"
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           badgeContent={<EditIcon sx={{width:'auto', height:'12px',color: '#38bdf8', borderRadius:'9999px' ,background:'#172554'}} />}
           >
-            <AccountCircleIcon sx={{width:40, height: 40}}/>
-          </Badge>
-          </>
-          <span>Truong Van A</span>
-          <span>vana1234@gmail.com</span>
+            <AccountCircleIcon sx={{width:60, height: 60}}/>
+          </Badge> */}
+          <Avatar sx={{width:60, height: 60}} />
+          <span>{name}</span>
+          <span>{email}</span>
         </Box>
         <MenuList dense>
           <MenuItem onClick={pressProfile}>
@@ -94,11 +124,11 @@ const AvatarDropdown = () => {
             <ListItemText>Profile</ListItemText>
           </MenuItem>
           {/* Add function here */}
-          <MenuItem onClick={pressProfile}> 
+          <MenuItem onClick={pressSetting}> 
             <ListItemIcon>
               <SettingsIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText>Setting</ListItemText>
+            <ListItemText className='text-xl'>Setting</ListItemText>
           </MenuItem>
           <Divider/>
           <MenuItem onClick={pressLogout}>
@@ -110,6 +140,8 @@ const AvatarDropdown = () => {
         </MenuList>
       </Menu>
     </Box>
+    <Account open={openProfile} setOpen={setOpenProfile} name={name} email={email} />
+    </>
   );
 }
 export default AvatarDropdown;

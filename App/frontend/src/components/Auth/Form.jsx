@@ -62,8 +62,9 @@ function Form({ route, method }) {
         if (method === "login") {
             try {
                 const res = await api.post(route, { email, password });
-                localStorage.setItem(ACCESS_TOKEN, res.data.access);
-                localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+                localStorage.setItem(ACCESS_TOKEN, res.data["token"]);
+
+                // localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
                 setIsAuthorized(true);
                 console.log(res);
                 navigate("/overview");

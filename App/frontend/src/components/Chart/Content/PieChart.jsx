@@ -1,37 +1,36 @@
 import React, {useState} from "react";
-import { Pie } from "react-chartjs-2";
-import {
-  Chart as ChartJs, ArcElement, Tooltip, Legend
-} from "chart.js"
-import { CHART_COLORS } from "./color";
-
-ChartJs.register( ArcElement, Tooltip, Legend);
-
-const testData = {
-  labels: [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ],
-  datasets:[
-    {
-      label:"Steps",
-      data: [3000,5000,6000,9000,7000,6000,4000,],
-      backgroundColor: CHART_COLORS,
-      borderColor: "rgba(54, 162, 235, 1)",
-    },
-  ] 
-}
+import Plot from 'react-plotly.js'
 
 function PieChart() {
-  const options = {};
-  const data = testData;
+  const [data, setData] = useState([]);
   return (
-    <Pie options={options} data={data}/>
+    <Plot 
+      data={[
+        {
+          values: [19, 26, 55],
+          labels: ['Residential', 'Non-Residential', 'Utility'],
+          type: 'pie',
+          domain:{
+            row:0,
+            column:0,
+          }
+        },
+        {
+          values: [43, 23, 31],
+          labels: ['Test1', 'Test2', 'Test3'],
+          type: 'pie',
+          domain:{
+            row:0,
+            column:1,
+          }
+        }
+      ]}
+      layout ={{
+        height: 400,
+        width: 380,
+        grid:{rows: 1, columns: 2}
+      }}
+    />
   )
 }
 

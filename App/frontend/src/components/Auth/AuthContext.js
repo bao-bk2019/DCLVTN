@@ -2,7 +2,7 @@
 import React from 'react';
 import { ACCESS_TOKEN } from './constants';
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-
+import api from './api';
 
 const AuthContext = createContext();
 
@@ -16,9 +16,10 @@ export function AuthProvider({ children }) {
     useMemo(() => {
         // Kiểm tra token từ localStorage
         const token = localStorage.getItem(ACCESS_TOKEN);
+        
         if (token === null) {
             setIsAuthorized(false);
-
+            
         } else {
             setIsAuthorized(true);
         }

@@ -14,6 +14,9 @@ import SingleValue from '../Content/SingleValue';
 import Slider from '@mui/material/Slider';
 import { FormLabel } from '@mui/material';
 import {Typography} from '@mui/material';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 function FormDialog(props) {
     // Props
@@ -24,7 +27,10 @@ function FormDialog(props) {
     const [name, setName] = useState(null);
     const [num, setNum] = useState(1);
     //States for Single value
+    const [isMul, setIsMul] = useState('false');
     const [labelCol, setLabelCol] = useState(null);
+    const [xAxis, setXAxis] =useState(null);
+    const [yAxis, setYAxis] =useState(null);
     const [col0, setCol0] = useState(null);
     const [col1, setCol1] = useState(null);
     const [col2, setCol2] = useState(null);
@@ -40,6 +46,10 @@ function FormDialog(props) {
     const handleChange = (e) => {
         setType(e.target.value);
     };
+    const handleMultipleLines = (e) =>{
+        console.log(e.target.value);
+        setIsMul(e.target.value);
+    }
     const setColumnByIndex = (e, index) =>{
         switch(index){
             case 0: 
@@ -73,12 +83,6 @@ function FormDialog(props) {
         {name: 'Count', value:'count'}, 
         {name: 'Mean', value:'mean'},
         {name: 'Sum', value:'sum'},
-        // {name: 'Quartile 1', value:'25%'},
-        // {name: 'Median', value:'50%'},
-        // {name: 'Quartile 3', value:'75%'},
-        // {name: 'Mode', value:'mode'},
-        // {name: 'Standard deviation', value:'std'},
-        // {name: 'Variance', value:'var'},
         {name: 'Minimum', value:'min'},
         {name: 'Maximum', value:'max'},
     ];
@@ -101,7 +105,7 @@ function FormDialog(props) {
             component:"form",
             onSubmit: (event) => {
                 if (method === 'add') {
-                setListOfCharts([...listOfCharts, {width: size, title: name, type: type, option:{label: labelCol, column0: col0, cal: cal}}]);
+                setListOfCharts([...listOfCharts, {width: size, title: name, type: type, option:{label: labelCol, xCol: xAxis, yCol: yAxis}}]);
                 event.preventDefault();
                 handleClose();
                 }
@@ -121,11 +125,12 @@ function FormDialog(props) {
                     onChange={handleChange}
                     required
                     >
+                        <MenuItem value={'value'}>Single Value</MenuItem>
                         <MenuItem value={'line'}>Line Chart</MenuItem>
-                        <MenuItem value={'area'}>Area Chart</MenuItem>
+                        <MenuItem value={'box'}>Box Plot</MenuItem>
                         <MenuItem value={'bar'}>Bar Chart</MenuItem>
                         <MenuItem value={'pie'}>Pie Chart</MenuItem>
-                        <MenuItem value={'value'}>Single Value</MenuItem>
+                        <MenuItem value={'histogram'}>Histogram</MenuItem>
                     </Select>
                 </FormControl>
                 
@@ -137,7 +142,7 @@ function FormDialog(props) {
                     <Slider
                         aria-label="Size"
                         aria-labelledby="size-slider"
-                        defaultValue={2}
+                        // defaultValue={2}
                         getAriaValueText={valuetext}
                         valueLabelDisplay="auto"
                         shiftStep={3}
@@ -145,6 +150,7 @@ function FormDialog(props) {
                         marks
                         min={1}
                         max={5}
+                        value={size}
                         onChange={(e) => setSize(e.target.value)}
                     />
                     <FormControl fullWidth sx={{marginTop:"10px"}}>
@@ -181,42 +187,95 @@ function FormDialog(props) {
                     <Slider
                         aria-label="Size"
                         aria-labelledby="size-slider"
-                        defaultValue={2}
+                        // defaultValue={2}
                         getAriaValueText={valuetext}
                         valueLabelDisplay="auto"
                         shiftStep={3}
                         step={1}
                         marks
-                        min={1}
+                        min={2}
                         max={4}
+                        value={size}
                         onChange={(e) => setSize(e.target.value)}
                     />
+                    <FormControl>
+                    <FormLabel id="demo-row-radio-buttons-group-label">Number of lines</FormLabel>
+                    <RadioGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="row-radio-buttons-group"
+                        value={isMul}
+                        onChange={handleMultipleLines}
+                    >
+                        <FormControlLabel value={'true'} control={<Radio />} label="Multiple lines" />
+                        <FormControlLabel value={'false'} control={<Radio />} label="Single lines" />
+                    </RadioGroup>
+                    </FormControl>
+                    {isMul === 'true'? 
+                        <FormControl fullWidth sx={{marginTop:"10px"}}>
+                            <InputLabel id="label-field">Label Field</InputLabel>
+                            <Select
+                            labelId="label-field"
+                            id="label-field-select"
+                            label="Label field"
+                            required
+                            onChange={(e) => {setLabelCol(e.target.value);}}
+                            >
+                                {fields.map((item)=> <MenuItem value={item.value}> {item.name} </MenuItem>)}
+                            </Select>
+                        </FormControl>: null
+                    }
                     <FormControl fullWidth sx={{marginTop:"10px"}}>
-                        <InputLabel id="Label field">Label Field</InputLabel>
+                        <InputLabel id="x-axis-field">X-axis Field</InputLabel>
                         <Select
-                        labelId="label-field"
-                        id="label-field-select"
-                        label="Label field"
+                        labelId="x-axis-field"
+                        id="x-axis-field-select"
+                        label="X-axis field"
                         required
-                        onChange={(e) => {setLabelCol(e.target.value);}}
+                        onChange={(e) => {setXAxis(e.target.value);}}
                         >
                             {fields.map((item)=> <MenuItem value={item.value}> {item.name} </MenuItem>)}
                         </Select>
                     </FormControl>
-                    <FormControl fullWidth sx={{marginTop:"10px"}}>
-                        <InputLabel id="cal">Calculate</InputLabel>
+                    {/* <FormControl fullWidth sx={{marginTop:"10px"}}>
+                        <InputLabel id="label-type">Type Value</InputLabel>
                         <Select
-                        labelId="cal"
-                        id="cal-select"
-                        label="Calculate"
+                        labelId="label-type"
+                        id="label-type-select"
+                        label="Type Value"
                         required
                         onChange={(e) => setCal(e.target.value)}
                         >
                             <MenuItem value="Value Count"> Value Count </MenuItem>
                             <MenuItem value="Sum of Value Column"> Sum of Value Column </MenuItem>
                         </Select>
+                    </FormControl> */}
+                    <FormControl fullWidth sx={{marginTop:"10px"}}>
+                        <InputLabel id="y-axis-field">Y-axis Field</InputLabel>
+                        <Select
+                        labelId="y-axis-field"
+                        id="y-axis-field-select"
+                        label="Y-axis field"
+                        required
+                        onChange={(e) => {setYAxis(e.target.value);}}
+                        >
+                            {fields.map((item)=> <MenuItem value={item.value}> {item.name} </MenuItem>)}
+                        </Select>
                     </FormControl>
-                    {cal === "Sum of Value Column" &&
+                    {/* <FormControl fullWidth sx={{marginTop:"10px"}}>
+                        <InputLabel id="label-type">Type Value</InputLabel>
+                        <Select
+                        labelId="label-type"
+                        id="label-type-select"
+                        label="Type Value"
+                        required
+                        onChange={(e) => setCal(e.target.value)}
+                        >
+                            <MenuItem value="Value Count"> Value Count </MenuItem>
+                            <MenuItem value="Sum of Value Column"> Sum of Value Column </MenuItem>
+                        </Select>
+                    </FormControl> */}
+                    {/* {cal === "Sum of Value Column" &&
                         <>
                         <FormControl fullWidth sx={{marginTop:"10px"}}>
                             <InputLabel id="Number of value fields">Number of value fields</InputLabel>
@@ -244,7 +303,7 @@ function FormDialog(props) {
                             </Select>
                         </FormControl>)}
                         </>
-                    }
+                    } */}
                     <TextField label="Name of the chart" fullWidth variant="outlined" sx={{marginTop:"10px"}} onChange={(e)=>setName(e.target.value)}/>
                 </>}
                 {type === 'bar' &&
@@ -255,7 +314,7 @@ function FormDialog(props) {
                     <Slider
                         aria-label="Size"
                         aria-labelledby="size-slider"
-                        defaultValue={2}
+                        // defaultValue={2}
                         getAriaValueText={valuetext}
                         valueLabelDisplay="auto"
                         shiftStep={3}
@@ -263,6 +322,7 @@ function FormDialog(props) {
                         marks
                         min={1}
                         max={4}
+                        value={size}
                         onChange={(e) => setSize(e.target.value)}
                     />
                     <FormControl fullWidth sx={{marginTop:"10px"}}>
@@ -329,7 +389,7 @@ function FormDialog(props) {
                     <Slider
                         aria-label="Size"
                         aria-labelledby="size-slider"
-                        defaultValue={2}
+                        // defaultValue={2}
                         getAriaValueText={valuetext}
                         valueLabelDisplay="auto"
                         shiftStep={3}
@@ -337,6 +397,7 @@ function FormDialog(props) {
                         marks
                         min={1}
                         max={4}
+                        value={size}
                         onChange={(e) => setSize(e.target.value)}
                     />
                     <FormControl fullWidth sx={{marginTop:"10px"}}>

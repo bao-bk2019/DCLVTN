@@ -27,6 +27,7 @@ import Layout from "./components/Layout.jsx";
 import Overview from "./components/WorkPlace/Overview.jsx"
 import Dashboard from "./components/WorkPlace/Dashboard.jsx"
 // import TestPage from "./components/TestPage.jsx"
+import RFMAnalysis from "./components/WorkPlace/RFMAnalysis.jsx"
 
 function Logout() {
   localStorage.clear()
@@ -49,6 +50,7 @@ function App() {
   const mainList = [
     { path: '/overview', element: <Overview/> },
     { path: '/dashboard', element: <Dashboard/> },
+    { path: '/rfm', element: <RFMAnalysis/> },
   ];
   // const userList = [
   //   { path: 'profile', element: <Profile /> },

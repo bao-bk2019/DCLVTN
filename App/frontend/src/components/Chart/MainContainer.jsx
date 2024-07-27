@@ -10,18 +10,19 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import BarChart from './Content/BarChart';
 import PieChart from './Content/PieChart';
+import BoxPlot from './Content/BoxPlot';
 
 
 // import AddDialog from './Dialog/AddDialog';
 function MainContainer(props) {
   // const [open, setOpen] = useState(false);
-  const {index, width, title, type, listOfCharts, setListOfCharts, layout, setLayout, option} = props;
+  const {data, index, width, title, type, listOfCharts, setListOfCharts, layout, setLayout, option} = props;
   const heightTypes ={
-    'value': '100px',
-    'line': '400px',
-    'area': '400px',
-    'bar': '400px',
-    'pie': '300px',
+    'value': 400,
+    'line': 400,
+    'area': 400,
+    'bar': 400,
+    'pie': 400,
   }
   const heightLayoutTypes ={
     'value': 2,
@@ -31,11 +32,11 @@ function MainContainer(props) {
     'pie': 4,
   }
   const widthTypes ={
-    'value': '200px',
-    'line': '500px',
-    'area': '500px',
-    'bar' : '500px',
-    'pie': '250px',
+    'value': 100,
+    'line': 200,
+    'area': 200,
+    'bar' : 200,
+    'pie': 200,
   }
   
 
@@ -43,6 +44,7 @@ function MainContainer(props) {
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    console.log('Click');
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -54,20 +56,21 @@ function MainContainer(props) {
   }
   return (
     <>
-      <Card sx={{width: widthTypes[type], height: heightTypes[type], margin:"5px",  padding:'10px', background:'white'}}>
+      <Card sx={{width: 'auto', height: 'auto', margin:"5px",  padding:'10px', background:'white'}}>
           <CardHeader
           title={<h3 className='font-bold text-xl text-dark-blue'>{title}</h3>}
           action={
-              <IconButton aria-label="settings" onClick={(e)=>handleClick(e)}>
+              <IconButton aria-label="settings" onClick={(e)=>handleClick(e)} onMouseDown={(e) => e.stopPropagation()}>
                 <MoreVertIcon />
               </IconButton>
           }
           sx={{padding:0}}
           />
-          {type === 'value'? <SingleValue  column={option.label} cal={option.cal} />: null}
-          {type === 'line'? <LineChart />: null}
+          {type === 'value'? <SingleValue data={data}  column={option.label} cal={option.cal} />: null}
+          {type === 'line'? <LineChart data={data} width={widthTypes[type]*width} height={heightTypes[type]} option={option} />: null}
           {type === 'bar'? <BarChart />: null}
           {type === 'pie'? <PieChart />: null}
+          {type === 'box'? <BoxPlot />: null}
       </Card>
       <Menu
         id="basic-menu"
@@ -78,7 +81,7 @@ function MainContainer(props) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={()=>DeleteChart(index)}>Delete</MenuItem>
+        <MenuItem onClick={()=>DeleteChart(index)}>Remove</MenuItem>
       </Menu>
     </>
   )
