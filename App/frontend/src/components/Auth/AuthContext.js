@@ -2,7 +2,7 @@
 import React from 'react';
 import { ACCESS_TOKEN } from './constants';
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import api from './api';
+import api from '../Service/apiService';
 
 const AuthContext = createContext();
 

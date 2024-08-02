@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "./api";
+import api from "../Service/apiService";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
 // import LoadingIndicator from "./LoadingIndicator";
@@ -63,14 +63,14 @@ function Form({ route, method }) {
             try {
                 const res = await api.post(route, { email, password });
                 localStorage.setItem(ACCESS_TOKEN, res.data["token"]);
-
-                // localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
                 setIsAuthorized(true);
-                console.log(res);
                 navigate("/overview");
             } catch (error) {
                 console.log(error);
-                setErrorMessage('Username or password incorrect.');
+                if (error.code === "ERR_NETWORK"){
+                    setErrorMessage('Can\'t connect to server.');
+                }
+                else setErrorMessage('Username or pass word incorrect.');
             } finally {
                 setLoading(false);
             }
@@ -87,7 +87,7 @@ function Form({ route, method }) {
                 console.log(error);
                 setErrorMessage('Error');
             } finally {
-                setLoading(false)
+                setLoading(false)   
             }
         }
 

@@ -16,7 +16,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
-import api from "../Auth/api";
+import api from "../Service/apiService";
 // import Acount from '../Management/Acount';
 // import Stack from '@mui/material/Stack';
 
@@ -59,7 +59,11 @@ const AvatarDropdown = () => {
         setName(res.data.name);
         setEmail(res.data.email);
         } catch (error) {
-            console.log(error.response.status);
+            console.log(error);
+            // console.log(error.response.status);
+            if (error.code === "ERR_NETWORK"){
+              window.location.href = './login';
+            }
             if (error.response.status === 401){
               localStorage.clear();
               window.location.href = './login';
